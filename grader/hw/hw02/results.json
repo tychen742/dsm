@@ -1,0 +1,171 @@
+{
+    "tests": [
+        {
+            "name": "Public Tests",
+            "visibility": "visible",
+            "output": "q2_2 results: All test cases passed!\n\nq3_3 results: All test cases passed!\n\nq1_1 results: All test cases passed!\n\nq2_3 results: All test cases passed!\n\nq3_2 results: All test cases passed!\n\nq5_7 results:\n    q5_7 - 1 result:\n        \u274c Test case failed\n        Error at line 19 in test q5_7:\n              assert isinstance(remaining_inventory, Table), \\\n        AssertionError: Expected `remaining_inventory` to be a Table, but got <class 'NoneType'>\n\n    q5_7 - 2 result:\n        \u274c Test case failed\n        Error at line 32 in test q5_7:\n              kiwi_original = inventory.where(\"fruit name\", \"kiwi\").column(\"count\").item(0)\n        AttributeError: NoneType' object has no attribute 'where\n\nq4_2 results: All test cases passed!\n\nq5_3 results: All test cases passed!\n\nq4_3 results: All test cases passed!\n\nq5_2 results: All test cases passed!\n\nq5_6 results: All test cases passed!\n\nq5_1 results: All test cases passed!\n\nq4_4 results: All test cases passed!\n\nq5_5 results: All test cases passed!\n\nq5_4 results: All test cases passed!\n\nq4_1 results: All test cases passed!\n\nq2_4 results: All test cases passed!\n\nq1_3 results: All test cases passed!\n\nq3_1 results: All test cases passed!\n\nq2_1 results: All test cases passed!\n\nq2_5 results: All test cases passed!\n\nq1_2 results: All test cases passed!\n\nq3_4 results: All test cases passed!",
+            "status": "failed"
+        },
+        {
+            "name": "q2_2",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q2_2 results: All test cases passed!"
+        },
+        {
+            "name": "q3_3",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q3_3 results: All test cases passed!"
+        },
+        {
+            "name": "q1_1",
+            "score": 0,
+            "max_score": 2,
+            "visibility": "hidden",
+            "output": "q1_1 results:\n    q1_1 - 1 result:\n        \u274c Test case failed\n        Error at line 14 in test q1_1:\n              actual = sum_scores(12, 0.3, 0.6, 0.1)\n        NameError: name 'sum_scores' is not defined\n\n    q1_1 - 2 result:\n        \u274c Test case failed\n        Error at line 20 in test q1_1:\n              actual = sum_scores(-2, 3, 5, -10)\n        NameError: name 'sum_scores' is not defined"
+        },
+        {
+            "name": "q2_3",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q2_3 results: All test cases passed!"
+        },
+        {
+            "name": "q3_2",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q3_2 results: All test cases passed!"
+        },
+        {
+            "name": "q5_7",
+            "score": 0,
+            "max_score": 5,
+            "visibility": "hidden",
+            "output": "q5_7 results:\n    q5_7 - 1 result:\n        \u274c Test case failed\n        Error at line 19 in test q5_7:\n              assert isinstance(remaining_inventory, Table), \\\n        AssertionError: Expected `remaining_inventory` to be a Table, but got <class 'NoneType'>\n\n    q5_7 - 2 result:\n        \u274c Test case failed\n        Error at line 32 in test q5_7:\n              kiwi_original = inventory.where(\"fruit name\", \"kiwi\").column(\"count\").item(0)\n        AttributeError: NoneType' object has no attribute 'where"
+        },
+        {
+            "name": "q4_2",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q4_2 results: All test cases passed!"
+        },
+        {
+            "name": "q5_3",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q5_3 results: All test cases passed!"
+        },
+        {
+            "name": "q4_3",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q4_3 results: All test cases passed!"
+        },
+        {
+            "name": "q5_2",
+            "score": 0,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q5_2 results:\n    q5_2 - 1 result:\n        \u274c Test case failed\n        Error at line 16 in test q5_2:\n              assert isinstance(inventory, Table), f\"Expected `inventory` to be a Table, but got {type(inventory)}\"\n        AssertionError: Expected `inventory` to be a Table, but got <class 'NoneType'>\n\n    q5_2 - 2 result:\n        \u274c Test case failed\n        Error at line 23 in test q5_2:\n              sorted_inventory = inventory.sort(0)\n        AttributeError: NoneType' object has no attribute 'sort"
+        },
+        {
+            "name": "q5_6",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q5_6 results: All test cases passed!"
+        },
+        {
+            "name": "q5_1",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q5_1 results: All test cases passed!"
+        },
+        {
+            "name": "q4_4",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q4_4 results: All test cases passed!"
+        },
+        {
+            "name": "q5_5",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q5_5 results: All test cases passed!"
+        },
+        {
+            "name": "q5_4",
+            "score": 5,
+            "max_score": 5,
+            "visibility": "hidden",
+            "output": "q5_4 results: All test cases passed!"
+        },
+        {
+            "name": "q4_1",
+            "score": 6.0,
+            "max_score": 6.0,
+            "visibility": "hidden",
+            "output": "q4_1 results: All test cases passed!"
+        },
+        {
+            "name": "q2_4",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q2_4 results: All test cases passed!"
+        },
+        {
+            "name": "q1_3",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q1_3 results: All test cases passed!"
+        },
+        {
+            "name": "q3_1",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q3_1 results: All test cases passed!"
+        },
+        {
+            "name": "q2_1",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q2_1 results: All test cases passed!"
+        },
+        {
+            "name": "q2_5",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q2_5 results: All test cases passed!"
+        },
+        {
+            "name": "q1_2",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q1_2 results: All test cases passed!"
+        },
+        {
+            "name": "q3_4",
+            "score": 4,
+            "max_score": 4,
+            "visibility": "hidden",
+            "output": "q3_4 results: All test cases passed!"
+        }
+    ]
+}
