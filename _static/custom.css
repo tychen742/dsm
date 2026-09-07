@@ -290,6 +290,16 @@ html[data-theme=light] pre {
     border-left: 1px solid #ddd;
 }
 
+/* Wrap terminal transcript blocks so long command/output lines fit the page. */
+.highlight-bash pre,
+.highlight-console pre,
+.highlight-powershell pre,
+.highlight-text pre {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+}
+
 /* Green left border ONLY on input code blocks */
 div.cell_input pre,
 div.cell_input .highlight pre {
