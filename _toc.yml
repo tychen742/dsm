@@ -253,13 +253,13 @@ parts:
     chapters:
       - file: chapters/appendices/0101-tooling
         title: Work Environment
-      - file: chapters/appendices/0200-intro-jupyter
+      - file: chapters/appendices/jupyter/0200-intro-jupyter
         title: Jupyter Environment
         sections:
-          - file: chapters/appendices/0201-python-install
-          - file: chapters/appendices/0202-virtual-env
-          - file: chapters/appendices/0203-the-notebook
-          - file: chapters/appendices/0204-jupyter-bonus
+          - file: chapters/appendices/jupyter/0201-python-install
+          - file: chapters/appendices/jupyter/0202-virtual-env
+          - file: chapters/appendices/jupyter/0203-the-notebook
+          - file: chapters/appendices/jupyter/0204-jupyter-bonus
   - caption: "Bibliography"
     numbered: false
     chapters:
