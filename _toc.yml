@@ -252,9 +252,9 @@ parts:
     restart_numbering: true
     chapters:
       - file: chapters/appendices/0101-tooling
-        title: Work Environment
+        title: Course Tooling
       - file: chapters/appendices/jupyter/0200-intro-jupyter
-        title: Jupyter Environment
+        title: Jupyter Setup
         sections:
           - file: chapters/appendices/jupyter/0201-python-install
           - file: chapters/appendices/jupyter/0202-virtual-env

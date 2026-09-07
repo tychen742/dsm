@@ -6,12 +6,12 @@ The appendices collect setup guides, tooling instructions, reference resources, 
 
 ## Source Notebooks
 
-- `0101-tooling.ipynb` - work environment.
-- `0200-intro-jupyter.ipynb` - Jupyter environment overview.
-- `0201-python-install.ipynb` - Python installation.
-- `0202-virtual-env.ipynb` - virtual environments.
-- `0203-the-notebook.ipynb` - Jupyter Notebook.
-- `0204-jupyter-bonus.ipynb` - faster Jupyter launch workflow.
+- `0101-tooling.ipynb` - course tooling.
+- `jupyter/0200-intro-jupyter.ipynb` - Jupyter setup overview.
+- `jupyter/0201-python-install.ipynb` - Python installation.
+- `jupyter/0202-virtual-env.ipynb` - virtual environments.
+- `jupyter/0203-the-notebook.ipynb` - Jupyter Notebook.
+- `jupyter/0204-jupyter-bonus.ipynb` - faster Jupyter launch workflow.
 - `cheatsheets.ipynb` - cheat sheets, currently present but not listed in `_toc.yml`.
 - `resources.ipynb` - resources, currently present but not listed in `_toc.yml`.
 

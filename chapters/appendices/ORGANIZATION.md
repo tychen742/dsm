@@ -16,17 +16,17 @@ Students should be able to:
 
 ## Sequence
 
-1. `0101-tooling.ipynb` - Work Environment
+1. `0101-tooling.ipynb` - Course Tooling
    - Course tooling overview
-2. `0200-intro-jupyter.ipynb` - Jupyter Environment
+2. `jupyter/0200-intro-jupyter.ipynb` - Jupyter Setup
    - Jupyter orientation
-3. `0201-python-install.ipynb` - Python installation
+3. `jupyter/0201-python-install.ipynb` - Python installation
    - Python setup
-4. `0202-virtual-env.ipynb` - Virtual Environment
+4. `jupyter/0202-virtual-env.ipynb` - Virtual Environment
    - Environment setup and activation
-5. `0203-the-notebook.ipynb` - Jupyter Notebook
+5. `jupyter/0203-the-notebook.ipynb` - Jupyter Notebook
    - Notebook interface and workflow
-6. `0204-jupyter-bonus.ipynb` - Launch Jupyter FAST!
+6. `jupyter/0204-jupyter-bonus.ipynb` - Launch Jupyter FAST!
    - Faster launch workflow
 
 ## Unlisted Material
