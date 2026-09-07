@@ -30,7 +30,7 @@ sphinx:
     appendix_numbering: _ext
   config:
     bibtex_bibfiles:
-      - chapters/references.bib
+      - references.bib
     bibtex_reference_style: author_year
     bibtex_default_style: unsrt ### Keep bibliography numeric/ordered
     html_static_path: ["_static"]
