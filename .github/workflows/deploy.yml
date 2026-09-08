@@ -38,6 +38,10 @@ jobs:
       - name: Build Jupyter Book
         run: jupyter-book build .
 
+      - name: Add chapter slide decks
+        run: |
+          cp -R _html_extra/chapters/. _build/html/chapters/
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
