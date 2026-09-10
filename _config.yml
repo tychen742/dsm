@@ -50,9 +50,10 @@ sphinx:
       # THEBE SETUP (Feb 10, 2026):
       # - Keep Thebe off hidden solution cells so Jupyter Book's
       #   "Show code cell source" answer toggles remain intact.
-      # - Exercise cells are visually distinguished, and visible cells are interactive.
+      # - Exercise cells are visually distinguished, visible cells are interactive,
+      #   and hidden setup cells can opt in with runnable.
       # selector: "div.tag_thebe-interactive"  # Old: only exercise cells were interactive
-      selector: "div.cell:not(.tag_hide-input)"
+      selector: "div.cell:not(.tag_hide-input), div.cell.tag_runnable"
       selector_input: "div.cell_input"
       selector_output: "div.cell_output"
       bootstrap: false # Don't auto-start kernel on page load
