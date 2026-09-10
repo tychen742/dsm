@@ -89,7 +89,7 @@ By the end of this chapter, you will be able to:
 
 ## Array Basics
 
-Creating, inspecting, indexing, and reshaping arrays
+Creating, reshaping, inspecting, and indexing arrays
 
 ---
 
@@ -152,6 +152,7 @@ sales = np.array([[120, 135, 142],
                   [98, 105, 111]])
 
 sales.shape
+sales.size
 ```
 
 | Shape | Meaning |
@@ -159,6 +160,8 @@ sales.shape
 | `(3,)` | One-dimensional array with 3 values |
 | `(2, 3)` | Two rows and three columns |
 | `(4, 2, 3)` | Three-dimensional structure |
+
+`size` is the total number of values in the array.
 
 ---
 
