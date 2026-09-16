@@ -36,6 +36,32 @@ Do not commit production secrets. Put configuration outside the repository, then
 
 The legacy `/var/www/dsm_private/quiz_config.php` path is supported only as a fallback. Keep real credentials outside the public web root.
 
+## Grader Python Environment
+
+The server-side grader re-runs submitted code outside Thebe. Keep its Python environment aligned with the packages students use in assignment notebooks.
+
+Production DSM uses a dedicated grader virtual environment:
+
+```bash
+cd /var/www/dsm_private
+python3 -m venv grader-venv
+./grader-venv/bin/python -m pip install --upgrade pip
+./grader-venv/bin/python -m pip install numpy pandas
+chmod -R g+rX /var/www/dsm_private/grader-venv
+```
+
+Configure the API to use that interpreter in the private config:
+
+```php
+'lab_grader' => [
+    'python_bin' => '/var/www/dsm_private/grader-venv/bin/python',
+    'timeout_seconds' => 3,
+    'max_code_bytes' => 12000,
+],
+```
+
+Do not rely on a shell user's `~/.local` Python packages for production grading. Apache runs grader requests as the web server user, so user-site packages visible to `tychen` may not be visible to the grader.
+
 Example:
 
 ```php
@@ -64,6 +90,11 @@ return [
     ],
     'student_auth' => [
         'require_authenticated_submissions' => true,
+    ],
+    'lab_grader' => [
+        'python_bin' => '/var/www/dsm_private/grader-venv/bin/python',
+        'timeout_seconds' => 3,
+        'max_code_bytes' => 12000,
     ],
     'lti' => [
         'enabled' => true,

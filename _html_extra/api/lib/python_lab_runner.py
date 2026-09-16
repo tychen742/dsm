@@ -150,7 +150,17 @@ def prepare_pandas_tree(tree):
     return aliases
 
 
-def run_code(code, profile="plain_python"):
+def add_python_paths(paths):
+    if not isinstance(paths, list):
+        return
+    for path in reversed(paths):
+        if isinstance(path, str) and path and path not in sys.path:
+            sys.path.insert(0, path)
+
+
+def run_code(code, profile="plain_python", python_paths=None):
+    if profile == "pandas":
+        add_python_paths(python_paths)
     tree = ast.parse(code, mode="exec")
     LabCodeValidator(profile).visit(tree)
     pandas_aliases = {}
@@ -178,7 +188,7 @@ def main():
         profile = str(payload.get("profile", "plain_python"))
         if profile not in {"plain_python", "pandas"}:
             raise ValueError("Unknown code runner profile.")
-        output = run_code(code, profile)
+        output = run_code(code, profile, payload.get("python_paths", []))
         print(json.dumps({"ok": True, "stdout": output, "stderr": "", "error": None}))
     except Exception as exc:
         print(json.dumps({"ok": False, "stdout": "", "stderr": "", "error": str(exc)}))

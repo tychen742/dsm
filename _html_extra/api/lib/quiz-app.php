@@ -43,6 +43,7 @@ function dsm_load_config(): array
             'python_bin' => 'python3',
             'timeout_seconds' => 3,
             'max_code_bytes' => 12000,
+            'python_paths' => [],
         ],
         'lti' => [
             'enabled' => false,
@@ -1630,7 +1631,16 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     if (!in_array($runnerProfile, ['plain_python', 'pandas'], true)) {
         $runnerProfile = 'plain_python';
     }
-    $payload = json_encode(['code' => $code, 'profile' => $runnerProfile], JSON_UNESCAPED_SLASHES);
+    $pythonPaths = $graderConfig['python_paths'] ?? [];
+    if (!is_array($pythonPaths)) {
+        $pythonPaths = [];
+    }
+    $pythonPaths = array_values(array_filter($pythonPaths, static fn ($path): bool => is_string($path) && $path !== ''));
+    $payload = json_encode([
+        'code' => $code,
+        'profile' => $runnerProfile,
+        'python_paths' => $pythonPaths,
+    ], JSON_UNESCAPED_SLASHES);
     if (!is_string($payload)) {
         return ['ok' => false, 'stdout' => '', 'stderr' => '', 'error' => 'Could not prepare code for grading.'];
     }
