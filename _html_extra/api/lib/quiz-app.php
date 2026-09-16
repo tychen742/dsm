@@ -747,6 +747,7 @@ Sample mean: 42.0',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch04-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
                 'q1' => 'Rows: 4
 Columns: 2',
@@ -1022,6 +1023,7 @@ Week 2 total: 47',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch04-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
                 'q1' => true,
                 'q2' => false,
@@ -1501,7 +1503,9 @@ function dsm_grade_lab_code_attempt(array $lab, array $codeByQuestion, array $gr
     foreach ($expectedOutputs as $question => $expectedOutput) {
         $code = (string) ($codeByQuestion[$question] ?? '');
         $normalizedCode[$question] = dsm_limit_lab_code($code, (int) ($graderConfig['max_code_bytes'] ?? 12000));
-        $run = dsm_run_lab_code_cell($normalizedCode[$question], $graderConfig);
+        $runnerConfig = $graderConfig;
+        $runnerConfig['runner_profile'] = (string) ($lab['runner_profile'] ?? 'plain_python');
+        $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
         $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
         $expectedNormalized = dsm_normalize_lab_output($expectedOutput);
         $accepted = !empty($run['ok']) && $actualOutput === $expectedNormalized;
@@ -1562,7 +1566,9 @@ function dsm_grade_homework_attempt(array $homework, array $answers, array $code
     foreach (($homework['code_outputs'] ?? []) as $question => $expectedOutput) {
         $code = (string) ($codeByQuestion[$question] ?? '');
         $normalizedCode[$question] = dsm_limit_lab_code($code, (int) ($graderConfig['max_code_bytes'] ?? 12000));
-        $run = dsm_run_lab_code_cell($normalizedCode[$question], $graderConfig);
+        $runnerConfig = $graderConfig;
+        $runnerConfig['runner_profile'] = (string) ($homework['runner_profile'] ?? 'plain_python');
+        $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
         $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
         $expectedNormalized = dsm_normalize_lab_output((string) $expectedOutput);
         $accepted = !empty($run['ok']) && $actualOutput === $expectedNormalized;
@@ -1620,7 +1626,11 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
 
     $pythonBin = (string) ($graderConfig['python_bin'] ?? 'python3');
     $timeoutSeconds = max(1, min(10, (int) ($graderConfig['timeout_seconds'] ?? 3)));
-    $payload = json_encode(['code' => $code], JSON_UNESCAPED_SLASHES);
+    $runnerProfile = (string) ($graderConfig['runner_profile'] ?? 'plain_python');
+    if (!in_array($runnerProfile, ['plain_python', 'pandas'], true)) {
+        $runnerProfile = 'plain_python';
+    }
+    $payload = json_encode(['code' => $code, 'profile' => $runnerProfile], JSON_UNESCAPED_SLASHES);
     if (!is_string($payload)) {
         return ['ok' => false, 'stdout' => '', 'stderr' => '', 'error' => 'Could not prepare code for grading.'];
     }
@@ -1630,7 +1640,10 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
         1 => ['pipe', 'w'],
         2 => ['pipe', 'w'],
     ];
-    $process = proc_open([$pythonBin, '-I', '-S', $runner], $descriptorSpec, $pipes, sys_get_temp_dir());
+    $pythonArgs = $runnerProfile === 'pandas'
+        ? [$pythonBin, $runner]
+        : [$pythonBin, '-I', '-S', $runner];
+    $process = proc_open($pythonArgs, $descriptorSpec, $pipes, sys_get_temp_dir());
     if (!is_resource($process)) {
         return ['ok' => false, 'stdout' => '', 'stderr' => '', 'error' => 'Could not start code runner.'];
     }
