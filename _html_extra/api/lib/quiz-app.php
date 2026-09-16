@@ -1033,8 +1033,12 @@ Week 2 total: 47',
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Customer rows: 3
+                'q6' => [
+                    'Customer rows: 3
 Purchase total: 12',
+                    'Customer row: 3
+Purchase total: 12',
+                ],
                 'q7' => 'Average order: 35.0',
                 'q8' => 'West revenue: 900
 First region: East',
@@ -1508,8 +1512,7 @@ function dsm_grade_lab_code_attempt(array $lab, array $codeByQuestion, array $gr
         $runnerConfig['runner_profile'] = (string) ($lab['runner_profile'] ?? 'plain_python');
         $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
         $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
-        $expectedNormalized = dsm_normalize_lab_output($expectedOutput);
-        $accepted = !empty($run['ok']) && $actualOutput === $expectedNormalized;
+        $accepted = !empty($run['ok']) && dsm_lab_output_matches($actualOutput, $expectedOutput);
         $itemScore = $accepted ? 2.0 : 0.0;
         $score += $itemScore;
 
@@ -1571,8 +1574,7 @@ function dsm_grade_homework_attempt(array $homework, array $answers, array $code
         $runnerConfig['runner_profile'] = (string) ($homework['runner_profile'] ?? 'plain_python');
         $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
         $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
-        $expectedNormalized = dsm_normalize_lab_output((string) $expectedOutput);
-        $accepted = !empty($run['ok']) && $actualOutput === $expectedNormalized;
+        $accepted = !empty($run['ok']) && dsm_lab_output_matches($actualOutput, $expectedOutput);
         $itemScore = $accepted ? 1.0 : 0.0;
         $score += $itemScore;
 
@@ -1609,6 +1611,17 @@ function dsm_limit_lab_code(string $code, int $maxBytes): string
         return $code;
     }
     return substr($code, 0, $maxBytes);
+}
+
+function dsm_lab_output_matches(string $actualOutput, mixed $expectedOutput): bool
+{
+    $expectedOutputs = is_array($expectedOutput) ? $expectedOutput : [$expectedOutput];
+    foreach ($expectedOutputs as $candidate) {
+        if ($actualOutput === dsm_normalize_lab_output((string) $candidate)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function dsm_normalize_lab_output(string $output): string
