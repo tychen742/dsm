@@ -11,6 +11,14 @@ a.toc-backref {
     text-decoration: none !important;
 }
 
+.chapter-flow a,
+.chapter-flow a:hover,
+.chapter-flow a:focus {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
 button.thebelab-button.thebelab-run-button {
     padding-left: 0 !important;
 }
