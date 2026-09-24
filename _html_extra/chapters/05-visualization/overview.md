@@ -20,9 +20,9 @@ From chart choice to pandas plotting and polished visual communication.
 
 ## Chapter Flow
 
-- Pandas plotting basics
-- Pandas chart types
-- Pandas plot styling
+- 5.1 Pandas plotting basics
+- 5.2 Pandas chart types
+- 5.3 Pandas plot styling
 
 ---
 

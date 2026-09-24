@@ -20,9 +20,9 @@ Chance models, descriptive distributions, and sampling variation.
 
 ## Chapter Flow
 
-- Probability models
-- Descriptive distributions
-- Sampling variability
+- 8.1 Probability models
+- 8.2 Descriptive distributions
+- 8.3 Sampling variability
 
 ---
 

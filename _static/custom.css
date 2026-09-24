@@ -1004,7 +1004,7 @@ body.bd-auth-modal-open {
 
 .book-continue-reading span {
   font-size: var(--pst-font-size-base, 1rem);
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.25;
   min-width: 0;
   overflow: hidden;
