@@ -1003,7 +1003,7 @@ body.bd-auth-modal-open {
 }
 
 .book-continue-reading span {
-  font-size: 0.9rem;
+  font-size: var(--pst-font-size-base, 1rem);
   font-weight: 600;
   line-height: 1.25;
   min-width: 0;
@@ -1015,12 +1015,12 @@ body.bd-auth-modal-open {
 .book-continue-reading svg {
   color: #5f4de0;
   fill: currentColor;
-  height: 1.15rem;
+  height: 0.92rem;
   position: absolute;
   right: 0.85rem;
   top: 50%;
   transform: translateY(-10%);
-  width: 1.15rem;
+  width: 0.92rem;
 }
 
 .book-continue-reading:hover,
