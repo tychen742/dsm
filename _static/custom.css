@@ -19,6 +19,29 @@ a.toc-backref {
     text-decoration: none !important;
 }
 
+.video-credit {
+    background: var(--pst-color-surface, #f8fafc);
+    border-left: 3px solid var(--pst-color-border, #d0d7de);
+    color: var(--pst-color-text-muted, #5a6573);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.9rem;
+}
+
+.video-credit p {
+    margin: 0.2rem 0;
+}
+
+.video-credit strong {
+    color: var(--pst-color-text-base, #1f2937);
+    font-weight: 600;
+}
+
+.video-rights {
+    font-size: 0.85rem;
+}
+
 button.thebelab-button.thebelab-run-button {
     padding-left: 0 !important;
 }
