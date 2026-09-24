@@ -747,6 +747,7 @@ window.BOOK_READING_PROGRESS = Object.assign(
   const config = Object.assign({}, defaults, window.BOOK_READING_PROGRESS || {});
   const storageKey = `${config.storagePrefix}:lastReadingPage`;
   const pendingScrollKey = `${config.storagePrefix}:pendingScroll`;
+  const dismissedCardKey = `${config.storagePrefix}:dismissedContinueReading`;
 
   function pageTitle() {
     const heading = document.querySelector("main h1");
@@ -798,6 +799,30 @@ window.BOOK_READING_PROGRESS = Object.assign(
       return;
     }
     localStorage.setItem(storageKey, JSON.stringify(progress));
+  }
+
+  function progressDismissalId(progress) {
+    return [
+      progress.path || "",
+      progress.title || "",
+      Math.max(0, Math.round(progress.scrollY || 0)),
+    ].join("|");
+  }
+
+  function isContinueReadingDismissed(progress) {
+    try {
+      return localStorage.getItem(dismissedCardKey) === progressDismissalId(progress);
+    } catch (_error) {
+      return false;
+    }
+  }
+
+  function dismissContinueReading(progress) {
+    try {
+      localStorage.setItem(dismissedCardKey, progressDismissalId(progress));
+    } catch (_error) {
+      // Dismissal is a convenience; the bookmark still works without storage.
+    }
   }
 
   async function syncRemoteProgress(progress) {
@@ -862,23 +887,34 @@ window.BOOK_READING_PROGRESS = Object.assign(
     if (!isTrackablePageUrl(progress.path)) {
       return;
     }
+    if (isContinueReadingDismissed(progress)) {
+      return;
+    }
 
     if (document.querySelector(`.${config.className}`)) {
       return;
     }
 
-    const button = document.createElement("a");
-    button.className = config.className;
-    button.href = progress.path;
-    button.innerHTML = `
+    const card = document.createElement("div");
+    card.className = config.className;
+
+    function hideCard() {
+      card.classList.add(`${config.className}-hiding`);
+      window.setTimeout(() => card.remove(), 180);
+    }
+
+    const link = document.createElement("a");
+    link.className = `${config.className}-link`;
+    link.href = progress.path;
+    link.innerHTML = `
       <p>Continue Reading</p>
       <span></span>
       <svg aria-hidden="true" viewBox="0 0 24 24">
         <path d="M6 4.75A2.75 2.75 0 0 1 8.75 2h6.5A2.75 2.75 0 0 1 18 4.75v16.1a.75.75 0 0 1-1.17.62L12 18.22l-4.83 3.25A.75.75 0 0 1 6 20.85V4.75Z"></path>
       </svg>`;
-    button.querySelector("span").textContent = progress.title || "Continue reading";
-    button.title = progress.title ? `Continue: ${progress.title}` : "Continue Reading";
-    button.addEventListener("click", () => {
+    link.querySelector("span").textContent = progress.title || "Continue reading";
+    link.title = progress.title ? `Continue: ${progress.title}` : "Continue Reading";
+    link.addEventListener("click", () => {
       if (progress.scrollY) {
         sessionStorage.setItem(
           pendingScrollKey,
@@ -890,7 +926,19 @@ window.BOOK_READING_PROGRESS = Object.assign(
       }
     });
 
-    document.body.appendChild(button);
+    const closeButton = document.createElement("button");
+    closeButton.className = `${config.className}-close`;
+    closeButton.type = "button";
+    closeButton.setAttribute("aria-label", "Dismiss continue reading");
+    closeButton.innerHTML = `<span aria-hidden="true">&times;</span>`;
+    closeButton.addEventListener("click", () => {
+      dismissContinueReading(progress);
+      hideCard();
+    });
+
+    card.append(link, closeButton);
+    document.body.appendChild(card);
+    window.setTimeout(hideCard, 3000);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
