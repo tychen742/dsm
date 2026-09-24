@@ -697,3 +697,218 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     accountObserver.observe(sidebar, { childList: true, subtree: true });
 });
+
+/* BEGIN shared reading continuity js */
+window.BOOK_READING_PROGRESS = Object.assign(
+  {
+    "bookId": "dsm",
+    "storagePrefix": "dsm",
+    "skipPaths": [
+      "/index.html",
+      "/preface.html",
+      "/chapters/preface.html",
+      "/genindex.html",
+      "/search.html"
+    ]
+  },
+  window.BOOK_READING_PROGRESS || {}
+);
+
+/*
+ * Jupyter Book reading continuity.
+ *
+ * Optional project config:
+ *
+ *   window.BOOK_READING_PROGRESS = {
+ *     bookId: "my-book",
+ *     storagePrefix: "my-book",
+ *     apiBaseUrl: window.MY_BOOK_API || "",
+ *     progressEndpoint: "/v1/progress/reading"
+ *   };
+ */
+(function setupBookReadingContinuity() {
+  const defaults = {
+    bookId: "book",
+    storagePrefix: "book",
+    className: "book-continue-reading",
+    apiBaseUrl: "",
+    progressEndpoint: "/v1/progress/reading",
+    sidebarSelector: ".bd-sidebar-primary",
+    sidebarContentSelector: ".sidebar-primary-items__start",
+    skipPaths: [
+      "/index.html",
+      "/chapters/preface.html",
+      "/genindex.html",
+      "/search.html",
+    ],
+    skipPathPatterns: [],
+  };
+
+  const config = Object.assign({}, defaults, window.BOOK_READING_PROGRESS || {});
+  const storageKey = `${config.storagePrefix}:lastReadingPage`;
+  const pendingScrollKey = `${config.storagePrefix}:pendingScroll`;
+
+  function pageTitle() {
+    const heading = document.querySelector("main h1");
+    return (heading && heading.textContent.trim()) || document.title.trim();
+  }
+
+  function isTrackablePageUrl(pageUrl) {
+    let pathname = pageUrl || "";
+    try {
+      pathname = new URL(pageUrl, window.location.href).pathname;
+    } catch (_error) {
+      pathname = pageUrl.split(/[?#]/)[0];
+    }
+    pathname = pathname.replace(/\/+$/, "");
+
+    if (!pathname || pathname === "/" || pathname === "/chapters/preface") {
+      return false;
+    }
+
+    if (!pathname.endsWith(".html")) {
+      return false;
+    }
+
+    if (config.skipPaths.some((skipPath) => pathname.endsWith(skipPath))) {
+      return false;
+    }
+    return !config.skipPathPatterns.some((pattern) => new RegExp(pattern).test(pathname));
+  }
+
+  function shouldTrackPage() {
+    return isTrackablePageUrl(window.location.pathname);
+  }
+
+  function readLocalProgress() {
+    try {
+      const progress = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (progress && !isTrackablePageUrl(progress.path)) {
+        localStorage.removeItem(storageKey);
+        return null;
+      }
+      return progress;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function writeLocalProgress(progress) {
+    if (!progress || !isTrackablePageUrl(progress.path)) {
+      return;
+    }
+    localStorage.setItem(storageKey, JSON.stringify(progress));
+  }
+
+  async function syncRemoteProgress(progress) {
+    if (!config.apiBaseUrl || !progress || !isTrackablePageUrl(progress.path)) {
+      return;
+    }
+
+    try {
+      await fetch(`${config.apiBaseUrl}${config.progressEndpoint}`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookId: config.bookId,
+          path: progress.path,
+          title: progress.title,
+          scrollY: progress.scrollY,
+        }),
+      });
+    } catch (_error) {
+      // Local continuity still works when the optional backend is unavailable.
+    }
+  }
+
+  function saveCurrentProgress() {
+    const path = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (!shouldTrackPage()) {
+      return;
+    }
+
+    const progress = {
+      path,
+      title: pageTitle(),
+      scrollY: Math.max(0, Math.round(window.scrollY)),
+      savedAt: new Date().toISOString(),
+    };
+
+    writeLocalProgress(progress);
+    syncRemoteProgress(progress);
+  }
+
+  function restorePendingScroll() {
+    try {
+      const pending = JSON.parse(sessionStorage.getItem(pendingScrollKey) || "null");
+      if (!pending || pending.path !== window.location.pathname) {
+        return;
+      }
+      sessionStorage.removeItem(pendingScrollKey);
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: pending.scrollY, behavior: "instant" });
+      });
+    } catch (_error) {
+      sessionStorage.removeItem(pendingScrollKey);
+    }
+  }
+
+  function addContinueReadingButton() {
+    const progress = readLocalProgress();
+    if (!progress || !progress.path || progress.path === window.location.pathname) {
+      return;
+    }
+    if (!isTrackablePageUrl(progress.path)) {
+      return;
+    }
+
+    if (document.querySelector(`.${config.className}`)) {
+      return;
+    }
+
+    const button = document.createElement("a");
+    button.className = config.className;
+    button.href = progress.path;
+    button.innerHTML = `
+      <p>Continue Reading</p>
+      <span></span>
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M6 4.75A2.75 2.75 0 0 1 8.75 2h6.5A2.75 2.75 0 0 1 18 4.75v16.1a.75.75 0 0 1-1.17.62L12 18.22l-4.83 3.25A.75.75 0 0 1 6 20.85V4.75Z"></path>
+      </svg>`;
+    button.querySelector("span").textContent = progress.title || "Continue reading";
+    button.title = progress.title ? `Continue: ${progress.title}` : "Continue Reading";
+    button.addEventListener("click", () => {
+      if (progress.scrollY) {
+        sessionStorage.setItem(
+          pendingScrollKey,
+          JSON.stringify({
+            path: new URL(progress.path, window.location.href).pathname,
+            scrollY: progress.scrollY,
+          }),
+        );
+      }
+    });
+
+    document.body.appendChild(button);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    restorePendingScroll();
+    addContinueReadingButton();
+    saveCurrentProgress();
+  });
+
+  window.addEventListener("beforeunload", saveCurrentProgress);
+
+  let scrollTimer = 0;
+  window.addEventListener(
+    "scroll",
+    () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(saveCurrentProgress, 600);
+    },
+    { passive: true },
+  );
+})();
+/* END shared reading continuity js */

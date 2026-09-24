@@ -963,3 +963,74 @@ body.bd-auth-modal-open {
         width: auto;
     }
 }
+
+/* BEGIN shared reading continuity css */
+/* Jupyter Book reading continuity button. */
+.book-continue-reading {
+  border: 1px solid var(--pst-color-border, #d0d7de);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 28px rgba(25, 42, 70, 0.16);
+  color: var(--pst-color-link, #176de8);
+  display: grid;
+  gap: 0.35rem;
+  max-width: min(260px, calc(100vw - 32px));
+  padding: 0.75rem 0.85rem;
+  position: fixed;
+  right: 1.15rem;
+  text-decoration: none;
+  top: 25vh;
+  width: 240px;
+  z-index: 1030;
+}
+
+.book-continue-reading p {
+  color: #5a6573;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.book-continue-reading span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.book-continue-reading svg {
+  color: #5f4de0;
+  fill: currentColor;
+  height: 1.15rem;
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-10%);
+  width: 1.15rem;
+}
+
+.book-continue-reading:hover,
+.book-continue-reading:focus {
+  background: var(--pst-color-on-background, #f6f8fa);
+  color: var(--pst-color-link-hover, #0b5ed7);
+  outline: 2px solid rgba(47, 111, 222, 0.18);
+  outline-offset: 3px;
+  text-decoration: none;
+}
+
+@media (max-width: 960px) {
+  .book-continue-reading {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    top: auto;
+    width: auto;
+  }
+}
+/* END shared reading continuity css */
