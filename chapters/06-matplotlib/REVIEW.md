@@ -188,13 +188,13 @@ Done 2026-09-29 on branch `ch06-slides`.
 
 - [x] Suppress stray return-value output: 17 cells remained after S9 (0601: 4, 0602: 6, 0603: 7); each now ends with `plt.show()`, outputs refreshed. Done 2026-09-29.
 - [x] Replace deprecated `ax.boxplot(..., vert=True)`: removed (vertical is the default); done with S9.
-- [ ] Fix typos in `0603`:
-  - [ ] "aviaible"
-  - [ ] `pt.rcParams`
-  - [ ] unclosed backtick in "`axes[2]"
-  - [ ] "insert axes" → "inset axes"
-  - [ ] curly quotes in the linestyle comment
-  - [ ] `matplotlib.style.use` → `plt.style.use` for consistency
+- [x] Fix typos in `0603` (done 2026-09-29):
+  - [x] "aviaible" → "available styles"
+  - [x] `pt.rcParams` → `plt.rcParams`
+  - [x] unclosed backtick in "`axes[2]" (fixed when S9 rewrote that paragraph)
+  - [x] "insert axes" → "inset axes" (fixed when S9 rewrote that demo, now in `0602`)
+  - [x] curly quotes in the linestyle comment; the list also showed an en dash where `'-'` belongs
+  - [x] `matplotlib.style.use` → `plt.style.use` for consistency; also "matplotlib offers" → "Matplotlib offers"
 - [x] Seed random data: histogram, boxplot, and the sales exercise prompt use `np.random.default_rng(seed)`; done with S9.
 - [x] Fix the inset exercise prompt (now in `0602`): it now says only that `x` is already defined.
 - [ ] Confirm whether the AGENTS.md "Spring 2026: chapters 1–8 are frozen" note is still in effect for Fall 2026.
