@@ -309,6 +309,10 @@ def round_number(value):
     return round(value, 4) if math.isfinite(value) else None
 
 
+def plot_alpha(value):
+    return 1.0 if value is None else round_number(value)
+
+
 def summarize_axes(ax):
     from matplotlib.collections import PathCollection
     from matplotlib.container import BarContainer
@@ -323,6 +327,7 @@ def summarize_axes(ax):
             "marker": plot_marker(line.get_marker()),
             "label": "" if label.startswith("_") else label,
             "points": len(line.get_xdata()),
+            "alpha": plot_alpha(line.get_alpha()),
         })
 
     bars = []
@@ -333,6 +338,7 @@ def summarize_axes(ax):
                 "bars": len(container.patches),
                 "heights": [round_number(patch.get_height()) for patch in container.patches],
                 "label": "" if label.startswith("_") else label,
+                "alpha": plot_alpha(container.patches[0].get_alpha()) if container.patches else 1.0,
             })
 
     scatters = []
@@ -342,6 +348,7 @@ def summarize_axes(ax):
             scatters.append({
                 "points": len(collection.get_offsets()),
                 "label": "" if label.startswith("_") else label,
+                "alpha": plot_alpha(collection.get_alpha()),
             })
 
     legend = ax.get_legend()
@@ -351,6 +358,7 @@ def summarize_axes(ax):
         "ylabel": ax.get_ylabel(),
         "xlim": [round_number(v) for v in ax.get_xlim()],
         "ylim": [round_number(v) for v in ax.get_ylim()],
+        "position": [round_number(v) for v in ax.get_position(original=True).bounds],
         "xscale": ax.get_xscale(),
         "yscale": ax.get_yscale(),
         "xticklabels": [t.get_text() for t in ax.get_xticklabels() if t.get_text()],
@@ -366,18 +374,22 @@ def summarize_figure(fig):
     fig.canvas.draw()
     suptitle = fig._suptitle.get_text() if getattr(fig, "_suptitle", None) else ""
     width, height = fig.get_size_inches()
+    axes = fig.axes
+    first = axes[0] if axes else None
     return {
         "size": [round_number(width), round_number(height)],
         "dpi": round_number(fig.dpi),
         "suptitle": suptitle,
-        "axes": [summarize_axes(ax) for ax in fig.axes],
+        "sharex": len(axes) > 1 and all(first.get_shared_x_axes().joined(first, ax) for ax in axes),
+        "sharey": len(axes) > 1 and all(first.get_shared_y_axes().joined(first, ax) for ax in axes),
+        "axes": [summarize_axes(ax) for ax in axes],
     }
 
 
 def summarize_plots(plt, saved):
     figures = [plt.figure(num) for num in plt.get_fignums()]
     summary = summarize_figure(figures[-1]) if figures else {
-        "size": [], "dpi": None, "suptitle": "", "axes": [],
+        "size": [], "dpi": None, "suptitle": "", "sharex": False, "sharey": False, "axes": [],
     }
     summary["figure_count"] = len(figures)
     summary["savefig"] = saved

@@ -50,7 +50,7 @@ A code question is graded by `code_outputs` (exact normalized stdout), `plot_che
 ],
 ```
 
-Paths address the last figure the code created: `size`, `dpi`, `suptitle`, `figure_count`, `savefig[i].fname|dpi|format`, and `axes[i]` with `title`, `xlabel`, `ylabel`, `xlim`, `ylim`, `xscale`, `yscale`, `xticklabels`, `legend`, `has_legend`, `lines[j].color|linestyle|linewidth|marker|label|points`, `bars[j].bars|heights|label` (bar charts and histograms), and `scatters[j].points|label`. Append `.count` for a length. Colors compare as lowercase hex (`'r'` and `'red'` are both `#ff0000`), line styles as `-`, `--`, `-.`, `:`, and numbers with a small tolerance. `expected` can also be `['min' => n]`, `['max' => n]`, `['one_of' => [...]]`, or `['contains' => value]`.
+Paths address the last figure the code created: `size`, `dpi`, `suptitle`, `sharex`, `sharey` (true when every axes shares that axis with the first), `figure_count`, `savefig[i].fname|dpi|format`, and `axes[i]` with `title`, `xlabel`, `ylabel`, `position` (`[left, bottom, width, height]` in figure fractions), `xlim`, `ylim`, `xscale`, `yscale`, `xticklabels`, `legend`, `has_legend`, `lines[j].color|linestyle|linewidth|marker|label|points|alpha`, `bars[j].bars|heights|label|alpha` (bar charts and histograms), and `scatters[j].points|label|alpha`. Append `.count` for a length. Colors compare as lowercase hex (`'r'` and `'red'` are both `#ff0000`), line styles as `-`, `--`, `-.`, `:`, and numbers with a small tolerance. `expected` can also be `['min' => n]`, `['max' => n]`, `['one_of' => [...]]`, or `['contains' => value]`.
 
 Students only see the `hint` of each failing check, never the expected value, so feedback does not reveal answers before the due date.
 
