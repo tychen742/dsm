@@ -151,7 +151,7 @@ Done 2026-09-29 on branch `ch06-glossary`.
 
 ### S8. No index entries
 
-- [ ] Add `{index}` directives near each substantive `##` and `###` heading in `0601`–`0603`.
+- [x] Add `{index}` directives near each substantive `##` and `###` heading in `0601`–`0603`. Done 2026-09-29: 33 blocks (0601: 8, 0602: 7, 0603: 18) in the book's existing fenced style; Recap skipped as structural.
 
 ### S9. Weak business context
 
