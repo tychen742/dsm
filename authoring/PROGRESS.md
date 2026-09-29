@@ -5,6 +5,15 @@ Status values: `Draft` · `In Progress` · `Needs Review` · `Complete`
 ## Project TODOs
 
 - Keep runnable helper code outside `chapters/`. Reusable notebook helpers live in `shared/`, and shared data files live in `data/`.
+- **After midterm (Fall 2026): protect answer keys and solutions.** The repo is public, so answer keys and solutions are readable on GitHub even though students cannot see them on thinkdsm.org:
+  - `_html_extra/api/lib/quiz-app.php` holds every preview key, homework true/false key, and lab/homework `plot_checks` / `code_outputs`.
+  - Lab and homework solution cells are in the notebook source, and locked answers are hidden only by page JavaScript/CSS, so the code is in the page HTML.
+  - After midterm: store all answer keys in DSM's current database (the PHP API's production database), not in the repo. Add an answer-key table keyed by assignment ID (`chNN-preview`, `chNN-lab`, `chNN-homework`) holding preview answers, homework true/false answers, and lab/homework `plot_checks` / `code_outputs`. `quiz-app.php` keeps only non-secret metadata (chapter, slug, max score, Canvas column, runner profile) and reads keys from the DB; grading fails with a clear "answer key not configured" error if a key is missing. Manage keys in the admin area with an audit record of each change; seed the table once from the current `quiz-app.php` values, then delete the keys from the code.
+  - Keep the grader tests working: read keys from the DB (or an exported copy kept outside the repo), not from the repo.
+  - Later: move DSM onto the ThinkPress platform (`~/workspace/press`, Django + PostgreSQL, `learn.thinkpress.org`), which is built for several books and owns assignment records, submissions, and grades. ThinkPress starts with other books first because DSM and py are in production. When DSM moves: add a ThinkDSM `catalog.Book` row and DSM assignments, add a private grading-spec field to press (it has no answer-key field yet) that the learner API never returns, keep code grading as a separate DSM service (press does not run code; `python_lab_runner.py` becomes that service), and carry over accounts, login events, attempts and best scores, Canvas sync, and the admin reports and exports. Shape the answer-key table above so it maps cleanly onto press later.
+  - Rotate the preview keys after the move, since git history keeps the old ones.
+  - Longer term: make the repo private once cells can run without Live Code (mybinder.org requires a public repo).
+  - Serving locked answer cells only after unlock is a separate change.
 
 ## Part I — Fundamentals
 
