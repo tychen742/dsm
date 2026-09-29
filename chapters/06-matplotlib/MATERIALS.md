@@ -34,7 +34,9 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 
 - Source: `_html_extra/chapters/06-matplotlib/overview.md`.
 - Rendered HTML: `_html_extra/chapters/06-matplotlib/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: rewritten 2026-09-29 (24 slides) from the current sections: roadmap, goals, one divider per section, code taken from the notebooks' business examples, plot-type chooser, vocabulary, and practice. Every slide was rendered to an image and checked for overflow.
+- Regenerate after edits (from the repo root): `npx @marp-team/marp-cli --no-stdin --html _html_extra/chapters/06-matplotlib/overview.md -o _html_extra/chapters/06-matplotlib/overview.html`. `--no-stdin` matters when running from a script or non-interactive shell; without it marp-cli waits for input on stdin.
+- The front matter is ch03's, plus the template's `.cols`, `pre`, and callout-variant rules for the two-column slides.
 
 ## Archived Or Unlisted Material
 

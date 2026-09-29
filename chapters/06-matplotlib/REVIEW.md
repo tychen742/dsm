@@ -177,9 +177,12 @@ Done 2026-09-29 on branch `ch06-closing-sections`.
 
 ### S12. Slides are still the template
 
-- [ ] Rewrite `_html_extra/chapters/06-matplotlib/overview.md` with real section content and key code patterns.
-- [ ] Regenerate `overview.html` with `npx @marp-team/marp-cli --html ...`.
-- [ ] Correct the "verified" status line in `MATERIALS.md`.
+Done 2026-09-29 on branch `ch06-slides`.
+
+- [x] Rewrite `_html_extra/chapters/06-matplotlib/overview.md` with real section content and key code patterns: 24 slides following 0601–0603, in ch03's slide style.
+- [x] Regenerate `overview.html` with `npx @marp-team/marp-cli --no-stdin --html ...`; all slides rendered to images and checked for overflow.
+- [x] Correct the "verified" status line in `MATERIALS.md`.
+- Other chapters: ch05 and ch07–ch15 still have the six-slide placeholder deck.
 
 ## Could Defer
 
