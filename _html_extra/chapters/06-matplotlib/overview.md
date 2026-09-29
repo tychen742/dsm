@@ -57,7 +57,7 @@ style: |
 
 Explicit control over figures, axes, and chart styling
 
-*Sections: Basics and stateful plotting · Figures and axes · Controls and plot types*
+*Sections: Matplotlib basics · Figures and axes · Styling and plot types*
 
 *Use arrow keys or Space to navigate · Press F for fullscreen*
 
@@ -67,9 +67,9 @@ Explicit control over figures, axes, and chart styling
 
 | Part | Main Question | Core Vocabulary |
 |---|---|---|
-| Basics and stateful plotting | How do I draw and label a first chart? | pyplot, stateful interface, line plot, legend |
+| Matplotlib basics | How do I draw and label a first chart? | pyplot, stateful interface, line plot, legend |
 | Figures and axes | How do I build and arrange charts on purpose? | figure, axes, `plt.subplots()`, inset, DPI |
-| Controls and plot types | How do I style a chart and pick the right type? | rcParams, axis range, alpha, histogram, boxplot |
+| Styling and plot types | How do I style a chart and pick the right type? | rcParams, axis range, alpha, histogram, boxplot |
 
 <div class="callout">
 
@@ -93,7 +93,7 @@ By the end of this chapter, you will be able to:
 
 <!-- _class: section -->
 
-## Basics and Stateful Plotting
+## Matplotlib Basics
 
 First plots, labels, and the pyplot interface
 
@@ -384,7 +384,7 @@ A chart that looks sharp on screen can print blurry. Save report figures with `d
 
 <!-- _class: section -->
 
-## Controls and Plot Types
+## Styling and Plot Types
 
 Styling charts and matching the chart to the question
 

@@ -20,11 +20,11 @@ These match the Learning Goals on `0600-matplotlib.ipynb`.
 
 1. `0600-matplotlib.ipynb` - Landing
    - Chapter orientation, video, learning goals, flow, glossary, and slides.
-2. `0601-mpl.ipynb` - Matplotlib Basics and Stateful Plotting
+2. `0601-mpl.ipynb` - Matplotlib Basics
    - Matplotlib introduction, installation, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and `plt.subplot()` layouts.
-3. `0602-figures-axes.ipynb` - Matplotlib Figures and Axes
+3. `0602-figures-axes.ipynb` - Figures and Axes
    - Object-oriented figures and axes with `plt.subplots()`, multiple axes, `fig.suptitle()` and `sharey`; manual placement and insets with `fig.add_axes()`; figure size, DPI, and saving figures with `dpi=`.
-4. `0603-controls-plot-types.ipynb` - Matplotlib Controls and Common Plot Types
+4. `0603-controls-plot-types.ipynb` - Styling and Plot Types
    - Figure and axes control tables, `rcParams` styling, legends, axis ranges, colors and line settings, and common plot types.
 5. `assignments/index.ipynb` - Assignments
    - Preview

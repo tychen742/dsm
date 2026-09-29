@@ -89,11 +89,11 @@ parts:
       - file: chapters/06-matplotlib/0600-matplotlib
         sections:
           - file: chapters/06-matplotlib/0601-mpl
-            title: Matplotlib Basics and Stateful Plotting
+            title: Matplotlib Basics
           - file: chapters/06-matplotlib/0602-figures-axes
-            title: Matplotlib Figures and Axes
+            title: Figures and Axes
           - file: chapters/06-matplotlib/0603-controls-plot-types
-            title: Matplotlib Controls and Common Plot Types
+            title: Styling and Plot Types
           - file: chapters/06-matplotlib/assignments/index
             title: Assignments
             sections:
