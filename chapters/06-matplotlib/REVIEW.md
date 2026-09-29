@@ -164,9 +164,11 @@ Only the sales/visits exercise in `0603` is currently a business case.
 
 ### S10. Missing closing sections
 
-- [ ] Add Summary and Further Reading (and References if sources are cited) to `0601` and `0602`.
-- [ ] Expand the `0603` Recap into a Summary; add Further Reading.
-- [ ] Delete the trailing empty cell at the end of `0603`.
+Done 2026-09-29 on branch `ch06-closing-sections`.
+
+- [x] Add Summary and Further Reading (and References if sources are cited) to `0601` and `0602`. The one outside source, the Matplotlib paper, is cited in the 0601 introduction as {cite}`Hunter_2007` and added to `references.bib`, so it appears on the book's Bibliography page.
+- [x] Expand the `0603` Recap into a Summary (keeps the workflow advice); add Further Reading.
+- [x] Delete the trailing empty cell at the end of `0603`.
 
 ### S11. Preview answer key is a fixed pattern
 
