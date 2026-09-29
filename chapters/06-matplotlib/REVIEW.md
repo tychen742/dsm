@@ -186,7 +186,7 @@ Done 2026-09-29 on branch `ch06-slides`.
 
 ## Could Defer
 
-- [ ] Suppress stray return-value output in 22 cells (`Text(0.5, 1.0, ...)`, `[<matplotlib.lines.Line2D ...>]`): end cells with `;` or `plt.show()`, then re-execute. Counts: `0601` 5, `0602` 2, `0603` 15.
+- [x] Suppress stray return-value output: 17 cells remained after S9 (0601: 4, 0602: 6, 0603: 7); each now ends with `plt.show()`, outputs refreshed. Done 2026-09-29.
 - [x] Replace deprecated `ax.boxplot(..., vert=True)`: removed (vertical is the default); done with S9.
 - [ ] Fix typos in `0603`:
   - [ ] "aviaible"
