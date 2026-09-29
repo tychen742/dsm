@@ -155,8 +155,10 @@ Done 2026-09-29 on branch `ch06-glossary`.
 
 ### S9. Weak business context
 
-- [ ] Replace most `sin(x)` / `x**2` / A–D examples with business data (quarterly revenue, regional sales, forecast vs actual, customer visits).
-- [ ] Reuse datasets already introduced in earlier chapters where possible.
+Done 2026-09-29 on branch `ch06-business-examples`.
+
+- [x] Replace most `sin(x)` / `x**2` / A–D examples with business data: 51 cells across 0601–0603 now use one small retailer's data, defined inline per cell. Demos avoid reproducing assignment tasks (e.g. the `add_axes()` demo zooms on a promotion week, not Q4). The style gallery in 0603 stays abstract on purpose. Setup cells now hold imports only.
+- [x] Reuse datasets already introduced in earlier chapters where possible: same style as ch04's inline tables (regions, quarters, months), and the same retailer as the ch06 lab and homework.
 
 Only the sales/visits exercise in `0603` is currently a business case.
 
@@ -180,7 +182,7 @@ Only the sales/visits exercise in `0603` is currently a business case.
 ## Could Defer
 
 - [ ] Suppress stray return-value output in 22 cells (`Text(0.5, 1.0, ...)`, `[<matplotlib.lines.Line2D ...>]`): end cells with `;` or `plt.show()`, then re-execute. Counts: `0601` 5, `0602` 2, `0603` 15.
-- [ ] Replace deprecated `ax.boxplot(..., vert=True)` with `orientation='vertical'` (deprecated in 3.11, removed in 3.13).
+- [x] Replace deprecated `ax.boxplot(..., vert=True)`: removed (vertical is the default); done with S9.
 - [ ] Fix typos in `0603`:
   - [ ] "aviaible"
   - [ ] `pt.rcParams`
@@ -188,7 +190,7 @@ Only the sales/visits exercise in `0603` is currently a business case.
   - [ ] "insert axes" → "inset axes"
   - [ ] curly quotes in the linestyle comment
   - [ ] `matplotlib.style.use` → `plt.style.use` for consistency
-- [ ] Seed random data (histogram `random.sample`, boxplot `np.random.normal`, sales exercise `np.random.normal`) so outputs are stable.
+- [x] Seed random data: histogram, boxplot, and the sales exercise prompt use `np.random.default_rng(seed)`; done with S9.
 - [x] Fix the inset exercise prompt (now in `0602`): it now says only that `x` is already defined.
 - [ ] Confirm whether the AGENTS.md "Spring 2026: chapters 1–8 are frozen" note is still in effect for Fall 2026.
 

@@ -20,13 +20,15 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 
 ## Figures And Media
 
-- `0602-figures-axes.ipynb` saves an example figure to `../../_build/generated/filename.png`.
+- `0602-figures-axes.ipynb` saves an example figure to `../../_build/generated/monthly_revenue.png`.
 - The Q5 lab solution writes `regional_margin_q2.png` next to `lab.ipynb`, and the `0602` Saving Figures exercise solution writes `quarterly_revenue.png` next to the notebook, when executed; both files are ignored in `.gitignore`.
 - Chapter overview video embedded in `0600-matplotlib.ipynb`.
 
 ## Supporting Code And Data
 
-- No external project datasets; examples use generated arrays and in-notebook values.
+- No external project datasets. Section examples and assignments use one small retailer's data, defined inline in each cell so it runs on its own in Live Code: monthly and quarterly revenue, regions (North, South, East, West), stores, products, ad spend, daily sales with a promotion week, order values, and warehouse delivery times. Random data uses a fixed seed (`np.random.default_rng(...)`).
+- The `Line and marker styles` gallery in `0603` keeps simple `x` values on purpose: it is a side-by-side catalog of styles.
+- Setup cells after each section title are tagged `hide-input`, `thebe-init`, and `runnable`, so Live Code runs the imports automatically.
 
 ## Slide Deck
 
