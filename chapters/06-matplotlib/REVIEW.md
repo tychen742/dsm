@@ -105,14 +105,14 @@ Done 2026-09-28. Kept the tagged `hide-input` solutions (which carry committed o
 
 ### M4. Landing page does not follow the standard layout
 
-File: `0600-matplotlib.ipynb`
+Done 2026-09-28. Scope decided with the author: fix defects book-wide, keep the book's house style for the rest.
 
-- [ ] Remove the empty `<h2>Overview</h2>` heading.
-- [ ] Add 3–5 overview bullets in `- **Concept Term**: Short description.` format.
-- [ ] Remove the `{contents}` block (landing pages do not use it).
-- [ ] Rename "Learning Goals" to "Learning Objectives".
-- [ ] Use the standard video credit: linked `Title (M:SS)` plus "Hosted on YouTube; property of its original creator, embedded here for educational reference only." Keep the existing video (UO98lJQ3QGI).
-- [ ] Add the link color style to the slides heading: `style="color: var(--pst-color-link, #176de8);"`.
+- [x] Remove the empty `<h2>Overview</h2>` heading (ch06 only; on ch03–ch05 the heading introduces real text and was kept).
+- [x] Add 3–5 overview bullets in `- **Concept Term**: Short description.` format (ch06: five bullets from the section content).
+- [x] Remove the `{contents}` block: removed from all nine landing pages. It rendered nothing, since landing headings are raw `<h2>`.
+- [-] Rename "Learning Goals" to "Learning Objectives": kept "Learning Goals", the heading on all nine landing pages.
+- [-] Standard video credit: kept the book's `video-credit` box, used on all nine landing pages.
+- [x] Slides link color: added to ch05–ch09 (ch01–ch04 already had it).
 
 ### M5. Homework true/false questions restate definitions
 
