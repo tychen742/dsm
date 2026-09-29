@@ -60,7 +60,7 @@ Before the new lab goes live on the server:
 - [x] `pip install matplotlib` in the grader venv (3.10.9).
 - [x] `/var/www/dsm_private/mplconfig` (tychen:www-data, 2770) set as `mplconfig_dir` in the live config; font cache warmed.
 - [x] `timeout_seconds` raised to 5; runner on the server Python takes 0.8–1.0 s.
-- [ ] Merge with the pandas-hardening task, which edits the same runner file (still pending).
+- [-] Merge with the pandas-hardening task: that task's work was discarded 2026-09-29 (it was uncommitted and based on an old `main`). The underlying issue is recorded in `authoring/PROGRESS.md` Project TODOs.
 
 #### New Lab (swapped in 2026-09-28)
 

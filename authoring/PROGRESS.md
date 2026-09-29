@@ -14,6 +14,7 @@ Status values: `Draft` · `In Progress` · `Needs Review` · `Complete`
   - Rotate the preview keys after the move, since git history keeps the old ones.
   - Longer term: make the repo private once cells can run without Live Code (mybinder.org requires a public repo).
   - Serving locked answer cells only after unlock is a separate change.
+- **Harden the grader's `pandas` runner profile.** Code graded under `runner_profile => 'pandas'` (ch04 lab and some homework) can read files readable by the web server user; `pd.read_csv("/etc/hosts")` succeeds, and `to_csv`, `np.load`, and `pd.read_pickle` are reachable. The `matplotlib` profile already blocks these by attribute name (`MATPLOTLIB_BLOCKED_ATTRIBUTES` in `_html_extra/api/lib/python_lab_runner.py`); apply the same blocklist to `pandas`, run the runner with `-I`, and check every pandas-profile reference solution still passes. An earlier attempt (2026-09-28) was discarded unfinished.
 
 ## Part I — Fundamentals
 
