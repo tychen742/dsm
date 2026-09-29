@@ -83,7 +83,8 @@ Follow `book-authoring` for shared Jupyter Book conventions: landing page format
 
 ## Semester Constraints
 
-Update each semester. Example entries: -->
+Update each semester.
 
-- Spring 2026: chapters 1–8 are frozen; only chapters 9–12 are in scope
-- Do not restructure existing chapter headings without discussion
+- Fall 2026: all chapters are in scope. Do not restructure existing chapter headings without discussion.
+- During breaks, major restructuring will happen.
+- Why: agents have at times made aggressive changes without consulting the author. During the semester, fix issues within a chapter, and consult the author before structural or large changes (moving or renaming sections, rewriting many examples, book-wide edits): propose the plan, wait for approval, then make the change.
