@@ -173,7 +173,7 @@ Done 2026-09-29 on branch `ch06-closing-sections`.
 ### S11. Preview answer key is a fixed pattern
 
 - [x] Shuffle the correct-answer positions for `ch06-preview`: key is now C, A, D, B, D, A, B, C, D, A (done with S7). The preview test fails if the key returns to a fixed cycle.
-- [ ] Book-wide follow-up: ch07 and ch08 use the same A-B-C-D-A-B… key. Decide whether to fix all chapters.
+- [x] Book-wide follow-up: the cycle was actually in 11 chapters (ch03, ch05, ch07–ch15), not just ch07 and ch08. All fixed 2026-09-29 by moving each correct choice to a new position; correct terms unchanged. `tests/grader/test_preview_keys.py` checks every chapter.
 
 ### S12. Slides are still the template
 
