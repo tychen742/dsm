@@ -725,8 +725,11 @@ div.thebelab-output,
     user-select: none !important;
 }
 
+/* Hide the answer but keep the summary row visible (greyed out below), so
+   students can see an answer exists. The details element also has the
+   admonition class, so the summary must be excluded explicitly. */
 .tag_hide-input.lab-answer-locked details > :not(summary),
-.tag_hide-input.lab-answer-locked .admonition > :not(.admonition-title) {
+.tag_hide-input.lab-answer-locked .admonition > :not(.admonition-title):not(summary) {
     display: none !important;
 }
 
