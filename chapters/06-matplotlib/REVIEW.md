@@ -220,9 +220,10 @@ Pass A (in-page fixes, no heading moves), done on branch `ch06-0603-pass-a`:
 - [x] Plot types: one sentence per chart on what it tells a manager; a new bins comparison (5, 15, 60); a note on sorting bars.
 - [x] Polish: Title Case for the #### headings, the Oxford comma in "Colors, Line Width, and Style", `plt.show()` instead of `;`, `figsize=(4, 3)` spacing, no stray `dpi=100`, `plt.subplots()` in the legend demo, and no red/green pair in the style exercise (budget is gray), plus a sentence on color-blind readers.
 
-Pass B (restructure; needs an approved outline first):
+Pass B (restructure; outline approved by the author), done 2026-09-29:
 
-- [ ] Replace the four opening reference tables: cut what 0602 already teaches, trim to one short Quick Reference, and move it to the end.
-- [ ] Rebalance exercises: merge the three line-styling exercises; add short ones for legends and a scatter or boxplot.
-- [ ] Split the 16-line style gallery into small labeled panels; drop `line.set_dashes()` and the obscure marker `'1'`.
+- [x] Replace the four opening reference tables: cut what 0602 already teaches, trim to one short Quick Reference, and move it to the end. The page now opens with Styling in Practice; "`rcParams`" is now "Style Sheets and `rcParams`".
+- [x] Rebalance exercises: the three line-styling exercises became one ("Style a Revenue Chart"); new exercises for legends, a scatter plot, and a boxplot; the bar-and-histogram exercise moved under Histogram. Five exercises became six.
+- [x] Split the 16-line style gallery into three labeled panels (line widths, line styles, markers); dropped `line.set_dashes()` and the marker `'1'`.
+- Possible follow-up (author's idea): put Common Plot Types before Styling in Practice.
 
