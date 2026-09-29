@@ -207,3 +207,22 @@ Done 2026-09-29 on branch `ch06-slides`.
 - [ ] `MATERIALS.md` and `ORGANIZATION.md` updated.
 - [ ] Slides regenerated.
 - [ ] Book build passes with no new warnings for ch06.
+
+## Follow-up Review of 0603 (2026-09-29)
+
+Pass A (in-page fixes, no heading moves), done on branch `ch06-0603-pass-a`:
+
+- [x] Boxplot text: whiskers stop at 1.5 × IQR; they reach the minimum and maximum only when there are no outliers.
+- [x] Style sheets and rcParams: two charts compare the `default` and `ggplot` styles with `plt.style.context()`, and one uses `plt.rc_context()`, so nothing changes globally. Removed `%config`, the tiny chart, and the reset cell.
+- [x] Every multi-series chart and exercise now labels its series and shows a legend; the color demo's legend sits outside the plot (`bbox_to_anchor`).
+- [x] Plot range: the identical "tight axes" panel became "y-axis from zero", with a sentence on how truncated axes exaggerate differences.
+- [x] Alpha: a new 300-order scatter shows why transparency helps when marks overlap.
+- [x] Plot types: one sentence per chart on what it tells a manager; a new bins comparison (5, 15, 60); a note on sorting bars.
+- [x] Polish: Title Case for the #### headings, the Oxford comma in "Colors, Line Width, and Style", `plt.show()` instead of `;`, `figsize=(4, 3)` spacing, no stray `dpi=100`, `plt.subplots()` in the legend demo, and no red/green pair in the style exercise (budget is gray), plus a sentence on color-blind readers.
+
+Pass B (restructure; needs an approved outline first):
+
+- [ ] Replace the four opening reference tables: cut what 0602 already teaches, trim to one short Quick Reference, and move it to the end.
+- [ ] Rebalance exercises: merge the three line-styling exercises; add short ones for legends and a scatter or boxplot.
+- [ ] Split the 16-line style gallery into small labeled panels; drop `line.set_dashes()` and the obscure marker `'1'`.
+
