@@ -23,7 +23,7 @@ Status legend: `[ ]` open, `[x]` done, `[-]` skipped/deferred (note why).
 
 ### M1. Lab does not use Matplotlib
 
-- [ ] Replace all five questions in `assignments/lab.ipynb`.
+- [x] Replace all five questions in `assignments/lab.ipynb`. Code done 2026-09-28; goes live after the server steps below.
 
 Current questions are print/string/arithmetic drills (Q3 multiplies rows by columns; Q5 builds a filename string). None creates a figure or axes.
 
@@ -34,6 +34,53 @@ Fix notes:
 - Confirm the server grader venv has `matplotlib` installed and uses a non-interactive backend (`Agg`).
 - Update the `ch06-lab` entry in `_html_extra/api/lib/quiz-app.php` to match.
 - Re-execute solution cells and commit their outputs.
+
+Grader findings (2026-09-28):
+
+- Flow: page JS sends the first five `thebe-interactive` cells' code to `v1/lab-attempts.php` → `dsm_grade_lab_code_attempt()` → `dsm_run_lab_code_cell()` pipes JSON to `lib/python_lab_runner.py` → normalized stdout is compared exactly against `code_outputs` in `dsm_lab_definition()` / `dsm_homework_definition()`.
+- The runner has two profiles only: `plain_python` (AST allowlist, a few builtins and methods, run with `-I -S`) and `pandas` (adds `pandas`/`numpy` imports and skips the method allowlist).
+- Matplotlib cannot be graded today. Tested locally: `import matplotlib.pyplot as plt` is rejected ("Only pandas and numpy imports are allowed"). This likely explains why ch05–ch07 labs are print drills.
+- List comprehensions are rejected in every profile (`ListComp is not allowed`), though `0603` teaches one.
+- Cold Matplotlib start with an empty config dir took 10.1 s locally (font-cache build) against the 3 s timeout. Warm start was 0.42 s. The grader needs a persistent, writable `MPLCONFIGDIR`, or every submission will time out.
+- `_html_extra/api/README.md` installs only `numpy pandas` in the production grader venv; `matplotlib` must be added there (not verified on the server).
+- Security, out of scope for ch06: the `pandas` profile can read arbitrary server files (`pd.read_csv("/etc/hosts")` succeeded). Spun off as a separate task.
+
+Proposed grader change:
+
+1. Add a `matplotlib` runner profile: allow `numpy`, `pandas`, `matplotlib`, `matplotlib.pyplot` imports; call `matplotlib.use("Agg")` before import; set `MPLCONFIGDIR` from config; make `plt.show()` a no-op; replace `savefig` with a recorder so no files are written; allow `ListComp`/`comprehension`.
+2. After running the code, the runner extracts a plot summary from every open figure (axes count, title, x/y labels, limits, line count with colors and styles, bar and patch counts, scatter point counts, legend labels, `suptitle`, figure size, DPI, recorded `savefig` calls).
+3. Grade with property checks instead of exact stdout: each question in the definition lists only the properties it requires (e.g. `{"axes": 4, "ax[0].title": "North"}`), and the runner returns pass/fail per check with a short hint. Keep `code_outputs` stdout matching available for mixed questions.
+4. Add `matplotlib` to `lab_grader` in `dsm_run_lab_code_cell()`'s profile allowlist, add `mplconfig_dir` to config, update the README install line.
+5. Test script: run every reference solution plus common wrong answers through the runner and assert the scores.
+
+Grader status (2026-09-28): items 1–4 built, not deployed. Details and the `plot_checks` path reference are in `_html_extra/api/README.md` ("Runner Profiles"). Verified: runner tests locally (Matplotlib 3.11.2) for pass/fail checks, blocked file access, bar/hist/scatter/pandas summaries, and the old profiles; PHP lint and an end-to-end grading harness in Docker (PHP 8.4, Matplotlib 3.10) including ch02/ch04 regression. Item 5 waits for the new ch06 questions.
+
+Before the new lab goes live on the server:
+
+- [ ] `pip install matplotlib` in the grader venv.
+- [ ] Create a writable `mplconfig_dir`, set it in the private config, and warm the font cache as the web server user (README has the commands).
+- [ ] Consider `timeout_seconds` 5 for the matplotlib profile (warm run is about 0.5 s locally; the server may be slower).
+- [ ] Merge with the pandas-hardening task, which edits the same runner file.
+
+#### New Lab (swapped in 2026-09-28)
+
+Five plotting questions set in one small retailer, now in `assignments/lab.ipynb` with executed solution output:
+
+| # | Title | Skills | Section source |
+|---|---|---|---|
+| 1 | Revenue Trend | `plt.subplots()`, line plot with markers, title, axis labels | 0601, 0602, 0603 markers |
+| 2 | Actual vs Forecast | two lines, line style, color, labels, legend | 0601, 0603 |
+| 3 | Regional Dashboard | 1x2 subplots, `figsize`, bar chart, histogram bins, `suptitle` | 0602, 0603 |
+| 4 | Ad Spend and Sales | scatter plot, axis labels, `set_xlim`/`set_ylim` | 0601, 0603 |
+| 5 | Report-Ready Figure | `figsize`, bar chart, `savefig` with filename and dpi | 0602, 0603 |
+
+- [x] Questions and solutions in `lab.ipynb`; solution cells executed with outputs committed. Cell tags unchanged (`thebe-interactive`; `hide-input` + `lab-answer`).
+- [x] `ch06-lab` in `quiz-app.php` switched from `code_outputs` to `runner_profile => 'matplotlib'` with `plot_checks`.
+- [x] Test: `tests/grader/test_ch06_lab.py` reads questions and solutions from `lab.ipynb` and checks from `quiz-app.php` (via PHP or the php Docker image), then verifies solutions and filled-in submissions pass, unedited questions fail, and common wrong answers fail with a hint. Result: 27 passed, 0 failed. Run with `.venv/bin/python tests/grader/test_ch06_lab.py`.
+- [x] `.gitignore`: `chapters/06-matplotlib/assignments/regional_margin_q2.png`, which the Q5 solution writes when the notebook executes.
+- [x] Section alignment in `0602`: new `fig.suptitle()` example (two regional revenue panels plotted against quarter labels), and the `savefig` example now uses `dpi=200` with a sentence on screen vs print resolution. Outputs copied from an executed run; saved file verified at 200 dpi.
+- The `data-lab-answers-release-at="2026-10-13..."` marker on the lab page is only a fallback when the settings API is unreachable; answer visibility follows the admin setting at `/api/admin/assignments.php`.
+- Existing ch06-lab attempts keep the scores they were given under the old questions.
 
 ### M2. Homework coding questions do not use Matplotlib
 

@@ -28,6 +28,50 @@ Saved fields include:
 - Canvas sync status and sync error
 - submission timestamp, IP address, and user agent
 
+## Runner Profiles
+
+Each lab or homework definition in `lib/quiz-app.php` picks a runner profile with `runner_profile`:
+
+- `plain_python` (default): a small set of builtins and string/list methods; no imports.
+- `pandas`: adds `numpy` and `pandas` imports.
+- `matplotlib`: adds `numpy`, `pandas`, and `matplotlib.pyplot` imports, list comprehensions, and `range`, `zip`, `enumerate`, `abs`, `dict`, `tuple`. File and system access (`read_*`, most `to_*`, `np.load`, `imread`, `fig.canvas`, and similar) is blocked by attribute name. Plots render with the `Agg` backend; `plt.show()` and `plt.close()` do nothing, and `savefig` records its arguments instead of writing a file.
+
+A code question is graded by `code_outputs` (exact normalized stdout), `plot_checks` (chart properties, `matplotlib` profile only), or both; with both, the question passes only when both pass. Plot checks are listed per question:
+
+```php
+'runner_profile' => 'matplotlib',
+'plot_checks' => [
+    'q1' => [
+        ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots().'],
+        ['path' => 'axes[0].title', 'expected' => 'Quarterly Revenue', 'hint' => 'Set the chart title.'],
+        ['path' => 'axes[0].lines[0].linestyle', 'expected' => '--', 'hint' => 'Draw the line dashed.'],
+        ['path' => 'axes[0].lines.count', 'expected' => ['min' => 2], 'hint' => 'Plot both series.'],
+    ],
+],
+```
+
+Paths address the last figure the code created: `size`, `dpi`, `suptitle`, `figure_count`, `savefig[i].fname|dpi|format`, and `axes[i]` with `title`, `xlabel`, `ylabel`, `xlim`, `ylim`, `xscale`, `yscale`, `xticklabels`, `legend`, `has_legend`, `lines[j].color|linestyle|linewidth|marker|label|points`, `bars[j].bars|heights|label` (bar charts and histograms), and `scatters[j].points|label`. Append `.count` for a length. Colors compare as lowercase hex (`'r'` and `'red'` are both `#ff0000`), line styles as `-`, `--`, `-.`, `:`, and numbers with a small tolerance. `expected` can also be `['min' => n]`, `['max' => n]`, `['one_of' => [...]]`, or `['contains' => value]`.
+
+Students only see the `hint` of each failing check, never the expected value, so feedback does not reveal answers before the due date.
+
+To see what the runner extracts from a solution, pipe it through the runner with `include_summary`:
+
+```bash
+echo '{"profile": "matplotlib", "include_summary": true, "code": "fig, ax = plt.subplots()\nax.plot([1, 2], [3, 4])"}' | ./grader-venv/bin/python -I lib/python_lab_runner.py
+```
+
+### Matplotlib Font Cache
+
+Matplotlib builds a font cache on first import, which takes about 10 seconds and exceeds the grader timeout. Set `mplconfig_dir` to a directory the web server user can write, and warm the cache as that user after installing or upgrading Matplotlib:
+
+```bash
+sudo mkdir -p /var/www/dsm_private/mplconfig
+sudo chown www-data:www-data /var/www/dsm_private/mplconfig
+sudo -u www-data MPLCONFIGDIR=/var/www/dsm_private/mplconfig /var/www/dsm_private/grader-venv/bin/python -c "import matplotlib.pyplot"
+```
+
+If `mplconfig_dir` is empty, the runner uses `dsm-mplconfig` under the system temp directory, which may be cleared on reboot.
+
 ## Production Configuration
 
 Do not commit production secrets. Put configuration outside the repository, then point `DSM_QUIZ_CONFIG` to it or use the production default path:
@@ -46,7 +90,7 @@ Production DSM uses a dedicated grader virtual environment:
 cd /var/www/dsm_private
 python3 -m venv grader-venv
 ./grader-venv/bin/python -m pip install --upgrade pip
-./grader-venv/bin/python -m pip install numpy pandas
+./grader-venv/bin/python -m pip install numpy pandas matplotlib
 chmod -R g+rX /var/www/dsm_private/grader-venv
 ```
 
@@ -57,6 +101,7 @@ Configure the API to use that interpreter in the private config:
     'python_bin' => '/var/www/dsm_private/grader-venv/bin/python',
     'timeout_seconds' => 3,
     'max_code_bytes' => 12000,
+    'mplconfig_dir' => '/var/www/dsm_private/mplconfig',
 ],
 ```
 

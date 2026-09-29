@@ -44,6 +44,7 @@ function dsm_load_config(): array
             'timeout_seconds' => 3,
             'max_code_bytes' => 12000,
             'python_paths' => [],
+            'mplconfig_dir' => '',
         ],
         'lti' => [
             'enabled' => false,
@@ -787,20 +788,56 @@ Outliers: [210]',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch06-lab',
-            'code_outputs' => [
-                'q1' => 'X values: [1, 2, 3, 4]
-Y values: [20, 24, 23, 29]',
-                'q2' => 'Title: Quarterly Revenue
-X label: Quarter
-Y label: Revenue',
-                'q3' => 'Rows: 2
-Columns: 2
-Axes: 4',
-                'q4' => 'Trend: line
-Groups: bar
-Relationship: scatter
-Distribution: hist',
-                'q5' => 'Filename: regional_margin_q2.png',
+            'runner_profile' => 'matplotlib',
+            'plot_checks' => [
+                'q1' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots().'],
+                    ['path' => 'axes[0].lines.count', 'expected' => 1, 'hint' => 'Draw one line for revenue.'],
+                    ['path' => 'axes[0].lines[0].points', 'expected' => 4, 'hint' => 'Plot all four quarters.'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['Q1', 'Q2', 'Q3', 'Q4'], 'hint' => 'Put the quarters on the x-axis.'],
+                    ['path' => 'axes[0].lines[0].marker', 'expected' => 'o', 'hint' => 'Use circle markers on the line.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Quarterly Revenue', 'hint' => 'Check the chart title.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'Quarter', 'hint' => 'Check the x-axis label.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'Revenue ($K)', 'hint' => 'Check the y-axis label.'],
+                ],
+                'q2' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Put both lines on one axes.'],
+                    ['path' => 'axes[0].lines.count', 'expected' => 2, 'hint' => 'Draw two lines: actual and forecast.'],
+                    ['path' => 'axes[0].lines[0].linestyle', 'expected' => '-', 'hint' => 'Draw the actual line solid.'],
+                    ['path' => 'axes[0].lines[1].linestyle', 'expected' => '--', 'hint' => 'Draw the forecast line dashed.'],
+                    ['path' => 'axes[0].lines[1].color', 'expected' => '#808080', 'hint' => 'Color the forecast line gray.'],
+                    ['path' => 'axes[0].legend', 'expected' => ['Actual', 'Forecast'], 'hint' => 'Label both lines and show the legend.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Actual vs Forecast', 'hint' => 'Check the chart title.'],
+                ],
+                'q3' => [
+                    ['path' => 'axes.count', 'expected' => 2, 'hint' => 'Create one row of two axes.'],
+                    ['path' => 'size', 'expected' => [10, 4], 'hint' => 'Use figsize=(10, 4).'],
+                    ['path' => 'axes[0].bars.count', 'expected' => 1, 'hint' => 'Draw a bar chart on the first axes.'],
+                    ['path' => 'axes[0].bars[0].heights', 'expected' => [150, 120, 180, 90], 'hint' => 'Use region_revenue for the bar heights.'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['North', 'South', 'East', 'West'], 'hint' => 'Put the regions on the x-axis of the bar chart.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Revenue by Region', 'hint' => 'Check the bar chart title.'],
+                    ['path' => 'axes[1].bars[0].bars', 'expected' => 5, 'hint' => 'Draw the histogram on the second axes with bins=5.'],
+                    ['path' => 'axes[1].title', 'expected' => 'Order Values', 'hint' => 'Check the histogram title.'],
+                    ['path' => 'suptitle', 'expected' => 'Regional Dashboard', 'hint' => 'Add the figure title with fig.suptitle().'],
+                ],
+                'q4' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots().'],
+                    ['path' => 'axes[0].scatters.count', 'expected' => 1, 'hint' => 'Use a scatter plot, not a line plot.'],
+                    ['path' => 'axes[0].scatters[0].points', 'expected' => 8, 'hint' => 'Plot all eight ad spend and sales pairs.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'Ad Spend ($K)', 'hint' => 'Check the x-axis label; ad spend goes on x.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'Sales ($K)', 'hint' => 'Check the y-axis label; sales goes on y.'],
+                    ['path' => 'axes[0].xlim', 'expected' => [0, 50], 'hint' => 'Set the x-axis range from 0 to 50.'],
+                    ['path' => 'axes[0].ylim', 'expected' => [0, 250], 'hint' => 'Set the y-axis range from 0 to 250.'],
+                ],
+                'q5' => [
+                    ['path' => 'size', 'expected' => [8, 4], 'hint' => 'Use figsize=(8, 4).'],
+                    ['path' => 'axes[0].bars[0].heights', 'expected' => [12.5, 9.8, 14.2, 7.6], 'hint' => 'Draw a bar chart of margin_pct.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Q2 Margin by Region', 'hint' => 'Check the chart title.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'Margin (%)', 'hint' => 'Check the y-axis label.'],
+                    ['path' => 'savefig.count', 'expected' => 1, 'hint' => 'Save the figure once with savefig().'],
+                    ['path' => 'savefig[0].fname', 'expected' => 'regional_margin_q2.png', 'hint' => 'Check the saved filename.'],
+                    ['path' => 'savefig[0].dpi', 'expected' => 200, 'hint' => 'Save at dpi=200.'],
+                ],
             ],
         ],
         'ch07-lab' => [
@@ -1501,34 +1538,27 @@ function dsm_grade_lab_code_attempt(array $lab, array $codeByQuestion, array $gr
         'q5' => "C decimal: 67\nC binary: 0b1000011\nItem hex: 0x40",
     ];
 
+    if (isset($lab['plot_checks']) && !isset($lab['code_outputs'])) {
+        $expectedOutputs = [];
+    }
+    $plotChecks = $lab['plot_checks'] ?? [];
+
     $feedback = [];
     $normalizedCode = [];
     $score = 0.0;
 
-    foreach ($expectedOutputs as $question => $expectedOutput) {
+    foreach (dsm_code_question_ids($expectedOutputs, $plotChecks) as $question) {
         $code = (string) ($codeByQuestion[$question] ?? '');
         $normalizedCode[$question] = dsm_limit_lab_code($code, (int) ($graderConfig['max_code_bytes'] ?? 12000));
-        $runnerConfig = $graderConfig;
-        $runnerConfig['runner_profile'] = (string) ($lab['runner_profile'] ?? 'plain_python');
-        $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
-        $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
-        $accepted = !empty($run['ok']) && dsm_lab_output_matches($actualOutput, $expectedOutput);
-        $itemScore = $accepted ? 2.0 : 0.0;
-        $score += $itemScore;
-
-        $message = $accepted ? 'Accepted.' : 'Output did not match.';
-        if (empty($run['ok']) && !empty($run['error'])) {
-            $message = (string) $run['error'];
-        }
-
-        $feedback[$question] = [
-            'correct' => $accepted,
-            'score' => $itemScore,
-            'max_score' => 2.0,
-            'message' => $message,
-            'stdout' => $actualOutput,
-            'stderr' => dsm_limit_lab_code((string) ($run['stderr'] ?? ''), 2000),
-        ];
+        $feedback[$question] = dsm_grade_code_question(
+            $normalizedCode[$question],
+            $expectedOutputs[$question] ?? null,
+            $plotChecks[$question] ?? null,
+            (string) ($lab['runner_profile'] ?? 'plain_python'),
+            $graderConfig,
+            2.0
+        );
+        $score += $feedback[$question]['score'];
     }
 
     return [
@@ -1566,31 +1596,21 @@ function dsm_grade_homework_attempt(array $homework, array $answers, array $code
         ];
     }
 
+    $expectedOutputs = $homework['code_outputs'] ?? [];
+    $plotChecks = $homework['plot_checks'] ?? [];
     $normalizedCode = [];
-    foreach (($homework['code_outputs'] ?? []) as $question => $expectedOutput) {
+    foreach (dsm_code_question_ids($expectedOutputs, $plotChecks) as $question) {
         $code = (string) ($codeByQuestion[$question] ?? '');
         $normalizedCode[$question] = dsm_limit_lab_code($code, (int) ($graderConfig['max_code_bytes'] ?? 12000));
-        $runnerConfig = $graderConfig;
-        $runnerConfig['runner_profile'] = (string) ($homework['runner_profile'] ?? 'plain_python');
-        $run = dsm_run_lab_code_cell($normalizedCode[$question], $runnerConfig);
-        $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
-        $accepted = !empty($run['ok']) && dsm_lab_output_matches($actualOutput, $expectedOutput);
-        $itemScore = $accepted ? 1.0 : 0.0;
-        $score += $itemScore;
-
-        $message = $accepted ? 'Accepted.' : 'Output did not match.';
-        if (empty($run['ok']) && !empty($run['error'])) {
-            $message = (string) $run['error'];
-        }
-
-        $feedback[$question] = [
-            'correct' => $accepted,
-            'score' => $itemScore,
-            'max_score' => 1.0,
-            'message' => $message,
-            'stdout' => $actualOutput,
-            'stderr' => dsm_limit_lab_code((string) ($run['stderr'] ?? ''), 2000),
-        ];
+        $feedback[$question] = dsm_grade_code_question(
+            $normalizedCode[$question],
+            $expectedOutputs[$question] ?? null,
+            $plotChecks[$question] ?? null,
+            (string) ($homework['runner_profile'] ?? 'plain_python'),
+            $graderConfig,
+            1.0
+        );
+        $score += $feedback[$question]['score'];
     }
 
     return [
@@ -1601,6 +1621,62 @@ function dsm_grade_homework_attempt(array $homework, array $answers, array $code
             'code' => $normalizedCode,
         ],
         'feedback' => $feedback,
+    ];
+}
+
+/**
+ * Question IDs graded by stdout, plot checks, or both, in first-seen order.
+ */
+function dsm_code_question_ids(array $expectedOutputs, array $plotChecks): array
+{
+    return array_values(array_unique(array_merge(array_keys($expectedOutputs), array_keys($plotChecks))));
+}
+
+/**
+ * Run one code cell and grade it. A question passes only when every configured
+ * check passes: exact stdout (code_outputs) and/or plot properties (plot_checks).
+ * Plot-check feedback carries author hints only, never expected values.
+ */
+function dsm_grade_code_question(
+    string $code,
+    mixed $expectedOutput,
+    ?array $plotChecks,
+    string $runnerProfile,
+    array $graderConfig,
+    float $maxScore
+): array {
+    $runnerConfig = $graderConfig;
+    $runnerConfig['runner_profile'] = $runnerProfile;
+    if ($plotChecks !== null) {
+        $runnerConfig['plot_checks'] = $plotChecks;
+    }
+    $run = dsm_run_lab_code_cell($code, $runnerConfig);
+    $actualOutput = dsm_normalize_lab_output((string) ($run['stdout'] ?? ''));
+
+    $outputAccepted = $expectedOutput === null || dsm_lab_output_matches($actualOutput, $expectedOutput);
+    $plot = is_array($run['plot'] ?? null) ? $run['plot'] : null;
+    $plotAccepted = $plotChecks === null || ($plot !== null && !empty($plot['passed']));
+    $accepted = !empty($run['ok']) && $outputAccepted && $plotAccepted;
+
+    if ($accepted) {
+        $message = 'Accepted.';
+    } elseif (empty($run['ok'])) {
+        $message = !empty($run['error']) ? (string) $run['error'] : 'Code could not be run.';
+    } elseif (!$outputAccepted) {
+        $message = 'Output did not match.';
+    } else {
+        $hints = array_map('strval', (array) ($plot['hints'] ?? []));
+        $message = $hints !== [] ? implode(' ', $hints) : 'Chart did not match the instructions.';
+    }
+
+    $itemScore = $accepted ? $maxScore : 0.0;
+    return [
+        'correct' => $accepted,
+        'score' => $itemScore,
+        'max_score' => $maxScore,
+        'message' => $message,
+        'stdout' => $actualOutput,
+        'stderr' => dsm_limit_lab_code((string) ($run['stderr'] ?? ''), 2000),
     ];
 }
 
@@ -1641,7 +1717,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     $pythonBin = (string) ($graderConfig['python_bin'] ?? 'python3');
     $timeoutSeconds = max(1, min(10, (int) ($graderConfig['timeout_seconds'] ?? 3)));
     $runnerProfile = (string) ($graderConfig['runner_profile'] ?? 'plain_python');
-    if (!in_array($runnerProfile, ['plain_python', 'pandas'], true)) {
+    if (!in_array($runnerProfile, ['plain_python', 'pandas', 'matplotlib'], true)) {
         $runnerProfile = 'plain_python';
     }
     $pythonPaths = $graderConfig['python_paths'] ?? [];
@@ -1649,11 +1725,16 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
         $pythonPaths = [];
     }
     $pythonPaths = array_values(array_filter($pythonPaths, static fn ($path): bool => is_string($path) && $path !== ''));
-    $payload = json_encode([
+    $runnerPayload = [
         'code' => $code,
         'profile' => $runnerProfile,
         'python_paths' => $pythonPaths,
-    ], JSON_UNESCAPED_SLASHES);
+    ];
+    if ($runnerProfile === 'matplotlib') {
+        $runnerPayload['plot_checks'] = array_values((array) ($graderConfig['plot_checks'] ?? []));
+        $runnerPayload['mplconfig_dir'] = (string) ($graderConfig['mplconfig_dir'] ?? '');
+    }
+    $payload = json_encode($runnerPayload, JSON_UNESCAPED_SLASHES);
     if (!is_string($payload)) {
         return ['ok' => false, 'stdout' => '', 'stderr' => '', 'error' => 'Could not prepare code for grading.'];
     }
@@ -1663,9 +1744,11 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
         1 => ['pipe', 'w'],
         2 => ['pipe', 'w'],
     ];
-    $pythonArgs = $runnerProfile === 'pandas'
-        ? [$pythonBin, $runner]
-        : [$pythonBin, '-I', '-S', $runner];
+    $pythonArgs = match ($runnerProfile) {
+        'pandas' => [$pythonBin, $runner],
+        'matplotlib' => [$pythonBin, '-I', $runner],
+        default => [$pythonBin, '-I', '-S', $runner],
+    };
     $process = proc_open($pythonArgs, $descriptorSpec, $pipes, sys_get_temp_dir());
     if (!is_resource($process)) {
         return ['ok' => false, 'stdout' => '', 'stderr' => '', 'error' => 'Could not start code runner.'];

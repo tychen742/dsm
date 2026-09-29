@@ -20,7 +20,7 @@ Students should be able to:
 2. `0601-mpl.ipynb` - Matplotlib Basics and Stateful Plotting
    - Matplotlib introduction, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and subplots.
 3. `0602-figures-axes.ipynb` - Matplotlib Figures and Axes
-   - Object-oriented figures and axes, `plt.subplots()`, multiple axes, and saving figures.
+   - Object-oriented figures and axes, `plt.subplots()`, multiple axes, `fig.suptitle()`, and saving figures with `dpi=`.
 4. `0603-controls-plot-types.ipynb` - Matplotlib Controls and Common Plot Types
    - Figure and axes controls, styles, colors, line settings, common plot types, `add_axes()`, and DPI.
 5. `assignments/index.ipynb` - Assignments
@@ -42,7 +42,7 @@ Students should be able to:
 ## Exercise And Assignment Plan
 
 - Preview: introduce the chapter vocabulary and core terms before class.
-- Lab: server-graded applied practice with plot coordinates, labels, subplot layout, plot-type planning, and saved-figure filenames.
+- Lab: server-graded plotting practice on one retailer's data: line plot with markers and labels (0601/0602), styled lines with a legend (0603), a 1x2 bar and histogram dashboard with `suptitle` (0602/0603), a scatter plot with axis limits (0603), and a saved report figure with `figsize` and `dpi` (0602). The grader checks chart properties, so pyplot and object-oriented solutions both pass.
 - Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
 
 ## Maintenance Notes

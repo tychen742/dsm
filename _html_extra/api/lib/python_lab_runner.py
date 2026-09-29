@@ -2,7 +2,10 @@ import ast
 import contextlib
 import io
 import json
+import math
+import os
 import sys
+import tempfile
 
 
 ALLOWED_CALLS = {
@@ -94,16 +97,86 @@ ALLOWED_NODES = (
 )
 
 
+# Matplotlib profile: plotting code needs a few more builtins and list
+# comprehensions. File and system access is blocked by attribute name.
+MATPLOTLIB_EXTRA_CALLS = {
+    "abs": abs,
+    "dict": dict,
+    "enumerate": enumerate,
+    "range": range,
+    "tuple": tuple,
+    "zip": zip,
+}
+
+MATPLOTLIB_EXTRA_NODES = (
+    ast.ListComp,
+    ast.comprehension,
+)
+
+MATPLOTLIB_IMPORTS = {"numpy", "pandas", "matplotlib", "matplotlib.pyplot"}
+
+MATPLOTLIB_BLOCKED_ATTRIBUTES = {
+    "api",
+    "backends",
+    "builtins",
+    "canvas",
+    "cbook",
+    "compat",
+    "ctypeslib",
+    "DataSource",
+    "eval",
+    "fromfile",
+    "fromregex",
+    "genfromtxt",
+    "get_cachedir",
+    "get_configdir",
+    "imread",
+    "imsave",
+    "io",
+    "lib",
+    "load",
+    "loadtxt",
+    "matplotlib",
+    "memmap",
+    "os",
+    "pickle",
+    "print_figure",
+    "query",
+    "rc_file",
+    "rc_params_from_file",
+    "save",
+    "savetxt",
+    "savez",
+    "savez_compressed",
+    "subprocess",
+    "switch_backend",
+    "sys",
+    "testing",
+    "tofile",
+}
+
+MATPLOTLIB_ALLOWED_TO_METHODS = {"to_dict", "to_frame", "to_list", "to_numpy", "to_string"}
+
+
 class LabCodeValidator(ast.NodeVisitor):
     def __init__(self, profile="plain_python"):
         self.profile = profile
+        self.allowed_nodes = ALLOWED_NODES
+        if profile == "matplotlib":
+            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES
 
     def generic_visit(self, node):
-        if not isinstance(node, ALLOWED_NODES):
+        if not isinstance(node, self.allowed_nodes):
             raise ValueError(f"{type(node).__name__} is not allowed in this lab.")
         super().generic_visit(node)
 
     def visit_Import(self, node):
+        if self.profile == "matplotlib":
+            for alias in node.names:
+                if alias.name not in MATPLOTLIB_IMPORTS:
+                    raise ValueError("Only numpy, pandas, and matplotlib imports are allowed in this lab.")
+            self.generic_visit(node)
+            return
         if self.profile != "pandas":
             raise ValueError("Import is not allowed in this lab.")
         for alias in node.names:
@@ -119,6 +192,8 @@ class LabCodeValidator(ast.NodeVisitor):
     def visit_Attribute(self, node):
         if node.attr.startswith("__"):
             raise ValueError("Attributes beginning with __ are not allowed.")
+        if self.profile == "matplotlib" and matplotlib_attribute_blocked(node.attr):
+            raise ValueError(f"{node.attr} is not allowed in this lab.")
         self.generic_visit(node)
 
     def visit_Call(self, node):
@@ -128,7 +203,7 @@ class LabCodeValidator(ast.NodeVisitor):
         elif isinstance(node.func, ast.Attribute):
             if node.func.attr.startswith("__"):
                 raise ValueError("Attributes beginning with __ are not allowed.")
-            if self.profile != "pandas" and node.func.attr not in ALLOWED_METHODS:
+            if self.profile == "plain_python" and node.func.attr not in ALLOWED_METHODS:
                 raise ValueError("Only the allowed lab methods can be called.")
         else:
             raise ValueError("Only simple function and method calls are allowed.")
@@ -148,6 +223,264 @@ def prepare_pandas_tree(tree):
     tree.body = body
     ast.fix_missing_locations(tree)
     return aliases
+
+
+def matplotlib_attribute_blocked(name):
+    if name in MATPLOTLIB_BLOCKED_ATTRIBUTES:
+        return True
+    if name.startswith("read_"):
+        return True
+    if name.startswith("to_") and name not in MATPLOTLIB_ALLOWED_TO_METHODS:
+        return True
+    return False
+
+
+def prepare_matplotlib_tree(tree):
+    aliases = {"pd": "pandas", "np": "numpy", "plt": "matplotlib.pyplot"}
+    body = []
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.asname:
+                    aliases[alias.asname] = alias.name
+                else:
+                    top_level = alias.name.split(".")[0]
+                    aliases[top_level] = top_level
+            continue
+        body.append(node)
+    tree.body = body
+    ast.fix_missing_locations(tree)
+    return aliases
+
+
+def load_matplotlib(mplconfig_dir=None):
+    # A persistent config dir keeps the font cache between runs. Without it,
+    # every submission rebuilds the cache and exceeds the grader timeout.
+    if not mplconfig_dir:
+        mplconfig_dir = os.path.join(tempfile.gettempdir(), "dsm-mplconfig")
+    os.makedirs(mplconfig_dir, exist_ok=True)
+    os.environ["MPLCONFIGDIR"] = mplconfig_dir
+
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.figure
+    import matplotlib.pyplot as plt
+
+    saved = []
+
+    def record_savefig(fig, fname=None, *args, **kwargs):
+        # Record the dpi Matplotlib would use: the argument, else the
+        # savefig.dpi setting, where "figure" means the figure's own dpi.
+        dpi = kwargs.get("dpi")
+        if dpi is None:
+            dpi = matplotlib.rcParams["savefig.dpi"]
+        if dpi == "figure":
+            dpi = fig.dpi
+        saved.append({
+            "fname": fname if isinstance(fname, str) else "",
+            "dpi": round_number(dpi),
+            "format": kwargs.get("format") or "",
+        })
+
+    matplotlib.figure.Figure.savefig = record_savefig
+    plt.show = lambda *args, **kwargs: None
+    plt.close = lambda *args, **kwargs: None
+    return matplotlib, plt, saved
+
+
+def plot_color(value):
+    import matplotlib.colors
+
+    try:
+        return matplotlib.colors.to_hex(value, keep_alpha=False)
+    except (ValueError, TypeError):
+        return ""
+
+
+def plot_marker(value):
+    if value in (None, "None", "none", ""):
+        return ""
+    return str(value)
+
+
+def round_number(value):
+    value = float(value)
+    return round(value, 4) if math.isfinite(value) else None
+
+
+def summarize_axes(ax):
+    from matplotlib.collections import PathCollection
+    from matplotlib.container import BarContainer
+
+    lines = []
+    for line in ax.get_lines():
+        label = line.get_label()
+        lines.append({
+            "color": plot_color(line.get_color()),
+            "linestyle": line.get_linestyle(),
+            "linewidth": round_number(line.get_linewidth()),
+            "marker": plot_marker(line.get_marker()),
+            "label": "" if label.startswith("_") else label,
+            "points": len(line.get_xdata()),
+        })
+
+    bars = []
+    for container in ax.containers:
+        if isinstance(container, BarContainer):
+            label = container.get_label() or ""
+            bars.append({
+                "bars": len(container.patches),
+                "heights": [round_number(patch.get_height()) for patch in container.patches],
+                "label": "" if label.startswith("_") else label,
+            })
+
+    scatters = []
+    for collection in ax.collections:
+        if isinstance(collection, PathCollection):
+            label = collection.get_label() or ""
+            scatters.append({
+                "points": len(collection.get_offsets()),
+                "label": "" if label.startswith("_") else label,
+            })
+
+    legend = ax.get_legend()
+    return {
+        "title": ax.get_title(),
+        "xlabel": ax.get_xlabel(),
+        "ylabel": ax.get_ylabel(),
+        "xlim": [round_number(v) for v in ax.get_xlim()],
+        "ylim": [round_number(v) for v in ax.get_ylim()],
+        "xscale": ax.get_xscale(),
+        "yscale": ax.get_yscale(),
+        "xticklabels": [t.get_text() for t in ax.get_xticklabels() if t.get_text()],
+        "lines": lines,
+        "bars": bars,
+        "scatters": scatters,
+        "legend": [t.get_text() for t in legend.get_texts()] if legend else [],
+        "has_legend": legend is not None,
+    }
+
+
+def summarize_figure(fig):
+    fig.canvas.draw()
+    suptitle = fig._suptitle.get_text() if getattr(fig, "_suptitle", None) else ""
+    width, height = fig.get_size_inches()
+    return {
+        "size": [round_number(width), round_number(height)],
+        "dpi": round_number(fig.dpi),
+        "suptitle": suptitle,
+        "axes": [summarize_axes(ax) for ax in fig.axes],
+    }
+
+
+def summarize_plots(plt, saved):
+    figures = [plt.figure(num) for num in plt.get_fignums()]
+    summary = summarize_figure(figures[-1]) if figures else {
+        "size": [], "dpi": None, "suptitle": "", "axes": [],
+    }
+    summary["figure_count"] = len(figures)
+    summary["savefig"] = saved
+    return summary
+
+
+def resolve_plot_path(summary, path):
+    # Paths look like "axes[0].lines[1].color" or "axes.count".
+    current = summary
+    for part in path.split("."):
+        name, _, rest = part.partition("[")
+        if name == "count" and not rest:
+            if not isinstance(current, (list, dict)):
+                raise KeyError(path)
+            current = len(current)
+            continue
+        if name:
+            if not isinstance(current, dict) or name not in current:
+                raise KeyError(path)
+            current = current[name]
+        while rest:
+            index_text, _, rest = rest.partition("]")
+            rest = rest.lstrip("[")
+            if not isinstance(current, list):
+                raise KeyError(path)
+            index = int(index_text)
+            if index >= len(current) or index < -len(current):
+                raise KeyError(path)
+            current = current[index]
+    return current
+
+
+def plot_values_equal(actual, expected):
+    if isinstance(expected, bool) or isinstance(actual, bool):
+        return actual is expected
+    if isinstance(expected, (int, float)) and isinstance(actual, (int, float)):
+        return math.isclose(float(actual), float(expected), rel_tol=1e-3, abs_tol=1e-6)
+    if isinstance(expected, list) and isinstance(actual, list):
+        return len(actual) == len(expected) and all(
+            plot_values_equal(a, e) for a, e in zip(actual, expected)
+        )
+    if isinstance(expected, str) and isinstance(actual, str):
+        return actual.strip() == expected.strip()
+    return actual == expected
+
+
+def plot_check_passes(actual, expected):
+    if isinstance(expected, dict):
+        for op, value in expected.items():
+            if op == "min" and not (isinstance(actual, (int, float)) and actual >= value):
+                return False
+            if op == "max" and not (isinstance(actual, (int, float)) and actual <= value):
+                return False
+            if op == "one_of" and not any(plot_values_equal(actual, v) for v in value):
+                return False
+            if op == "contains" and not (isinstance(actual, (str, list)) and value in actual):
+                return False
+            if op not in {"min", "max", "one_of", "contains"}:
+                raise ValueError(f"Unknown plot check operator: {op}")
+        return True
+    return plot_values_equal(actual, expected)
+
+
+def run_plot_checks(summary, checks):
+    # Only hints go back to the student; expected values stay on the server.
+    hints = []
+    for check in checks:
+        path = str(check.get("path", ""))
+        try:
+            actual = resolve_plot_path(summary, path)
+            passed = plot_check_passes(actual, check.get("expected"))
+        except (KeyError, ValueError, IndexError):
+            passed = False
+        if not passed:
+            hint = str(check.get("hint") or "Check your chart against the instructions.")
+            if hint not in hints:
+                hints.append(hint)
+    return {"passed": not hints, "hints": hints}
+
+
+def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir=None):
+    add_python_paths(python_paths)
+    tree = ast.parse(code, mode="exec")
+    LabCodeValidator("matplotlib").visit(tree)
+    aliases = prepare_matplotlib_tree(tree)
+    compiled = compile(tree, "<student-code>", "exec")
+
+    import numpy as np
+    import pandas as pd
+
+    matplotlib, plt, saved = load_matplotlib(mplconfig_dir)
+    modules = {"numpy": np, "pandas": pd, "matplotlib": matplotlib, "matplotlib.pyplot": plt}
+    safe_globals = {"__builtins__": {**ALLOWED_CALLS, **MATPLOTLIB_EXTRA_CALLS}}
+    for alias, module_name in aliases.items():
+        safe_globals[alias] = modules[module_name]
+
+    stdout = io.StringIO()
+    with contextlib.redirect_stdout(stdout):
+        exec(compiled, safe_globals, safe_globals)
+
+    summary = summarize_plots(plt, saved)
+    plot = run_plot_checks(summary, plot_checks or [])
+    return stdout.getvalue(), summary, plot
 
 
 def add_python_paths(paths):
@@ -186,8 +519,23 @@ def main():
         payload = json.loads(sys.stdin.read() or "{}")
         code = str(payload.get("code", ""))
         profile = str(payload.get("profile", "plain_python"))
-        if profile not in {"plain_python", "pandas"}:
+        if profile not in {"plain_python", "pandas", "matplotlib"}:
             raise ValueError("Unknown code runner profile.")
+        if profile == "matplotlib":
+            checks = payload.get("plot_checks") or []
+            if not isinstance(checks, list):
+                raise ValueError("plot_checks must be a list.")
+            output, summary, plot = run_matplotlib_code(
+                code,
+                payload.get("python_paths", []),
+                checks,
+                payload.get("mplconfig_dir"),
+            )
+            result = {"ok": True, "stdout": output, "stderr": "", "error": None, "plot": plot}
+            if payload.get("include_summary"):
+                result["summary"] = summary
+            print(json.dumps(result))
+            return
         output = run_code(code, profile, payload.get("python_paths", []))
         print(json.dumps({"ok": True, "stdout": output, "stderr": "", "error": None}))
     except Exception as exc:

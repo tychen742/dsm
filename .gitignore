@@ -18,3 +18,6 @@ _build
 # Assignment artifacts
 assignments/*.zip
 assignments/**/*.zip
+
+# Files written when notebook examples run (book build or Live Code)
+chapters/06-matplotlib/assignments/regional_margin_q2.png
