@@ -18,11 +18,11 @@ Students should be able to:
 1. `0600-matplotlib.ipynb` - Landing
    - Chapter orientation, video, learning goals, flow, glossary, and slides.
 2. `0601-mpl.ipynb` - Matplotlib Basics and Stateful Plotting
-   - Matplotlib introduction, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and subplots.
+   - Matplotlib introduction, installation, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and `plt.subplot()` layouts.
 3. `0602-figures-axes.ipynb` - Matplotlib Figures and Axes
-   - Object-oriented figures and axes, `plt.subplots()`, multiple axes, `fig.suptitle()`, and saving figures with `dpi=`.
+   - Object-oriented figures and axes with `plt.subplots()`, multiple axes, `fig.suptitle()` and `sharey`; manual placement and insets with `fig.add_axes()`; figure size, DPI, and saving figures with `dpi=`.
 4. `0603-controls-plot-types.ipynb` - Matplotlib Controls and Common Plot Types
-   - Figure and axes controls, styles, colors, line settings, common plot types, `add_axes()`, and DPI.
+   - Figure and axes control tables, `rcParams` styling, legends, axis ranges, colors and line settings, and common plot types.
 5. `assignments/index.ipynb` - Assignments
    - Preview
    - Lab
@@ -42,8 +42,8 @@ Students should be able to:
 ## Exercise And Assignment Plan
 
 - Preview: introduce the chapter vocabulary and core terms before class.
-- Lab: server-graded plotting practice on one retailer's data: line plot with markers and labels (0601/0602), styled lines with a legend (0603), a 1x2 bar and histogram dashboard with `suptitle` (0602/0603), a scatter plot with axis limits (0603), and a saved report figure with `figsize` and `dpi` (0602). The grader checks chart properties, so pyplot and object-oriented solutions both pass.
-- Homework: server-graded reinforcement with five true/false concept checks and five plotting questions that extend the lab rather than repeat it: line width and marker shape (0603), overlapping histograms with `alpha` (0603), an `add_axes()` inset (0603), a shared-y comparison with an axes loop (0602/0603), and pandas plotting finished with Matplotlib (links ch05 and learning goal 4).
+- Lab: server-graded plotting practice on one retailer's data: line plot with markers and labels (0601/0602), styled lines with a legend (0603), a 1x2 bar and histogram dashboard with `suptitle` (0602/0603), a scatter plot with axis limits (0603), and a saved report figure with `figsize` and `dpi` (0602 Figure Size, Resolution, and Saving). The grader checks chart properties, so pyplot and object-oriented solutions both pass.
+- Homework: server-graded reinforcement with five true/false concept checks and five plotting questions that extend the lab rather than repeat it: line width and marker shape (0603), overlapping histograms with `alpha` (0603), an `add_axes()` inset (0602), a shared-y comparison with an axes loop (0602/0603), and pandas plotting finished with Matplotlib (links ch05 and learning goal 4).
 
 ## Maintenance Notes
 

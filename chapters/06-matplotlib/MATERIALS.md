@@ -7,9 +7,9 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 ## Active Source Notebooks
 
 - `0600-matplotlib.ipynb` - Landing: Chapter orientation, video, learning goals, flow, glossary, and slides.
-- `0601-mpl.ipynb` - Matplotlib Basics and Stateful Plotting: Matplotlib introduction, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and subplots.
-- `0602-figures-axes.ipynb` - Matplotlib Figures and Axes: Object-oriented figures and axes, `plt.subplots()`, multiple axes, `fig.suptitle()`, and saving figures with `dpi=`.
-- `0603-controls-plot-types.ipynb` - Matplotlib Controls and Common Plot Types: Figure and axes controls, styles, colors, line settings, common plot types, `add_axes()`, and DPI.
+- `0601-mpl.ipynb` - Matplotlib Basics and Stateful Plotting: Matplotlib introduction, installation, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and `plt.subplot()` layouts.
+- `0602-figures-axes.ipynb` - Matplotlib Figures and Axes: Object-oriented figures and axes with `plt.subplots()`, multiple axes, `fig.suptitle()` and `sharey`; manual placement and insets with `fig.add_axes()`; figure size, DPI, and saving figures with `dpi=`.
+- `0603-controls-plot-types.ipynb` - Matplotlib Controls and Common Plot Types: Figure and axes control tables, `rcParams` styling, legends, axis ranges, colors and line settings, and common plot types (scatter, bar, histogram, boxplot).
 
 ## Student Assignments
 
@@ -21,7 +21,7 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 ## Figures And Media
 
 - `0602-figures-axes.ipynb` saves an example figure to `../../_build/generated/filename.png`.
-- The Q5 lab solution writes `regional_margin_q2.png` next to `lab.ipynb` when executed; the file is ignored in `.gitignore`.
+- The Q5 lab solution writes `regional_margin_q2.png` next to `lab.ipynb`, and the `0602` Saving Figures exercise solution writes `quarterly_revenue.png` next to the notebook, when executed; both files are ignored in `.gitignore`.
 - Chapter overview video embedded in `0600-matplotlib.ipynb`.
 
 ## Supporting Code And Data

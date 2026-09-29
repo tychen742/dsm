@@ -125,17 +125,19 @@ Q4 ("saving a figure is useful for a report") is true on its face and tests noth
 
 ### S6. Section balance and structure
 
-- [ ] Move `## OO with add_axes()` (and its DPI subsection, or relocate DPI to Figure-Level Controls) from `0603` to `0602`.
+Done 2026-09-28 on branch `ch06-sections` (outline approved by the author).
+
+- [x] Move `## OO with add_axes()` (and its DPI subsection, or relocate DPI to Figure-Level Controls) from `0603` to `0602`. Now `0602` has `## Manual Placement with add_axes()` and `## Figure Size, Resolution, and Saving` (`figsize=` moved from `0603`, DPI, Saving Figures). Cell counts: `0602` 25 → 44, `0603` 70 → 54.
   - `0603` is 76 cells and 1.5 MB; `0602` has only one `##` heading.
   - `0602` cell 5 already promises `add_axes()`, and the section title "Figures and Axes" fits it.
-- [ ] Fix the `0601` opening:
+- [x] Fix the `0601` opening: one hidden setup cell, `{contents}` right after it, Introduction/Installation/Two Styles grouped under `## Introduction`, and `## Multiple Plots with plt.subplot()` promoted, giving three `##` headings. The "usual headers" text now shows the imports as a code block.
   - Merge import cells 1 and 6 into one `hide-input` cell right after the title.
   - Move `{contents}` directly after the imports cell.
   - Turn Introduction/Installation into regular content after the contents block.
   - Promote or re-home "Two Styles of Matplotlib Syntax" (currently an orphan `###` under Introduction).
   - Reach at least three `##` headings.
-- [ ] Add an exercise for "Saving Figures" in `0602`.
-- [ ] Reconcile the save path: code writes to `../../_build/generated`; `MATERIALS.md` says `../../figures/`.
+- [x] Add an exercise for "Saving Figures" in `0602`: save a quarterly revenue chart as `quarterly_revenue.png` at `dpi=150` (file ignored in `.gitignore`).
+- [x] Reconcile the save path: `MATERIALS.md` now records `../../_build/generated/filename.png`.
 
 ### S7. Glossary and learning objectives drift from content
 
@@ -185,7 +187,7 @@ Only the sales/visits exercise in `0603` is currently a business case.
   - [ ] curly quotes in the linestyle comment
   - [ ] `matplotlib.style.use` → `plt.style.use` for consistency
 - [ ] Seed random data (histogram `random.sample`, boxplot `np.random.normal`, sales exercise `np.random.normal`) so outputs are stable.
-- [ ] Fix the `0603` inset exercise prompt (cell 65): it says `x = np.linspace(0, 5, 50)` is defined, but the setup cell defines `np.linspace(0, 10, 50)`.
+- [x] Fix the inset exercise prompt (now in `0602`): it now says only that `x` is already defined.
 - [ ] Confirm whether the AGENTS.md "Spring 2026: chapters 1–8 are frozen" note is still in effect for Fall 2026.
 
 ## Completion Checklist
