@@ -16,7 +16,7 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
 - `assignments/lab.ipynb` - Chapter 06 server-graded lab (`ch06-lab`) with five plotting questions set in one small retailer: revenue trend line, actual vs forecast lines with legend, a two-panel bar and histogram dashboard with `suptitle`, an ad spend vs sales scatter with axis limits, and a report figure saved with `savefig` at a set dpi. Graded by the `matplotlib` runner profile with `plot_checks` in `_html_extra/api/lib/quiz-app.php`; regression test in `tests/grader/test_ch06_lab.py`.
-- `assignments/homework.ipynb` - Chapter 06 server-graded homework (`ch06-homework`) with five scenario-based true/false questions and five coding questions on figure size, legends, DPI, line styles, and axes titles.
+- `assignments/homework.ipynb` - Chapter 06 server-graded homework (`ch06-homework`) with five true/false questions and five plotting questions that extend the lab: sales vs target with line width and markers, two overlapping histograms with `alpha`, a full-year chart with a Q4 `add_axes()` inset, a three-region `sharey=True` comparison built in a `zip()` loop, and a `df.plot(ax=ax)` chart finished with Matplotlib. Coding questions are graded by the `matplotlib` runner profile with `plot_checks`; regression test in `tests/grader/test_ch06_homework.py`.
 
 ## Figures And Media
 

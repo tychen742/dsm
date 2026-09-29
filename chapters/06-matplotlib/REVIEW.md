@@ -57,10 +57,10 @@ Grader status (2026-09-28): items 1–4 built, not deployed. Details and the `pl
 
 Before the new lab goes live on the server:
 
-- [ ] `pip install matplotlib` in the grader venv.
-- [ ] Create a writable `mplconfig_dir`, set it in the private config, and warm the font cache as the web server user (README has the commands).
-- [ ] Consider `timeout_seconds` 5 for the matplotlib profile (warm run is about 0.5 s locally; the server may be slower).
-- [ ] Merge with the pandas-hardening task, which edits the same runner file.
+- [x] `pip install matplotlib` in the grader venv (3.10.9).
+- [x] `/var/www/dsm_private/mplconfig` (tychen:www-data, 2770) set as `mplconfig_dir` in the live config; font cache warmed.
+- [x] `timeout_seconds` raised to 5; runner on the server Python takes 0.8–1.0 s.
+- [ ] Merge with the pandas-hardening task, which edits the same runner file (still pending).
 
 #### New Lab (swapped in 2026-09-28)
 
@@ -81,10 +81,11 @@ Five plotting questions set in one small retailer, now in `assignments/lab.ipynb
 - [x] Section alignment in `0602`: new `fig.suptitle()` example (two regional revenue panels plotted against quarter labels), and the `savefig` example now uses `dpi=200` with a sentence on screen vs print resolution. Outputs copied from an executed run; saved file verified at 200 dpi.
 - The `data-lab-answers-release-at="2026-10-13..."` marker on the lab page is only a fallback when the settings API is unreachable; answer visibility follows the admin setting at `/api/admin/assignments.php`.
 - Existing ch06-lab attempts keep the scores they were given under the old questions.
+- Deployed 2026-09-28 (`4cb3cf1`, Build and Deploy run 36518745869). Live Q1 submission scored 2/2.
 
 ### M2. Homework coding questions do not use Matplotlib
 
-- [ ] Replace Q6–Q10 in `assignments/homework.ipynb`.
+- [x] Replace Q6–Q10 in `assignments/homework.ipynb`. Done 2026-09-28 on branch `ch06-homework`: five plotting questions (sales vs target, two stores with `alpha`, Q4 `add_axes()` inset, `sharey` regional comparison, `df.plot(ax=ax)` polish), solutions executed, `ch06-homework` switched to `plot_checks`, test `tests/grader/test_ch06_homework.py` (29 passed). Grader summary gained `alpha`, axes `position`, and figure `sharex`/`sharey`. `0602` now explains `sharey=True`.
 
 Current questions compute figure area, inches times DPI, and similar. Q7 and Q10 are the same append-in-a-loop task with different labels.
 
@@ -115,8 +116,8 @@ File: `0600-matplotlib.ipynb`
 
 ### M5. Homework true/false questions restate definitions
 
-- [ ] Rewrite Q1–Q5 in `assignments/homework.ipynb` as short management or workplace scenarios that require applying the concept.
-- [ ] Keep a 3:2 or 2:3 True/False balance (currently 3 True, 2 False).
+- [x] Rewrite Q1–Q5 in `assignments/homework.ipynb` as short management or workplace scenarios that require applying the concept. Done 2026-09-28: dashboard title vs `suptitle`, object-oriented vs stateful plotting, plot type for a distribution, shared y-axis, and `savefig` dpi for print.
+- [x] Keep a 3:2 or 2:3 True/False balance: now F, T, F, T, T (was T, T, F, T, F). The homework test checks the key against the solution cells and the balance.
 
 Q4 ("saving a figure is useful for a report") is true on its face and tests nothing.
 

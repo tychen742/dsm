@@ -8,23 +8,13 @@ defined in _html_extra/api/lib/quiz-app.php:
 - the unedited question cell must fail,
 - common wrong answers must fail with a hint.
 
-The checks are read from quiz-app.php through PHP, so the test fails if the
-notebook and the grader definition drift apart. PHP comes from $DSM_PHP, a
-working `php` on PATH, or the php:8.4-cli Docker image.
-
 Run with:  .venv/bin/python tests/grader/test_ch06_lab.py   (or pytest)
 """
 
-import json
-import os
-import shutil
-import subprocess
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-API = ROOT / "_html_extra" / "api"
-RUNNER = API / "lib" / "python_lab_runner.py"
+from grader_helpers import ROOT, assignment_definition, check_questions, notebook_code_cells, report
+
 LAB = ROOT / "chapters" / "06-matplotlib" / "assignments" / "lab.ipynb"
 LAB_ID = "ch06-lab"
 
@@ -52,90 +42,16 @@ WRONG_ANSWERS = {
 }
 
 
-def grader_python():
-    if os.environ.get("DSM_GRADER_PYTHON"):
-        return os.environ["DSM_GRADER_PYTHON"]
-    venv = ROOT / ".venv" / "bin" / "python"
-    return str(venv) if venv.exists() else sys.executable
-
-
-def php_command():
-    if os.environ.get("DSM_PHP"):
-        return [os.environ["DSM_PHP"]], "/"
-    php = shutil.which("php")
-    if php:
-        try:
-            if subprocess.run([php, "-v"], capture_output=True).returncode == 0:
-                return [php], "/"
-        except OSError:
-            pass  # e.g. a php binary built for another CPU
-    if shutil.which("docker"):
-        return ["docker", "run", "--rm", "-v", f"{API}:/api:ro", "php:8.4-cli", "php"], "/api"
-    raise RuntimeError("No PHP found. Set DSM_PHP or install Docker.")
-
-
-def lab_definition():
-    command, api_root = php_command()
-    api_dir = str(API) if api_root == "/" else api_root
-    script = (
-        f"require '{api_dir}/lib/quiz-app.php'; "
-        f"echo json_encode(dsm_lab_definition('{LAB_ID}'));"
-    )
-    result = subprocess.run(command + ["-r", script], capture_output=True, text=True, check=True)
-    return json.loads(result.stdout)
-
-
-def lab_cells():
-    notebook = json.loads(LAB.read_text())
-    questions, solutions = [], []
-    for cell in notebook["cells"]:
-        tags = cell.get("metadata", {}).get("tags", [])
-        source = "".join(cell["source"])
-        if "thebe-interactive" in tags:
-            questions.append(source)
-        elif "lab-answer" in tags:
-            solutions.append(source)
-    # The submit panel sends the first five question cells as q1..q5.
-    return questions[:5], solutions[:5]
-
-
-def run_checks(code, checks):
-    payload = json.dumps({"profile": "matplotlib", "code": code, "plot_checks": checks})
-    result = subprocess.run(
-        [grader_python(), "-I", str(RUNNER)], input=payload, capture_output=True, text=True, check=True
-    )
-    return json.loads(result.stdout)
-
-
-def student_submission(question, solution):
-    body = solution.split("\n", 1)[1]
-    return question.replace("### Your code starts here.", "### Your code starts here.\n" + body, 1)
-
-
 def collect_results():
-    definition = lab_definition()
+    definition = assignment_definition("dsm_lab_definition", LAB_ID)
     checks = definition["plot_checks"]
-    questions, solutions = lab_cells()
-    results = []
-
+    questions, solutions = notebook_code_cells(LAB, "lab-answer")
     ids = [f"q{n}" for n in range(1, len(questions) + 1)]
-    results.append(("definition", "question ids match notebook", sorted(checks) == ids, ""))
-    results.append(("definition", "runner profile", definition.get("runner_profile") == "matplotlib", ""))
-
-    for qid, question, solution in zip(ids, questions, solutions):
-        cases = [
-            ("reference solution", solution, True),
-            ("student submission", student_submission(question, solution), True),
-            ("unedited question", question, False),
-        ]
-        cases += [(name, code, False) for name, code in WRONG_ANSWERS.get(qid, {}).items()]
-        for name, code, should_pass in cases:
-            run = run_checks(code, checks.get(qid, []))
-            passed = bool(run.get("ok")) and bool(run.get("plot", {}).get("passed"))
-            detail = run.get("error") or " ".join(run.get("plot", {}).get("hints", []))
-            has_hint = should_pass or bool(detail)
-            results.append((qid, name, passed == should_pass and has_hint, detail))
-    return results
+    results = [
+        ("definition", "question ids match notebook", sorted(checks) == ids, ""),
+        ("definition", "runner profile", definition.get("runner_profile") == "matplotlib", ""),
+    ]
+    return results + check_questions(ids, questions, solutions, checks, WRONG_ANSWERS)
 
 
 def test_ch06_lab():
@@ -144,9 +60,4 @@ def test_ch06_lab():
 
 
 if __name__ == "__main__":
-    all_results = collect_results()
-    for qid, name, ok, detail in all_results:
-        print(f"{'ok  ' if ok else 'FAIL'} {qid:10s} {name:32s} {detail}")
-    failed = sum(1 for r in all_results if not r[2])
-    print(f"{len(all_results) - failed} passed, {failed} failed")
-    sys.exit(1 if failed else 0)
+    sys.exit(report(collect_results()))

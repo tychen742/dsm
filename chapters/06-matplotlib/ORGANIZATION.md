@@ -43,7 +43,7 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Lab: server-graded plotting practice on one retailer's data: line plot with markers and labels (0601/0602), styled lines with a legend (0603), a 1x2 bar and histogram dashboard with `suptitle` (0602/0603), a scatter plot with axis limits (0603), and a saved report figure with `figsize` and `dpi` (0602). The grader checks chart properties, so pyplot and object-oriented solutions both pass.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Homework: server-graded reinforcement with five true/false concept checks and five plotting questions that extend the lab rather than repeat it: line width and marker shape (0603), overlapping histograms with `alpha` (0603), an `add_axes()` inset (0603), a shared-y comparison with an axes loop (0602/0603), and pandas plotting finished with Matplotlib (links ch05 and learning goal 4).
 
 ## Maintenance Notes
 
