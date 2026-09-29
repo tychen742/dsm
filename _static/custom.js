@@ -184,8 +184,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // cells are visible. The old timestamp marker remains as a fallback.
     // -----------------------------------------------------------
     function answerLockMarker() {
-        return document.querySelector('[data-assignment-answers]')
+        var marker = document.querySelector('[data-assignment-answers]')
             || document.querySelector('[data-lab-answers-release-at]');
+        if (marker) return marker;
+        // Assignment pages without a marker (e.g. homework) still follow
+        // the admin setting; the lock notice goes after the page title.
+        if (assignmentIdFromPath() && answerCells().length) {
+            return document.querySelector('.bd-article h1, article h1, main h1');
+        }
+        return null;
     }
 
     function assignmentIdFromPath() {
