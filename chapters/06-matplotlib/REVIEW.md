@@ -225,5 +225,5 @@ Pass B (restructure; outline approved by the author), done 2026-09-29:
 - [x] Replace the four opening reference tables: cut what 0602 already teaches, trim to one short Quick Reference, and move it to the end. The page now opens with Styling in Practice; "`rcParams`" is now "Style Sheets and `rcParams`".
 - [x] Rebalance exercises: the three line-styling exercises became one ("Style a Revenue Chart"); new exercises for legends, a scatter plot, and a boxplot; the bar-and-histogram exercise moved under Histogram. Five exercises became six.
 - [x] Split the 16-line style gallery into three labeled panels (line widths, line styles, markers); dropped `line.set_dashes()` and the marker `'1'`.
-- Possible follow-up (author's idea): put Common Plot Types before Styling in Practice.
+- Author's direction (2026-09-29): keep styling first, and use it when teaching plot types. Done: the scatter highlights the current price with a legend, the bar chart is sorted with only the leader colored and a takeaway title, the histogram has white bin edges and a median line, and the boxplot has filled boxes, a title, and a y-axis from zero. The section intro says the examples reuse the styling tools.
 
