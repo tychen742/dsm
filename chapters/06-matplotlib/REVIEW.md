@@ -141,11 +141,13 @@ Done 2026-09-28 on branch `ch06-sections` (outline approved by the author).
 
 ### S7. Glossary and learning objectives drift from content
 
-- [ ] Remove or teach glossary terms with no real coverage: Artist (never taught), Style sheet, Tick.
-- [ ] Add terms that are taught: `plt.subplots()`, `savefig`, DPI, `tight_layout`, rcParams, format string, alpha, inset axes, boxplot, stateful (pyplot) interface.
-- [ ] Revise objectives with no matching content: #1 (artists), #3 ("scales"), #5 (customization layer under pandas and Seaborn). Either add content or reword.
-- [ ] Align `ORGANIZATION.md` Learning Goals (4 items) with the landing page (5 items).
-- [ ] Regenerate the preview questions from the revised glossary.
+Done 2026-09-29 on branch `ch06-glossary`.
+
+- [x] Remove or teach glossary terms with no real coverage: removed Artist; kept Style sheet (`plt.style.use` in 0603 rcParams) and Tick (0602 figure/axes table, 0603 rcParams), with explanations tied to that content.
+- [x] Add terms that are taught (glossary now 34 terms, each checked against the section text): `plt.subplots()`, `savefig`, DPI, `tight_layout`, rcParams, format string, alpha, inset axes, boxplot, stateful (pyplot) interface.
+- [x] Revise objectives with no matching content (rewritten; five goals now map to 0601–0603 and the lab/homework): #1 (artists), #3 ("scales"), #5 (customization layer under pandas and Seaborn). Either add content or reword.
+- [x] Align `ORGANIZATION.md` Learning Goals with the landing page (same five goals).
+- [x] Regenerate the preview questions from the revised glossary: ten new questions; test `tests/grader/test_ch06_preview.py` (23 passed).
 
 ### S8. No index entries
 
@@ -166,7 +168,7 @@ Only the sales/visits exercise in `0603` is currently a business case.
 
 ### S11. Preview answer key is a fixed pattern
 
-- [ ] Shuffle the correct-answer positions for `ch06-preview` in `_html_extra/api/lib/quiz-app.php` and in `preview.ipynb`.
+- [x] Shuffle the correct-answer positions for `ch06-preview`: key is now C, A, D, B, D, A, B, C, D, A (done with S7). The preview test fails if the key returns to a fixed cycle.
 - [ ] Book-wide follow-up: ch07 and ch08 use the same A-B-C-D-A-B… key. Decide whether to fix all chapters.
 
 ### S12. Slides are still the template

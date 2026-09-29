@@ -8,10 +8,13 @@ Chapter 06 teaches Matplotlib as the lower-level plotting tool students can use 
 
 Students should be able to:
 
-1. Create basic Matplotlib figures and axes.
-2. Plot common chart types with explicit labels and titles.
-3. Customize chart appearance to support clear communication.
-4. Use Matplotlib when a business chart needs more control than pandas plotting provides.
+1. Distinguish a figure from its axes and build single- and multi-chart figures with `plt.subplots()`.
+2. Create line, bar, scatter, histogram, and box plots that match a management question about trend, comparison, relationship, or distribution.
+3. Label and style charts with titles, axis labels, legends, colors, line styles, markers, transparency, and axis ranges.
+4. Arrange charts for comparison with subplots, shared axes, figure titles, and `add_axes()` insets.
+5. Set figure size and resolution, save figures for reports, and finish pandas plots with Matplotlib methods.
+
+These match the Learning Goals on `0600-matplotlib.ipynb`.
 
 ## Sequence
 
