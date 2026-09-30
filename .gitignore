@@ -22,3 +22,4 @@ assignments/**/*.zip
 # Files written when notebook examples run (book build or Live Code)
 chapters/06-matplotlib/assignments/regional_margin_q2.png
 chapters/06-matplotlib/quarterly_revenue.png
+chapters/06-matplotlib/report.mplstyle

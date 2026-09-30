@@ -21,7 +21,7 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 ## Figures And Media
 
 - `0602-figures-axes.ipynb` saves an example figure to `../../_build/generated/monthly_revenue.png`.
-- The Q5 lab solution writes `regional_margin_q2.png` next to `lab.ipynb`, and the `0602` Saving Figures exercise solution writes `quarterly_revenue.png` next to the notebook, when executed; both files are ignored in `.gitignore`.
+- The Q5 lab solution writes `regional_margin_q2.png` next to `lab.ipynb`, the `0602` Saving Figures exercise solution writes `quarterly_revenue.png`, and the `0603` Style Sheets example writes `report.mplstyle` next to the notebook, when executed; all three files are ignored in `.gitignore`.
 - Chapter overview video embedded in `0600-matplotlib.ipynb`.
 
 ## Supporting Code And Data
