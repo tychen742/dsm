@@ -9,7 +9,7 @@ Chapter 06 introduces Matplotlib for explicit control over Python visualizations
 - `0600-matplotlib.ipynb` - Landing: Chapter orientation, video, learning goals, flow, glossary, and slides.
 - `0601-mpl.ipynb` - Matplotlib Basics: Matplotlib introduction, installation, syntax styles, stateful pyplot commands, first plots, labels, titles, legends, and `plt.subplot()` layouts.
 - `0602-figures-axes.ipynb` - Figures and Axes: Object-oriented figures and axes with `plt.subplots()`, multiple axes, `fig.suptitle()` and `sharey`; manual placement and insets with `fig.add_axes()`; figure size, DPI, and saving figures with `dpi=`.
-- `0603-controls-plot-types.ipynb` - Styling and Plot Types: Style sheets and `rcParams`, legends, axis ranges, colors and line and marker styles; common plot types (scatter, bar, histogram, boxplot), each with a one-sentence business takeaway; six exercises; a closing Quick Reference table.
+- `0603-controls-plot-types.ipynb` - Styling and Plot Types: A three-level overview (`rcParams`, style sheets, arguments), then `rcParams`, style sheets, legends, axis ranges, colors and line and marker styles; common plot types (scatter, bar, histogram, boxplot), each with a one-sentence business takeaway; six exercises; a closing Quick Reference table.
 
 ## Student Assignments
 

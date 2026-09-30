@@ -25,7 +25,7 @@ These match the Learning Goals on `0600-matplotlib.ipynb`.
 3. `0602-figures-axes.ipynb` - Figures and Axes
    - Object-oriented figures and axes with `plt.subplots()`, multiple axes, `fig.suptitle()` and `sharey`; manual placement and insets with `fig.add_axes()`; figure size, DPI, and saving figures with `dpi=`.
 4. `0603-controls-plot-types.ipynb` - Styling and Plot Types
-   - Style sheets and `rcParams`, legends, axis ranges, colors and line and marker styles; common plot types (scatter, bar, histogram, boxplot), each with a one-sentence business takeaway; six exercises; a closing Quick Reference table.
+   - A three-level overview (`rcParams`, style sheets, arguments), then `rcParams`, style sheets, legends, axis ranges, colors and line and marker styles; common plot types (scatter, bar, histogram, boxplot), each with a one-sentence business takeaway; six exercises; a closing Quick Reference table.
 5. `assignments/index.ipynb` - Assignments
    - Preview
    - Lab
