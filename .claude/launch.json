@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dsm-local-build",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8889", "--bind", "127.0.0.1", "--directory", "/Users/tychen/workspace/dsm/_build/html"],
+      "port": 8889
+    }
+  ]
+}
