@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" font-family="Calibri, Segoe UI, sans-serif">
+  <rect x="0" y="0" width="640" height="400" fill="#ffffff"/>
+  <!-- column headers -->
+  <text x="150" y="44" font-size="24" font-weight="700" fill="#b8860b" text-anchor="middle">index (labels)</text>
+  <text x="390" y="44" font-size="24" font-weight="700" fill="#2a6b37" text-anchor="middle">values</text>
+  <!-- rows -->
+  <g font-size="26">
+    <rect x="60" y="64" width="180" height="56" rx="8" fill="#fbf3df"/>
+    <rect x="300" y="64" width="180" height="56" rx="8" fill="#eef5ef"/>
+    <text x="150" y="101" text-anchor="middle" fill="#1f2328">'North'</text>
+    <text x="390" y="101" text-anchor="middle" fill="#1f2328">120</text>
+
+    <rect x="60" y="132" width="180" height="56" rx="8" fill="#fbf3df"/>
+    <rect x="300" y="132" width="180" height="56" rx="8" fill="#eef5ef"/>
+    <text x="150" y="169" text-anchor="middle" fill="#1f2328">'South'</text>
+    <text x="390" y="169" text-anchor="middle" fill="#1f2328">95</text>
+
+    <rect x="60" y="200" width="180" height="56" rx="8" fill="#fbf3df"/>
+    <rect x="300" y="200" width="180" height="56" rx="8" fill="#eef5ef"/>
+    <text x="150" y="237" text-anchor="middle" fill="#1f2328">'West'</text>
+    <text x="390" y="237" text-anchor="middle" fill="#1f2328">143</text>
+  </g>
+  <!-- arrows label to value -->
+  <g stroke="#59636e" stroke-width="2" fill="none">
+    <path d="M244 92 H294"/><path d="M244 160 H294"/><path d="M244 228 H294"/>
+  </g>
+  <!-- dtype and name -->
+  <rect x="300" y="276" width="180" height="44" rx="8" fill="#ffffff" stroke="#2a6b37" stroke-width="2"/>
+  <text x="390" y="305" font-size="22" text-anchor="middle" fill="#2a6b37">dtype: int64</text>
+  <text x="520" y="101" font-size="20" fill="#59636e">one column</text>
+  <text x="520" y="127" font-size="20" fill="#59636e">of data</text>
+  <text x="60" y="370" font-size="22" fill="#59636e">ser.loc['South']  →  95      ser.iloc[1]  →  95</text>
+</svg>
