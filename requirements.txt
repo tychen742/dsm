@@ -12,6 +12,5 @@ lxml>=4.9           # pandas.read_html (0402)
 sqlalchemy>=2.0     # pandas.read_sql (0402)
 # plotly>=5.0
 # folium>=0.14
-# datascience>=0.17
 # otter-grader>=6.0
 # jupytext>=1.16
