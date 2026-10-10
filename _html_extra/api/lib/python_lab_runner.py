@@ -115,6 +115,12 @@ MATPLOTLIB_EXTRA_NODES = (
 
 MATPLOTLIB_IMPORTS = {"numpy", "pandas", "matplotlib", "matplotlib.pyplot"}
 
+# Seaborn profile: the matplotlib profile plus seaborn. Dataset loaders are
+# blocked because they read files or the network; labs supply inline data.
+SEABORN_IMPORTS = MATPLOTLIB_IMPORTS | {"seaborn"}
+
+PLOT_PROFILES = {"matplotlib", "seaborn"}
+
 MATPLOTLIB_BLOCKED_ATTRIBUTES = {
     "api",
     "backends",
@@ -127,6 +133,8 @@ MATPLOTLIB_BLOCKED_ATTRIBUTES = {
     "eval",
     "fromfile",
     "fromregex",
+    "get_data_home",
+    "get_dataset_names",
     "genfromtxt",
     "get_cachedir",
     "get_configdir",
@@ -135,6 +143,7 @@ MATPLOTLIB_BLOCKED_ATTRIBUTES = {
     "io",
     "lib",
     "load",
+    "load_dataset",
     "loadtxt",
     "matplotlib",
     "memmap",
@@ -162,7 +171,7 @@ class LabCodeValidator(ast.NodeVisitor):
     def __init__(self, profile="plain_python"):
         self.profile = profile
         self.allowed_nodes = ALLOWED_NODES
-        if profile == "matplotlib":
+        if profile in PLOT_PROFILES:
             self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES
 
     def generic_visit(self, node):
@@ -175,6 +184,12 @@ class LabCodeValidator(ast.NodeVisitor):
             for alias in node.names:
                 if alias.name not in MATPLOTLIB_IMPORTS:
                     raise ValueError("Only numpy, pandas, and matplotlib imports are allowed in this lab.")
+            self.generic_visit(node)
+            return
+        if self.profile == "seaborn":
+            for alias in node.names:
+                if alias.name not in SEABORN_IMPORTS:
+                    raise ValueError("Only numpy, pandas, matplotlib, and seaborn imports are allowed in this lab.")
             self.generic_visit(node)
             return
         if self.profile != "pandas":
@@ -192,7 +207,7 @@ class LabCodeValidator(ast.NodeVisitor):
     def visit_Attribute(self, node):
         if node.attr.startswith("__"):
             raise ValueError("Attributes beginning with __ are not allowed.")
-        if self.profile == "matplotlib" and matplotlib_attribute_blocked(node.attr):
+        if self.profile in PLOT_PROFILES and matplotlib_attribute_blocked(node.attr):
             raise ValueError(f"{node.attr} is not allowed in this lab.")
         self.generic_visit(node)
 
@@ -235,8 +250,10 @@ def matplotlib_attribute_blocked(name):
     return False
 
 
-def prepare_matplotlib_tree(tree):
+def prepare_matplotlib_tree(tree, profile="matplotlib"):
     aliases = {"pd": "pandas", "np": "numpy", "plt": "matplotlib.pyplot"}
+    if profile == "seaborn":
+        aliases["sns"] = "seaborn"
     body = []
     for node in tree.body:
         if isinstance(node, ast.Import):
@@ -345,11 +362,20 @@ def summarize_axes(ax):
     for collection in ax.collections:
         if isinstance(collection, PathCollection):
             label = collection.get_label() or ""
+            facecolors = collection.get_facecolors()
             scatters.append({
                 "points": len(collection.get_offsets()),
+                "colors": len({tuple(round(float(v), 4) for v in color[:3]) for color in facecolors}),
                 "label": "" if label.startswith("_") else label,
                 "alpha": plot_alpha(collection.get_alpha()),
             })
+
+    # Seaborn box plots add one BoxPlotContainer per hue level (or one for all).
+    boxes = sum(
+        len(getattr(container, "boxes", []))
+        for container in ax.containers
+        if type(container).__name__ == "BoxPlotContainer"
+    )
 
     legend = ax.get_legend()
     return {
@@ -365,7 +391,11 @@ def summarize_axes(ax):
         "lines": lines,
         "bars": bars,
         "scatters": scatters,
+        "boxes": boxes,
+        "meshes": sum(1 for c in ax.collections if type(c).__name__ == "QuadMesh"),
+        "texts": [t.get_text() for t in ax.texts],
         "legend": [t.get_text() for t in legend.get_texts()] if legend else [],
+        "legend_title": legend.get_title().get_text() if legend else "",
         "has_legend": legend is not None,
     }
 
@@ -383,6 +413,9 @@ def summarize_figure(fig):
         "sharex": len(axes) > 1 and all(first.get_shared_x_axes().joined(first, ax) for ax in axes),
         "sharey": len(axes) > 1 and all(first.get_shared_y_axes().joined(first, ax) for ax in axes),
         "axes": [summarize_axes(ax) for ax in axes],
+        # Figure-level Seaborn functions (relplot, catplot, displot) put the
+        # hue legend on the figure rather than on an axes.
+        "figure_legend": [t.get_text() for legend in fig.legends for t in legend.get_texts()],
     }
 
 
@@ -390,6 +423,7 @@ def summarize_plots(plt, saved):
     figures = [plt.figure(num) for num in plt.get_fignums()]
     summary = summarize_figure(figures[-1]) if figures else {
         "size": [], "dpi": None, "suptitle": "", "sharex": False, "sharey": False, "axes": [],
+        "figure_legend": [],
     }
     summary["figure_count"] = len(figures)
     summary["savefig"] = saved
@@ -470,11 +504,11 @@ def run_plot_checks(summary, checks):
     return {"passed": not hints, "hints": hints}
 
 
-def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir=None):
+def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir=None, profile="matplotlib"):
     add_python_paths(python_paths)
     tree = ast.parse(code, mode="exec")
-    LabCodeValidator("matplotlib").visit(tree)
-    aliases = prepare_matplotlib_tree(tree)
+    LabCodeValidator(profile).visit(tree)
+    aliases = prepare_matplotlib_tree(tree, profile)
     compiled = compile(tree, "<student-code>", "exec")
 
     import numpy as np
@@ -482,6 +516,10 @@ def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir
 
     matplotlib, plt, saved = load_matplotlib(mplconfig_dir)
     modules = {"numpy": np, "pandas": pd, "matplotlib": matplotlib, "matplotlib.pyplot": plt}
+    if profile == "seaborn":
+        import seaborn
+
+        modules["seaborn"] = seaborn
     safe_globals = {"__builtins__": {**ALLOWED_CALLS, **MATPLOTLIB_EXTRA_CALLS}}
     for alias, module_name in aliases.items():
         safe_globals[alias] = modules[module_name]
@@ -531,9 +569,9 @@ def main():
         payload = json.loads(sys.stdin.read() or "{}")
         code = str(payload.get("code", ""))
         profile = str(payload.get("profile", "plain_python"))
-        if profile not in {"plain_python", "pandas", "matplotlib"}:
+        if profile not in {"plain_python", "pandas"} | PLOT_PROFILES:
             raise ValueError("Unknown code runner profile.")
-        if profile == "matplotlib":
+        if profile in PLOT_PROFILES:
             checks = payload.get("plot_checks") or []
             if not isinstance(checks, list):
                 raise ValueError("plot_checks must be a list.")
@@ -542,6 +580,7 @@ def main():
                 payload.get("python_paths", []),
                 checks,
                 payload.get("mplconfig_dir"),
+                profile,
             )
             result = {"ok": True, "stdout": output, "stderr": "", "error": None, "plot": plot}
             if payload.get("include_summary"):

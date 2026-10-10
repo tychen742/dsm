@@ -63,8 +63,8 @@ def notebook_code_cells(path, answer_tag):
     return questions[:5], answers[:5]
 
 
-def run_plot_checks(code, checks):
-    payload = json.dumps({"profile": "matplotlib", "code": code, "plot_checks": checks})
+def run_plot_checks(code, checks, profile="matplotlib"):
+    payload = json.dumps({"profile": profile, "code": code, "plot_checks": checks})
     result = subprocess.run(
         [grader_python(), "-I", str(RUNNER)], input=payload, capture_output=True, text=True, check=True
     )
@@ -77,11 +77,19 @@ def student_submission(question, solution):
     return question.replace("### Your code starts here.", "### Your code starts here.\n" + body, 1)
 
 
-def check_questions(ids, questions, solutions, checks, wrong_answers):
+def normalize_output(text):
+    """Match dsm_normalize_lab_output() in quiz-app.php."""
+    return "\n".join(line.rstrip() for line in text.replace("\r\n", "\n").strip().split("\n"))
+
+
+def check_questions(ids, questions, solutions, checks, wrong_answers, profile="matplotlib", outputs=None):
     """Grade solutions, filled-in submissions, unedited questions, and wrong answers.
 
+    A case passes when the plot checks pass and, if the question has an
+    expected output in `outputs`, the normalized stdout matches it.
     Returns (question id, case name, ok, detail) tuples.
     """
+    outputs = outputs or {}
     results = []
     for qid, question, solution in zip(ids, questions, solutions):
         cases = [
@@ -91,9 +99,14 @@ def check_questions(ids, questions, solutions, checks, wrong_answers):
         ]
         cases += [(name, code, False) for name, code in wrong_answers.get(qid, {}).items()]
         for name, code, should_pass in cases:
-            run = run_plot_checks(code, checks.get(qid, []))
+            run = run_plot_checks(code, checks.get(qid, []), profile)
             passed = bool(run.get("ok")) and bool(run.get("plot", {}).get("passed"))
             detail = run.get("error") or " ".join(run.get("plot", {}).get("hints", []))
+            if qid in outputs and run.get("ok"):
+                output_ok = normalize_output(run.get("stdout", "")) == normalize_output(outputs[qid])
+                passed = passed and output_ok
+                if not output_ok:
+                    detail = (detail + " Output did not match.").strip()
             has_hint = should_pass or bool(detail)
             results.append((qid, name, passed == should_pass and has_hint, detail))
     return results

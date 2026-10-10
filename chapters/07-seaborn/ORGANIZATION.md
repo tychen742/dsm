@@ -43,8 +43,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with tidy observations, hue counts, facet groups, category means, and semantic mappings.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded Seaborn plotting tasks (`seaborn` runner profile with plot checks): histogram, scatter plot with `hue`, wide-to-tidy `melt()` with a grouped bar plot, box plot with a median comparison, and a faceted `relplot()`.
+- Homework: five scenario-based true/false checks (tidy data, hue, figure- vs axes-level functions, box plots, themes) and five Seaborn plotting questions graded by plot checks: count plot, KDE by group, line plot by group, correlation heatmap, and a faceted `displot()`.
 
 ## Maintenance Notes
 

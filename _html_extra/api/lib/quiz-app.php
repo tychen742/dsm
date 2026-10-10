@@ -845,18 +845,56 @@ Outliers: [210]',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch07-lab',
+            'runner_profile' => 'seaborn',
             'code_outputs' => [
-                'q1' => 'Observations: 5
-Variables: 3',
-                'q2' => 'Retail: 3
-Online: 2',
-                'q3' => 'Facets: [\'East\', \'North\', \'West\']
-Facet count: 3',
-                'q4' => 'Basic mean: 7.0
-Premium mean: 9.0',
-                'q5' => 'X variable: ad_spend
-Y variable: revenue
-Hue variable: region',
+                'q3' => 'Tidy rows: 8',
+                'q4' => 'Fastest median: Overnight',
+            ],
+            'plot_checks' => [
+                'q1' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.histplot() with ax=ax.'],
+                    ['path' => 'axes[0].bars.count', 'expected' => 1, 'hint' => 'Draw one histogram with sns.histplot().'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'order_value', 'hint' => 'Use the order_value column for x.'],
+                    ['path' => 'axes[0].bars[0].bars', 'expected' => 6, 'hint' => 'Use bins=6.'],
+                    ['path' => 'axes[0].bars[0].heights', 'expected' => [2, 3, 2, 2, 1, 2], 'hint' => 'Plot all twelve order values from orders.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Order Values', 'hint' => 'Check the chart title.'],
+                ],
+                'q2' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.scatterplot() with ax=ax.'],
+                    ['path' => 'axes[0].scatters.count', 'expected' => 1, 'hint' => 'Draw one scatter plot with sns.scatterplot().'],
+                    ['path' => 'axes[0].scatters[0].points', 'expected' => 8, 'hint' => 'Plot all eight campaigns.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'ad_spend', 'hint' => 'Put ad_spend on the x-axis.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'revenue', 'hint' => 'Put revenue on the y-axis.'],
+                    ['path' => 'axes[0].scatters[0].colors', 'expected' => 2, 'hint' => 'Color the points by region with hue=\'region\'.'],
+                    ['path' => 'axes[0].legend_title', 'expected' => 'region', 'hint' => 'Color the points by region with hue=\'region\'.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Ad Spend vs Revenue', 'hint' => 'Check the chart title.'],
+                ],
+                'q3' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.barplot() with ax=ax.'],
+                    ['path' => 'axes[0].bars.count', 'expected' => 2, 'hint' => 'Color the bars by region with hue=\'region\'; use the tidy DataFrame.'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['Q1', 'Q2', 'Q3', 'Q4'], 'hint' => 'Put quarter on the x-axis.'],
+                    ['path' => 'axes[0].bars[0].heights', 'expected' => [150, 165, 158, 180], 'hint' => 'Use revenue from tidy for the bar heights.'],
+                    ['path' => 'axes[0].bars[1].heights', 'expected' => [120, 118, 135, 142], 'hint' => 'Use revenue from tidy for the bar heights.'],
+                    ['path' => 'axes[0].legend_title', 'expected' => 'region', 'hint' => 'Color the bars by region with hue=\'region\'.'],
+                ],
+                'q4' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.boxplot() with ax=ax.'],
+                    ['path' => 'axes[0].boxes', 'expected' => 3, 'hint' => 'Draw one box per shipping method with sns.boxplot().'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['Standard', 'Express', 'Overnight'], 'hint' => 'Put method on the x-axis.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'days', 'hint' => 'Put days on the y-axis.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Delivery Days by Method', 'hint' => 'Check the chart title.'],
+                ],
+                'q5' => [
+                    ['path' => 'figure_count', 'expected' => 1, 'hint' => 'sns.relplot() makes its own figure; do not also call plt.subplots().'],
+                    ['path' => 'axes.count', 'expected' => 3, 'hint' => 'Use col=\'region\' to get one panel per region.'],
+                    ['path' => 'axes[0].title', 'expected' => 'region = East', 'hint' => 'Use col=\'region\' to get one panel per region.'],
+                    ['path' => 'axes[1].title', 'expected' => 'region = West', 'hint' => 'Use col=\'region\' to get one panel per region.'],
+                    ['path' => 'axes[2].title', 'expected' => 'region = North', 'hint' => 'Use col=\'region\' to get one panel per region.'],
+                    ['path' => 'axes[0].scatters[0].points', 'expected' => 4, 'hint' => 'Draw a scatter plot (the default kind) of discount vs units.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'discount', 'hint' => 'Put discount on the x-axis.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'units', 'hint' => 'Put units on the y-axis.'],
+                    ['path' => 'size', 'expected' => [9, 3], 'hint' => 'Use height=3.'],
+                ],
             ],
         ],
         'ch08-lab' => [
@@ -901,7 +939,8 @@ Control mean: 100.0',
 Version B rate: 0.14',
                 'q4' => 'Extreme differences: 2',
                 'q5' => 'Conditions met: 2
-Ready for causal claim: False',
+Ready for causal claim: True
+Small sample: True',
             ],
         ],
         'ch11-lab' => [
@@ -974,7 +1013,7 @@ False positives: 1',
 Distance to B: 13',
                 'q2' => 'Assigned cluster: A',
                 'q3' => 'New center: 12.0',
-                'q4' => 'Elbow k: 4',
+                'q4' => 'Elbow k: 3',
                 'q5' => 'Cluster A: 3
 Cluster B: 2',
             ],
@@ -1176,20 +1215,56 @@ Pair count: 3',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch07-homework',
+            'runner_profile' => 'seaborn',
             'true_false' => [
                 'q1' => true,
-                'q2' => true,
+                'q2' => false,
                 'q3' => false,
                 'q4' => true,
                 'q5' => false,
             ],
-            'code_outputs' => [
-                'q6' => 'Long rows: 4',
-                'q7' => 'X: discount
-Y: sales',
-                'q8' => 'Average rating: 4.0',
-                'q9' => 'Facet count: 3',
-                'q10' => 'Heatmap cells: 12',
+            'plot_checks' => [
+                'q6' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.countplot() with ax=ax.'],
+                    ['path' => 'axes[0].bars.count', 'expected' => 1, 'hint' => 'Draw one count plot with sns.countplot().'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['Online', 'Retail', 'Phone'], 'hint' => 'Put channel on the x-axis.'],
+                    ['path' => 'axes[0].bars[0].heights', 'expected' => [5, 3, 2], 'hint' => 'Count every order in orders.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Orders by Channel', 'hint' => 'Check the chart title.'],
+                ],
+                'q7' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.kdeplot() with ax=ax.'],
+                    ['path' => 'axes[0].lines.count', 'expected' => 2, 'hint' => 'Draw one KDE curve per segment with hue=\'segment\'.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'spend', 'hint' => 'Use the spend column for x.'],
+                    ['path' => 'axes[0].legend_title', 'expected' => 'segment', 'hint' => 'Draw one KDE curve per segment with hue=\'segment\'.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Spend by Segment', 'hint' => 'Check the chart title.'],
+                ],
+                'q8' => [
+                    ['path' => 'axes.count', 'expected' => 1, 'hint' => 'Create one axes with plt.subplots() and pass it to sns.lineplot() with ax=ax.'],
+                    ['path' => 'axes[0].lines[0].points', 'expected' => 6, 'hint' => 'Draw one line per region with hue=\'region\'.'],
+                    ['path' => 'axes[0].lines[1].points', 'expected' => 6, 'hint' => 'Draw one line per region with hue=\'region\'.'],
+                    ['path' => 'axes[0].lines[0].marker', 'expected' => 'o', 'hint' => 'Use circle markers (marker=\'o\').'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'month', 'hint' => 'Put month on the x-axis.'],
+                    ['path' => 'axes[0].ylabel', 'expected' => 'revenue', 'hint' => 'Put revenue on the y-axis.'],
+                    ['path' => 'axes[0].legend_title', 'expected' => 'region', 'hint' => 'Draw one line per region with hue=\'region\'.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Monthly Revenue', 'hint' => 'Check the chart title.'],
+                ],
+                'q9' => [
+                    ['path' => 'axes[0].meshes', 'expected' => 1, 'hint' => 'Draw the correlation matrix with sns.heatmap() on the axes from plt.subplots().'],
+                    ['path' => 'axes[0].xticklabels', 'expected' => ['ad_spend', 'visits', 'returns'], 'hint' => 'Draw corr, the result of metrics.corr().'],
+                    ['path' => 'axes[0].texts', 'expected' => ['1', '0.87', '-0.54', '0.87', '1', '-0.81', '-0.54', '-0.81', '1'], 'hint' => 'Show the correlation values in each cell with annot=True.'],
+                    ['path' => 'axes[1].ylim', 'expected' => [-1, 1], 'hint' => 'Set the color scale with vmin=-1 and vmax=1.'],
+                    ['path' => 'axes[0].title', 'expected' => 'Metric Correlations', 'hint' => 'Check the chart title.'],
+                ],
+                'q10' => [
+                    ['path' => 'figure_count', 'expected' => 1, 'hint' => 'sns.displot() makes its own figure; do not also call plt.subplots().'],
+                    ['path' => 'axes.count', 'expected' => 2, 'hint' => 'Use col=\'channel\' to get one panel per channel.'],
+                    ['path' => 'axes[0].title', 'expected' => 'channel = Online', 'hint' => 'Use col=\'channel\' to get one panel per channel.'],
+                    ['path' => 'axes[1].title', 'expected' => 'channel = Retail', 'hint' => 'Use col=\'channel\' to get one panel per channel.'],
+                    ['path' => 'axes[0].bars[0].bars', 'expected' => 4, 'hint' => 'Draw histograms (the default kind) with bins=4.'],
+                    ['path' => 'axes[1].bars[0].bars', 'expected' => 4, 'hint' => 'Draw histograms (the default kind) with bins=4.'],
+                    ['path' => 'axes[0].xlabel', 'expected' => 'order_value', 'hint' => 'Use the order_value column for x.'],
+                    ['path' => 'size', 'expected' => [6, 3], 'hint' => 'Use height=3.'],
+                ],
             ],
         ],
         'ch08-homework' => [
@@ -1760,7 +1835,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     $pythonBin = (string) ($graderConfig['python_bin'] ?? 'python3');
     $timeoutSeconds = max(1, min(10, (int) ($graderConfig['timeout_seconds'] ?? 3)));
     $runnerProfile = (string) ($graderConfig['runner_profile'] ?? 'plain_python');
-    if (!in_array($runnerProfile, ['plain_python', 'pandas', 'matplotlib'], true)) {
+    if (!in_array($runnerProfile, ['plain_python', 'pandas', 'matplotlib', 'seaborn'], true)) {
         $runnerProfile = 'plain_python';
     }
     $pythonPaths = $graderConfig['python_paths'] ?? [];
@@ -1773,7 +1848,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
         'profile' => $runnerProfile,
         'python_paths' => $pythonPaths,
     ];
-    if ($runnerProfile === 'matplotlib') {
+    if (in_array($runnerProfile, ['matplotlib', 'seaborn'], true)) {
         $runnerPayload['plot_checks'] = array_values((array) ($graderConfig['plot_checks'] ?? []));
         $runnerPayload['mplconfig_dir'] = (string) ($graderConfig['mplconfig_dir'] ?? '');
     }
@@ -1789,7 +1864,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     ];
     $pythonArgs = match ($runnerProfile) {
         'pandas' => [$pythonBin, $runner],
-        'matplotlib' => [$pythonBin, '-I', $runner],
+        'matplotlib', 'seaborn' => [$pythonBin, '-I', $runner],
         default => [$pythonBin, '-I', '-S', $runner],
     };
     $process = proc_open($pythonArgs, $descriptorSpec, $pipes, sys_get_temp_dir());

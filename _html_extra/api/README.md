@@ -35,8 +35,9 @@ Each lab or homework definition in `lib/quiz-app.php` picks a runner profile wit
 - `plain_python` (default): a small set of builtins and string/list methods; no imports.
 - `pandas`: adds `numpy` and `pandas` imports.
 - `matplotlib`: adds `numpy`, `pandas`, and `matplotlib.pyplot` imports, list comprehensions, and `range`, `zip`, `enumerate`, `abs`, `dict`, `tuple`. File and system access (`read_*`, most `to_*`, `np.load`, `imread`, `fig.canvas`, and similar) is blocked by attribute name. Plots render with the `Agg` backend; `plt.show()` and `plt.close()` do nothing, and `savefig` records its arguments instead of writing a file.
+- `seaborn`: the `matplotlib` profile plus `import seaborn as sns`. Dataset loaders (`load_dataset`, `get_dataset_names`, `get_data_home`) are blocked because they read files or the network; questions supply inline DataFrames.
 
-A code question is graded by `code_outputs` (exact normalized stdout), `plot_checks` (chart properties, `matplotlib` profile only), or both; with both, the question passes only when both pass. Plot checks are listed per question:
+A code question is graded by `code_outputs` (exact normalized stdout), `plot_checks` (chart properties, `matplotlib` and `seaborn` profiles only), or both; with both, the question passes only when both pass. Plot checks are listed per question:
 
 ```php
 'runner_profile' => 'matplotlib',
@@ -50,7 +51,7 @@ A code question is graded by `code_outputs` (exact normalized stdout), `plot_che
 ],
 ```
 
-Paths address the last figure the code created: `size`, `dpi`, `suptitle`, `sharex`, `sharey` (true when every axes shares that axis with the first), `figure_count`, `savefig[i].fname|dpi|format`, and `axes[i]` with `title`, `xlabel`, `ylabel`, `position` (`[left, bottom, width, height]` in figure fractions), `xlim`, `ylim`, `xscale`, `yscale`, `xticklabels`, `legend`, `has_legend`, `lines[j].color|linestyle|linewidth|marker|label|points|alpha`, `bars[j].bars|heights|label|alpha` (bar charts and histograms), and `scatters[j].points|label|alpha`. Append `.count` for a length. Colors compare as lowercase hex (`'r'` and `'red'` are both `#ff0000`), line styles as `-`, `--`, `-.`, `:`, and numbers with a small tolerance. `expected` can also be `['min' => n]`, `['max' => n]`, `['one_of' => [...]]`, or `['contains' => value]`.
+Paths address the last figure the code created: `size`, `dpi`, `suptitle`, `sharex`, `sharey` (true when every axes shares that axis with the first), `figure_count`, `savefig[i].fname|dpi|format`, and `axes[i]` with `title`, `xlabel`, `ylabel`, `position` (`[left, bottom, width, height]` in figure fractions), `xlim`, `ylim`, `xscale`, `yscale`, `xticklabels`, `legend`, `has_legend`, `lines[j].color|linestyle|linewidth|marker|label|points|alpha`, `bars[j].bars|heights|label|alpha` (bar charts and histograms), `scatters[j].points|colors|label|alpha` (`colors` counts distinct point colors, e.g. 2 when `hue` maps two groups), `boxes` (Seaborn box count), `meshes` (heatmap count), `texts` (annotation strings, e.g. heatmap `annot=True` values), and `legend_title`. `figure_legend` lists legend entries that figure-level Seaborn functions (`relplot`, `catplot`, `displot`) put on the figure. Append `.count` for a length. Colors compare as lowercase hex (`'r'` and `'red'` are both `#ff0000`), line styles as `-`, `--`, `-.`, `:`, and numbers with a small tolerance. `expected` can also be `['min' => n]`, `['max' => n]`, `['one_of' => [...]]`, or `['contains' => value]`.
 
 Students only see the `hint` of each failing check, never the expected value, so feedback does not reveal answers before the due date.
 
@@ -90,7 +91,7 @@ Production DSM uses a dedicated grader virtual environment:
 cd /var/www/dsm_private
 python3 -m venv grader-venv
 ./grader-venv/bin/python -m pip install --upgrade pip
-./grader-venv/bin/python -m pip install numpy pandas matplotlib
+./grader-venv/bin/python -m pip install numpy pandas matplotlib seaborn
 chmod -R g+rX /var/www/dsm_private/grader-venv
 ```
 
