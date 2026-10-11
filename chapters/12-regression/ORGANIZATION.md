@@ -4,7 +4,7 @@
 
 Chapter 12 teaches simple linear regression as a practical tool for prediction and relationship analysis before multiple regression.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 
@@ -51,7 +51,7 @@ Students should be able to:
 
 ## Maintenance Notes
 
-- Chapter overview slides are present and linked from the landing page.
+- Slides: the landing page links the legacy one-per-chapter overview deck (`overview.html`). Per-section lecture decks (`XXNN-slides.md`/`.html`, one per content section) will replace it; switch the landing page to a Lecture Slides list once all of this chapter's decks exist.
 - Media and data references are recorded in `MATERIALS.md`.
 - Archived material, if any, is outside the active chapter folder.
 - Terminology uses "Least Squares" consistently for the section title and method.

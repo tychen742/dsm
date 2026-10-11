@@ -4,7 +4,7 @@
 
 Chapter 06 teaches Matplotlib as the lower-level plotting tool students can use when pandas plotting is not enough.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 
@@ -14,7 +14,7 @@ Students should be able to:
 4. Arrange charts for comparison with subplots, shared axes, figure titles, and `add_axes()` insets.
 5. Set figure size and resolution, save figures for reports, and finish pandas plots with Matplotlib methods.
 
-These match the Learning Goals on `0600-matplotlib.ipynb`.
+These match the Learning Objectives on `0600-matplotlib.ipynb`.
 
 ## Sequence
 
@@ -50,6 +50,6 @@ These match the Learning Goals on `0600-matplotlib.ipynb`.
 
 ## Maintenance Notes
 
-- Chapter overview slides are present and linked from the landing page.
+- Slides: the landing page links the legacy one-per-chapter overview deck (`overview.html`). Per-section lecture decks (`XXNN-slides.md`/`.html`, one per content section) will replace it; switch the landing page to a Lecture Slides list once all of this chapter's decks exist.
 - Media and data references are recorded in `MATERIALS.md`.
 - Archived material, if any, is outside the active chapter folder.

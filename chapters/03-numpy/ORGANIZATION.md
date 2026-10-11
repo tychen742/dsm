@@ -4,7 +4,7 @@
 
 Chapter 03 bridges basic Python and table-oriented data work by teaching students how NumPy represents and computes over numerical collections.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 

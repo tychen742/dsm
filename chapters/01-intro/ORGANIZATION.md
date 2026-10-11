@@ -4,7 +4,7 @@
 
 Chapter 01 is the course entry point. It gives students a business-oriented view of data science, introduces the course workflow, and connects programming concepts to later Python work.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 

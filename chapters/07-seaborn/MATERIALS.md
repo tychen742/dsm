@@ -31,7 +31,7 @@ Chapter 07 introduces Seaborn for statistical visualization and higher-level plo
 
 - Source: `_html_extra/chapters/07-seaborn/overview.md`.
 - Rendered HTML: `_html_extra/chapters/07-seaborn/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

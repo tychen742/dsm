@@ -4,7 +4,7 @@
 
 Chapter 02 teaches the Python fundamentals students need before working with NumPy, pandas, visualization, and statistical simulations. The emphasis is practical fluency for data science and management tasks rather than software engineering depth.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 

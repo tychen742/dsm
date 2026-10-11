@@ -31,7 +31,7 @@ Chapter 11 introduces estimation, percentiles, bootstrap methods, and confidence
 
 - Source: `_html_extra/chapters/11-estimation/overview.md`.
 - Rendered HTML: `_html_extra/chapters/11-estimation/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

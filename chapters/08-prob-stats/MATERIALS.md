@@ -30,7 +30,7 @@ Chapter 08 introduces probability, descriptive statistics, distributions, and sa
 
 - Source: `_html_extra/chapters/08-prob-stats/overview.md`.
 - Rendered HTML: `_html_extra/chapters/08-prob-stats/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

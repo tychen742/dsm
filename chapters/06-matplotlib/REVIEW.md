@@ -110,7 +110,7 @@ Done 2026-09-28. Scope decided with the author: fix defects book-wide, keep the 
 - [x] Remove the empty `<h2>Overview</h2>` heading (ch06 only; on ch03–ch05 the heading introduces real text and was kept).
 - [x] Add 3–5 overview bullets in `- **Concept Term**: Short description.` format (ch06: five bullets from the section content).
 - [x] Remove the `{contents}` block: removed from all nine landing pages. It rendered nothing, since landing headings are raw `<h2>`.
-- [-] Rename "Learning Goals" to "Learning Objectives": kept "Learning Goals", the heading on all nine landing pages.
+- [x] Rename "Learning Goals" to "Learning Objectives": first kept "Learning Goals"; renamed on all 15 landing pages on 2026-10-10 to follow the shared book-authoring convention.
 - [-] Standard video credit: kept the book's `video-credit` box, used on all nine landing pages.
 - [x] Slides link color: added to ch05–ch09 (ch01–ch04 already had it).
 

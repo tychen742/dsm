@@ -4,7 +4,7 @@
 
 Chapter 04 teaches students how to load, inspect, clean, and transform table-shaped data for management analysis.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 

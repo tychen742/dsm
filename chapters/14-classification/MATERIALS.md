@@ -33,7 +33,7 @@ Chapter 14 introduces classification, nearest neighbors, training and testing, i
 
 - Source: `_html_extra/chapters/14-classification/overview.md`.
 - Rendered HTML: `_html_extra/chapters/14-classification/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

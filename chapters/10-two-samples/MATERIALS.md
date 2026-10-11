@@ -31,7 +31,7 @@ Chapter 10 extends inference to comparisons between two groups, including A/B te
 
 - Source: `_html_extra/chapters/10-two-samples/overview.md`.
 - Rendered HTML: `_html_extra/chapters/10-two-samples/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

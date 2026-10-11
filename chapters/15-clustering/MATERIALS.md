@@ -32,7 +32,7 @@ Chapter 15 introduces clustering as an unsupervised machine-learning technique, 
 
 - Source: `_html_extra/chapters/15-clustering/overview.md`.
 - Rendered HTML: `_html_extra/chapters/15-clustering/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

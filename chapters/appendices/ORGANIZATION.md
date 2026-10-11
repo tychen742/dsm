@@ -4,7 +4,7 @@
 
 The appendices support the course with setup, tooling, and reference material that students may need throughout the semester.
 
-## Learning Goals
+## Learning Objectives
 
 Students should be able to:
 

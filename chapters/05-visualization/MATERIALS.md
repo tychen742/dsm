@@ -31,7 +31,7 @@ Chapter 05 introduces data visualization as a way to explore data and communicat
 
 - Source: `_html_extra/chapters/05-visualization/overview.md`.
 - Rendered HTML: `_html_extra/chapters/05-visualization/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 

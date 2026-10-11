@@ -32,7 +32,7 @@ Chapter 12 introduces regression for prediction and relationship analysis.
 
 - Source: `_html_extra/chapters/12-regression/overview.md`.
 - Rendered HTML: `_html_extra/chapters/12-regression/overview.html`.
-- Status: verified during the landing-page alignment pass.
+- Status: legacy one-per-chapter overview deck, still linked from the landing page until per-section lecture decks (`XXNN-slides.md`/`.html`) replace it.
 
 ## Archived Or Unlisted Material
 
