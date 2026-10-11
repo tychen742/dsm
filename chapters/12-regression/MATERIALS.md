@@ -16,8 +16,8 @@ Chapter 12 introduces regression for prediction and relationship analysis.
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 12 server-graded lab (`ch12-lab`) with five coding questions on regression prediction, residuals, squared errors, correlation direction, and diagnostic flags.
-- `assignments/homework.ipynb` - Chapter 12 server-graded homework (`ch12-homework`) with five scenario-based true/false questions and five coding questions on predictions, residuals, MSE, outlier flags, and correlation strength.
+- `assignments/lab.ipynb` - Chapter 12 server-graded lab (`ch12-lab`) with five pandas tasks: r from standard units, the regression line's slope and intercept, a prediction and a residual, RMSE of the least squares line vs. a rule of thumb, and mean residuals by price range to detect a curved pattern.
+- `assignments/homework.ipynb` - Chapter 12 server-graded homework (`ch12-homework`) with five scenario-based true/false checks (correlation vs. causation, r and units, the regression effect, least squares, fan-shaped residuals) and five pandas coding questions: a negative correlation, slope/intercept/prediction, predicting in standard units, RMSE, and residual spread (heteroscedasticity).
 
 ## Figures And Media
 

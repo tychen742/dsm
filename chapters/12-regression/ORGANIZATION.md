@@ -46,8 +46,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with regression prediction, residuals, squared errors, correlation direction, and diagnostic flags.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile): r from standard units, the regression line's slope and intercept, a prediction and a residual, RMSE of the least squares line vs. a rule of thumb, and mean residuals by price range to detect a curved pattern.
+- Homework: five scenario-based true/false checks (correlation vs. causation, r and units, the regression effect, least squares, fan-shaped residuals) and five pandas coding questions: a negative correlation, slope/intercept/prediction, predicting in standard units, RMSE, and residual spread (heteroscedasticity).
 
 ## Maintenance Notes
 

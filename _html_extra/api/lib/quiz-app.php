@@ -982,15 +982,19 @@ Whole interval above 0.5: True',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch12-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => 'Predicted sales: 155',
-                'q2' => 'Residual: 7',
-                'q3' => 'Squared residuals: [4, 1, 9]
-SSE: 14',
-                'q4' => 'Direction: negative',
-                'q5' => 'First absolute residual: 2
-Last absolute residual: 9
-Pattern flag: True',
+                'q1' => 'r: 0.972',
+                'q2' => 'Slope: 6.57
+Intercept: 48.61',
+                'q3' => 'Predicted sales at 6.5: 91.32
+Residual at 5: 3.54',
+                'q4' => 'Regression RMSE: 3.67
+Rule of thumb RMSE: 4.27',
+                'q5' => 'Low prices: 4.0
+Middle prices: -8.7
+High prices: 4.6
+Pattern: curved',
             ],
         ],
         'ch13-lab' => [
@@ -1400,19 +1404,25 @@ Claim inside interval: True',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch12-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
+                'q1' => false,
                 'q2' => true,
                 'q3' => true,
-                'q4' => false,
+                'q4' => true,
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Predicted demand: 70',
-                'q7' => 'Residuals: [2, -1, 3]',
-                'q8' => 'MSE: 4.0',
-                'q9' => 'Outlier flag: True',
-                'q10' => 'Strength: strong',
+                'q6' => 'r: -0.995',
+                'q7' => 'Slope: -2.19
+Intercept: 70.29
+Predicted units at 15: 37.5',
+                'q8' => 'Predicted spend (standard units): 1.2
+Predicted spend: 110.0',
+                'q9' => 'RMSE: 0.72',
+                'q10' => 'SD (small fitted): 1.47
+SD (large fitted): 7.4
+Spread grows: True',
             ],
         ],
         'ch13-homework' => [
