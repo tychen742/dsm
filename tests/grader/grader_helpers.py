@@ -100,7 +100,8 @@ def check_questions(ids, questions, solutions, checks, wrong_answers, profile="m
         cases += [(name, code, False) for name, code in wrong_answers.get(qid, {}).items()]
         for name, code, should_pass in cases:
             run = run_plot_checks(code, checks.get(qid, []), profile)
-            passed = bool(run.get("ok")) and bool(run.get("plot", {}).get("passed"))
+            plot_ok = bool(run.get("plot", {}).get("passed")) if checks.get(qid) else True
+            passed = bool(run.get("ok")) and plot_ok
             detail = run.get("error") or " ".join(run.get("plot", {}).get("hints", []))
             if qid in outputs and run.get("ok"):
                 output_ok = normalize_output(run.get("stdout", "")) == normalize_output(outputs[qid])

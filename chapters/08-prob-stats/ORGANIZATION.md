@@ -44,8 +44,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with probability, expected value, descriptive summaries, sample proportions, and sampling variability.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile): checking a probability model and using a complement, expected revenue, choosing mean or median for skewed data, percentiles/IQR/standard deviation, and how sample size changes the standard error.
+- Homework: five scenario-based true/false checks (valid models, reading an expected value, mean vs. median, sampling variability, sample size and SE) and five pandas coding questions: empirical return rate and complement, empirical distribution of items per order, median and 90th percentile, the effect of an outlier on mean vs. median, and the standard error of a mean.
 
 ## Maintenance Notes
 

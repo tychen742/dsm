@@ -902,15 +902,21 @@ Outliers: [210]',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch08-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => 'Delay probability: 0.15',
-                'q2' => 'Expected sales: 155.0',
-                'q3' => 'Mean wait: 6.0
-Median wait: 5',
-                'q4' => 'Renewed proportion: 0.6',
-                'q5' => 'Sample A mean: 12.0
-Sample B mean: 15.0
-Difference: 3.0',
+                'q1' => 'Total probability: 1.0
+P(not same day): 0.45',
+                'q2' => 'Expected revenue per subscriber: 24.5
+Expected revenue from 2000 subscribers: 49000.0',
+                'q3' => 'Mean: 6.5
+Median: 4.0
+Typical value: median',
+                'q4' => '25th percentile: 1125.0
+75th percentile: 1475.0
+IQR: 350.0
+Standard deviation: 189.7',
+                'q5' => 'SE with n=100: 0.04
+SE with n=400: 0.02',
             ],
         ],
         'ch09-lab' => [
@@ -1272,20 +1278,27 @@ Pair count: 3',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch08-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
-                'q2' => true,
+                'q1' => false,
+                'q2' => false,
                 'q3' => true,
                 'q4' => false,
-                'q5' => false,
+                'q5' => true,
             ],
             'code_outputs' => [
-                'q6' => 'On-time probability: 0.85',
-                'q7' => 'Wait range: 9',
-                'q8' => 'Mean sales: 30.0
-Above mean: 1',
-                'q9' => 'Empirical probability: 0.5',
-                'q10' => 'Larger sample has smaller SE: True',
+                'q6' => 'Return rate: 0.15
+Kept rate: 0.85',
+                'q7' => 'Proportion with 2 items: 0.4
+Average items: 2.1',
+                'q8' => 'Median wait: 4.5
+90th percentile: 12.1',
+                'q9' => 'Mean with large order: 1100.0
+Mean without: 600.0
+Median with large order: 600.0
+Median without: 600.0',
+                'q10' => 'SE with n=36: 2.0
+SE with n=144: 1.0',
             ],
         ],
         'ch09-homework' => [
