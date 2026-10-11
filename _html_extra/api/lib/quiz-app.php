@@ -1042,14 +1042,23 @@ Baseline accuracy: 0.6',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch15-lab',
+            'runner_profile' => 'sklearn',
             'code_outputs' => [
-                'q1' => 'Distance to A: 5
-Distance to B: 13',
-                'q2' => 'Assigned cluster: A',
-                'q3' => 'New center: 12.0',
-                'q4' => 'Elbow k: 3',
-                'q5' => 'Cluster A: 3
-Cluster B: 2',
+                'q1' => 'Assignments: [0, 0, 1, 1, 0, 1]
+Cluster sizes: [3, 3]',
+                'q2' => 'Center 0: [-1.0, -0.7]
+Center 1: [1.1, 0.87]',
+                'q3' => 'Raw sizes: [3, 3, 5, 5]
+Scaled sizes: [4, 4, 4, 4]',
+                'q4' => 'k=2: 0.457
+k=3: 0.573
+k=4: 0.746
+k=5: 0.652
+Best k: 4',
+                'q5' => 'Spend 550.0, orders 3.0
+Spend 800.0, orders 24.25
+Spend 2425.0, orders 5.0
+Spend 2550.0, orders 27.75',
             ],
         ],
     ];
@@ -1494,19 +1503,27 @@ Best: k3',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch15-homework',
+            'runner_profile' => 'sklearn',
             'true_false' => [
-                'q1' => true,
+                'q1' => false,
                 'q2' => true,
-                'q3' => true,
-                'q4' => false,
+                'q3' => false,
+                'q4' => true,
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Cluster count: 3',
-                'q7' => 'Nearest center: B',
-                'q8' => 'Scaled spending: 4.5',
-                'q9' => 'Cluster average: 18.0',
-                'q10' => 'Best k: 3',
+                'q6' => 'Assignments: [0, 0, 1, 0, 1, 1, 1]
+Sizes: [3, 4]',
+                'q7' => 'Centers: [[1.5, 1.5], [9.0, 8.0]]
+Inertia: 5.0',
+                'q8' => 'Cluster sizes: [4, 4, 4]',
+                'q9' => 'k=2: 0.682
+k=3: 0.864
+k=4: 0.773
+Best k: 3',
+                'q10' => 'Most frequent visitors: cluster 1
+Their mean spend: 45.0
+Customers: 3',
             ],
         ],
     ];

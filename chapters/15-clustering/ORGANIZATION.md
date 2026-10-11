@@ -44,8 +44,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with center distances, cluster assignment, center updates, elbow comparison, and cluster summaries.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded scikit-learn tasks (`sklearn` runner profile): one k-means assignment step and one update step by hand, KMeans on raw vs. standardized features (sorted cluster sizes), choosing k with silhouette scores, and cluster profiles in original units sorted by spend. Expected outputs avoid cluster numbers, which can differ between scikit-learn versions.
+- Homework: five scenario-based true/false checks (unlabeled data, scaling, smallest inertia, silhouette scores, arbitrary cluster numbers) and five coding questions: an assignment step on one feature, inertia by hand, KMeans cluster sizes, choosing k by silhouette score, and profiling a segment with groupby.
 
 ## Maintenance Notes
 

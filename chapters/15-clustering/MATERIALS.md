@@ -15,8 +15,8 @@ Chapter 15 introduces clustering as an unsupervised machine-learning technique, 
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 15 server-graded lab (`ch15-lab`) with five coding questions on center distances, cluster assignment, center updates, elbow comparison, and cluster summaries.
-- `assignments/homework.ipynb` - Chapter 15 server-graded homework (`ch15-homework`) with five scenario-based true/false questions and five coding questions on cluster counts, nearest centers, scaled features, cluster averages, and silhouette choices.
+- `assignments/lab.ipynb` - Chapter 15 server-graded lab (`ch15-lab`) with five scikit-learn tasks (`sklearn` runner profile): one k-means assignment step and one update step by hand, KMeans on raw vs. standardized features (sorted cluster sizes), choosing k with silhouette scores, and cluster profiles in original units sorted by spend.
+- `assignments/homework.ipynb` - Chapter 15 server-graded homework (`ch15-homework`) with five scenario-based true/false checks (unlabeled data, scaling, smallest inertia, silhouette scores, arbitrary cluster numbers) and five coding questions: an assignment step on one feature, inertia by hand, KMeans cluster sizes, choosing k by silhouette score, and profiling a segment with groupby.
 
 ## Figures And Media
 
