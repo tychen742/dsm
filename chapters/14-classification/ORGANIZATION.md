@@ -48,8 +48,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with feature rows, nearest-neighbor distance, accuracy, confusion counts, and majority voting.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile): the nearest neighbor and its distance, a 5-nearest-neighbor majority vote (k changes the prediction), standardizing a new case with training statistics, a classify() function applied to a test set, and test accuracy compared with an always-the-common-class baseline.
+- Homework: five scenario-based true/false checks (testing on training data, scaling, scaling with the test set, k = 1, accuracy with rare classes) and five pandas coding questions: distance between two rows, a 3-nearest-neighbor prediction, scaling a test set with training statistics, accuracy vs. baseline and fraud caught, and choosing k by test accuracy.
 
 ## Maintenance Notes
 

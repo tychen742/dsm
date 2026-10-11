@@ -33,7 +33,7 @@ Saved fields include:
 Each lab or homework definition in `lib/quiz-app.php` picks a runner profile with `runner_profile`:
 
 - `plain_python` (default): a small set of builtins (including `abs`) and string/list methods; no imports.
-- `pandas`: adds `numpy` and `pandas` imports and the `range`, `zip`, `enumerate`, `abs`, `dict`, and `tuple` builtins.
+- `pandas`: adds `numpy` and `pandas` imports and the `range`, `zip`, `enumerate`, `abs`, `dict`, and `tuple` builtins, and the `&`, `|`, and `~` operators for combining boolean conditions (also allowed in the `sklearn` and plot profiles).
 - `sklearn`: `numpy`, `pandas`, and scikit-learn. Students can write `from sklearn.linear_model import LinearRegression`; allowed modules are `sklearn.linear_model`, `sklearn.model_selection`, `sklearn.metrics`, `sklearn.neighbors`, `sklearn.preprocessing`, and `sklearn.cluster` (also `from sklearn import metrics`). `sklearn.datasets`, `fetch_*`, and file access are blocked, as in the plot profiles.
 
 In every profile, the submitted cell runs in one namespace, so functions defined in the cell can read the cell's top-level variables, as in a notebook. The runner also prints one numpy array before running the cell, because numpy sets up array printing lazily and that setup needs imports that student code cannot make.

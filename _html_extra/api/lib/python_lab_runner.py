@@ -114,6 +114,13 @@ MATPLOTLIB_EXTRA_NODES = (
     ast.comprehension,
 )
 
+# pandas boolean filtering combines conditions with &, |, and ~.
+PANDAS_EXTRA_NODES = (
+    ast.BitAnd,
+    ast.BitOr,
+    ast.Invert,
+)
+
 MATPLOTLIB_IMPORTS = {"numpy", "pandas", "matplotlib", "matplotlib.pyplot"}
 
 # Seaborn profile: the matplotlib profile plus seaborn. Dataset loaders are
@@ -192,9 +199,11 @@ class LabCodeValidator(ast.NodeVisitor):
         self.profile = profile
         self.allowed_nodes = ALLOWED_NODES
         if profile in PLOT_PROFILES:
-            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES
+            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES + PANDAS_EXTRA_NODES
         elif profile == "sklearn":
-            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES + (ast.ImportFrom,)
+            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES + PANDAS_EXTRA_NODES + (ast.ImportFrom,)
+        elif profile == "pandas":
+            self.allowed_nodes = ALLOWED_NODES + PANDAS_EXTRA_NODES
 
     def generic_visit(self, node):
         if not isinstance(node, self.allowed_nodes):

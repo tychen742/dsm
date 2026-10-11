@@ -17,8 +17,8 @@ Chapter 14 introduces classification, nearest neighbors, training and testing, i
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 14 server-graded lab (`ch14-lab`) with five coding questions on feature rows, nearest-neighbor distance, accuracy, confusion counts, and majority voting.
-- `assignments/homework.ipynb` - Chapter 14 server-graded homework (`ch14-homework`) with five scenario-based true/false questions and five coding questions on predictions, nearest labels, accuracy counts, feature distance, and train/test rows.
+- `assignments/lab.ipynb` - Chapter 14 server-graded lab (`ch14-lab`) with five pandas tasks: the nearest neighbor and its distance, a 5-nearest-neighbor majority vote (k changes the prediction), standardizing a new case with training statistics, a classify() function applied to a test set, and test accuracy compared with an always-the-common-class baseline.
+- `assignments/homework.ipynb` - Chapter 14 server-graded homework (`ch14-homework`) with five scenario-based true/false checks (testing on training data, scaling, scaling with the test set, k = 1, accuracy with rare classes) and five pandas coding questions: distance between two rows, a 3-nearest-neighbor prediction, scaling a test set with training statistics, accuracy vs. baseline and fraud caught, and choosing k by test accuracy.
 
 ## Figures And Media
 

@@ -1023,14 +1023,18 @@ Multiple RMSE: 7.38',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch14-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => 'Features: [42, 3]
-Label: renew',
-                'q2' => 'Squared distance: 25',
-                'q3' => 'Accuracy: 0.75',
-                'q4' => 'True positives: 2
-False positives: 1',
-                'q5' => 'Predicted class: low risk',
+                'q1' => 'Nearest distance: 0.141
+1-NN prediction: repaid',
+                'q2' => 'Default votes: 3
+Repaid votes: 2
+5-NN prediction: default',
+                'q3' => 'Income in standard units: -0.21
+Balance in standard units: -0.17',
+                'q4' => 'Predictions: [\'repaid\', \'default\', \'default\', \'default\', \'repaid\']',
+                'q5' => 'Classifier accuracy: 0.4
+Baseline accuracy: 0.6',
             ],
         ],
         'ch15-lab' => [
@@ -1463,20 +1467,26 @@ Gap for C: 12.5',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch14-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
+                'q1' => false,
                 'q2' => true,
-                'q3' => true,
-                'q4' => false,
+                'q3' => false,
+                'q4' => true,
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Churn predictions: 2',
-                'q7' => 'Nearest label: approve',
-                'q8' => 'Correct predictions: 3',
-                'q9' => 'Distance score: 20',
-                'q10' => 'Training rows: 3
-Test rows: 2',
+                'q6' => 'Distance: 1.414',
+                'q7' => 'Nearest labels: [\'renew\', \'cancel\', \'renew\']
+Prediction: renew',
+                'q8' => 'Scaled test spend: [-1.06, 0.35, 1.41]',
+                'q9' => 'Accuracy: 0.9
+Always-ok accuracy: 0.9
+Fraud caught: 1 of 2',
+                'q10' => 'k1: 0.625
+k3: 0.875
+k5: 0.625
+Best: k3',
             ],
         ],
         'ch15-homework' => [
