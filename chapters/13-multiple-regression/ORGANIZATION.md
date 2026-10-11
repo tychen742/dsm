@@ -43,8 +43,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with multiple-regression prediction, coefficient effects, train/test counts, model comparison, and feature scaling.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded scikit-learn tasks (`sklearn` runner profile): fit a LinearRegression and read its intercept and coefficients, the effect of one more room holding other features fixed, the most correlated predictor pair (multicollinearity), test RMSE of a simple vs. multiple model after train_test_split, and test-set R-squared with r2_score.
+- Homework: five scenario-based true/false checks (reading a coefficient, correlated predictors, training error, more predictors and overfitting, R-squared) and five coding questions: pricing listings with a fitted model, test residuals and RMSE, nearest-neighbor regression, checking two predictors for multicollinearity, and choosing a model by test RMSE.
 
 ## Maintenance Notes
 

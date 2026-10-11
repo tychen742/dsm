@@ -122,6 +122,25 @@ SEABORN_IMPORTS = MATPLOTLIB_IMPORTS | {"seaborn"}
 
 PLOT_PROFILES = {"matplotlib", "seaborn"}
 
+# scikit-learn profile: numpy, pandas, and model-fitting modules. Students may
+# write `from sklearn.linear_model import LinearRegression`; the runner resolves
+# those names itself. Dataset loaders and file access are blocked.
+SKLEARN_IMPORT_MODULES = {"numpy", "pandas", "sklearn"}
+SKLEARN_FROM_MODULES = {
+    "sklearn",
+    "sklearn.cluster",
+    "sklearn.linear_model",
+    "sklearn.metrics",
+    "sklearn.model_selection",
+    "sklearn.neighbors",
+    "sklearn.preprocessing",
+}
+SKLEARN_FROM_SUBMODULES = {"cluster", "linear_model", "metrics", "model_selection", "neighbors", "preprocessing"}
+SKLEARN_BLOCKED_ATTRIBUTES = {"datasets", "externals", "set_config", "utils"}
+
+# Profiles whose code can import modules and must have file/system names blocked.
+BLOCKING_PROFILES = PLOT_PROFILES | {"sklearn"}
+
 MATPLOTLIB_BLOCKED_ATTRIBUTES = {
     "api",
     "backends",
@@ -174,6 +193,8 @@ class LabCodeValidator(ast.NodeVisitor):
         self.allowed_nodes = ALLOWED_NODES
         if profile in PLOT_PROFILES:
             self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES
+        elif profile == "sklearn":
+            self.allowed_nodes = ALLOWED_NODES + MATPLOTLIB_EXTRA_NODES + (ast.ImportFrom,)
 
     def generic_visit(self, node):
         if not isinstance(node, self.allowed_nodes):
@@ -185,6 +206,14 @@ class LabCodeValidator(ast.NodeVisitor):
             for alias in node.names:
                 if alias.name not in MATPLOTLIB_IMPORTS:
                     raise ValueError("Only numpy, pandas, and matplotlib imports are allowed in this lab.")
+            self.generic_visit(node)
+            return
+        if self.profile == "sklearn":
+            for alias in node.names:
+                if alias.name.split(".")[0] not in SKLEARN_IMPORT_MODULES:
+                    raise ValueError("Only numpy, pandas, and sklearn imports are allowed in this lab.")
+                if alias.name.startswith("sklearn.") and alias.name not in SKLEARN_FROM_MODULES:
+                    raise ValueError(f"{alias.name} is not available in this lab.")
             self.generic_visit(node)
             return
         if self.profile == "seaborn":
@@ -200,6 +229,16 @@ class LabCodeValidator(ast.NodeVisitor):
                 raise ValueError("Only pandas and numpy imports are allowed in this lab.")
         self.generic_visit(node)
 
+    def visit_ImportFrom(self, node):
+        if self.profile != "sklearn" or node.level or node.module not in SKLEARN_FROM_MODULES:
+            raise ValueError("Only imports from sklearn modules such as sklearn.linear_model are allowed in this lab.")
+        for alias in node.names:
+            if alias.name == "*" or alias.name.startswith("_"):
+                raise ValueError("Import specific names, for example: from sklearn.linear_model import LinearRegression")
+            if node.module == "sklearn" and alias.name not in SKLEARN_FROM_SUBMODULES:
+                raise ValueError(f"sklearn.{alias.name} is not available in this lab.")
+        self.generic_visit(node)
+
     def visit_Name(self, node):
         if node.id.startswith("__"):
             raise ValueError("Names beginning with __ are not allowed.")
@@ -208,7 +247,9 @@ class LabCodeValidator(ast.NodeVisitor):
     def visit_Attribute(self, node):
         if node.attr.startswith("__"):
             raise ValueError("Attributes beginning with __ are not allowed.")
-        if self.profile in PLOT_PROFILES and matplotlib_attribute_blocked(node.attr):
+        if self.profile in BLOCKING_PROFILES and matplotlib_attribute_blocked(node.attr):
+            raise ValueError(f"{node.attr} is not allowed in this lab.")
+        if self.profile == "sklearn" and (node.attr in SKLEARN_BLOCKED_ATTRIBUTES or node.attr.startswith("fetch_")):
             raise ValueError(f"{node.attr} is not allowed in this lab.")
         self.generic_visit(node)
 
@@ -515,6 +556,7 @@ def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir
     import numpy as np
     import pandas as pd
 
+    warm_numpy_printing(np)
     matplotlib, plt, saved = load_matplotlib(mplconfig_dir)
     modules = {"numpy": np, "pandas": pd, "matplotlib": matplotlib, "matplotlib.pyplot": plt}
     if profile == "seaborn":
@@ -532,6 +574,60 @@ def run_matplotlib_code(code, python_paths=None, plot_checks=None, mplconfig_dir
     summary = summarize_plots(plt, saved)
     plot = run_plot_checks(summary, plot_checks or [])
     return stdout.getvalue(), summary, plot
+
+
+def prepare_sklearn_tree(tree):
+    """Remove import statements and return {name: object} for the names they bind."""
+    import importlib
+
+    names = {"np": importlib.import_module("numpy"), "pd": importlib.import_module("pandas")}
+    body = []
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                module = importlib.import_module(alias.name)
+                if alias.asname:
+                    names[alias.asname] = module
+                else:
+                    top = alias.name.split(".")[0]
+                    names[top] = importlib.import_module(top)
+            continue
+        if isinstance(node, ast.ImportFrom):
+            module = importlib.import_module(node.module)
+            for alias in node.names:
+                if hasattr(module, alias.name):
+                    value = getattr(module, alias.name)
+                else:
+                    value = importlib.import_module(f"{node.module}.{alias.name}")
+                names[alias.asname or alias.name] = value
+            continue
+        body.append(node)
+    tree.body = body
+    ast.fix_missing_locations(tree)
+    return names
+
+
+def run_sklearn_code(code, python_paths=None):
+    add_python_paths(python_paths)
+    tree = ast.parse(code, mode="exec")
+    LabCodeValidator("sklearn").visit(tree)
+    names = prepare_sklearn_tree(tree)
+    warm_numpy_printing(names["np"])
+    compiled = compile(tree, "<student-code>", "exec")
+    safe_globals = {"__builtins__": {**ALLOWED_CALLS, **MATPLOTLIB_EXTRA_CALLS}}
+    safe_globals.update(names)
+    stdout = io.StringIO()
+    with contextlib.redirect_stdout(stdout):
+        exec(compiled, safe_globals, safe_globals)
+    return stdout.getvalue()
+
+
+def warm_numpy_printing(np):
+    # numpy sets up array printing lazily, on the first str()/repr() of an array,
+    # and that setup imports modules. Student code runs without __import__, so
+    # do it here first; otherwise print(array) fails inside the lab.
+    str(np.array([0.5]))
+    repr(np.array([0.5]))
 
 
 def add_python_paths(paths):
@@ -559,6 +655,7 @@ def run_code(code, profile="plain_python", python_paths=None):
         import numpy as np
         import pandas as pd
 
+        warm_numpy_printing(np)
         modules = {"pandas": pd, "numpy": np}
         for alias, module_name in pandas_aliases.items():
             safe_globals[alias] = modules[module_name]
@@ -574,8 +671,12 @@ def main():
         payload = json.loads(sys.stdin.read() or "{}")
         code = str(payload.get("code", ""))
         profile = str(payload.get("profile", "plain_python"))
-        if profile not in {"plain_python", "pandas"} | PLOT_PROFILES:
+        if profile not in {"plain_python", "pandas", "sklearn"} | PLOT_PROFILES:
             raise ValueError("Unknown code runner profile.")
+        if profile == "sklearn":
+            output = run_sklearn_code(code, payload.get("python_paths", []))
+            print(json.dumps({"ok": True, "stdout": output, "stderr": "", "error": None}))
+            return
         if profile in PLOT_PROFILES:
             checks = payload.get("plot_checks") or []
             if not isinstance(checks, list):

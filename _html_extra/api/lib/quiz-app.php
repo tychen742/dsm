@@ -1002,13 +1002,20 @@ Pattern: curved',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch13-lab',
+            'runner_profile' => 'sklearn',
             'code_outputs' => [
-                'q1' => 'Predicted price: 320',
-                'q2' => 'Added room effect: 30',
-                'q3' => 'Train rows: 4
-Test rows: 2',
-                'q4' => 'Best model: multiple',
-                'q5' => 'Scaled size: 2.4',
+                'q1' => 'Intercept: 34.71
+sqft: 0.1
+rooms: 15.5
+age: -1.87',
+                'q2' => 'House A: 276.7
+House B: 292.2
+Difference: 15.5',
+                'q3' => 'Most correlated pair: sqft and rooms
+Correlation: 0.94',
+                'q4' => 'Simple RMSE: 32.8
+Multiple RMSE: 7.38',
+                'q5' => 'Test R-squared: 0.99',
             ],
         ],
         'ch14-lab' => [
@@ -1430,19 +1437,25 @@ Spread grows: True',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch13-homework',
+            'runner_profile' => 'sklearn',
             'true_false' => [
                 'q1' => true,
                 'q2' => true,
-                'q3' => true,
+                'q3' => false,
                 'q4' => false,
-                'q5' => false,
+                'q5' => true,
             ],
             'code_outputs' => [
-                'q6' => 'Predicted revenue: 510',
-                'q7' => 'Larger coefficient: service_score',
-                'q8' => 'Selected model: model_b',
-                'q9' => 'Feature count: 3',
-                'q10' => 'Average absolute error: 5.0',
+                'q6' => 'Listing 1: 211.5
+Listing 2: 352.4
+Listing 3: 296.4',
+                'q7' => 'Residuals: [-5, 10, -5, 15, -7, -5]
+Test RMSE: 8.65',
+                'q8' => 'Predicted price: 298.3',
+                'q9' => 'Correlation: 0.83
+Multicollinearity flag: True',
+                'q10' => 'Best model: B
+Gap for C: 12.5',
             ],
         ],
         'ch14-homework' => [
@@ -1892,7 +1905,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     $pythonBin = (string) ($graderConfig['python_bin'] ?? 'python3');
     $timeoutSeconds = max(1, min(10, (int) ($graderConfig['timeout_seconds'] ?? 3)));
     $runnerProfile = (string) ($graderConfig['runner_profile'] ?? 'plain_python');
-    if (!in_array($runnerProfile, ['plain_python', 'pandas', 'matplotlib', 'seaborn'], true)) {
+    if (!in_array($runnerProfile, ['plain_python', 'pandas', 'matplotlib', 'seaborn', 'sklearn'], true)) {
         $runnerProfile = 'plain_python';
     }
     $pythonPaths = $graderConfig['python_paths'] ?? [];
@@ -1921,7 +1934,7 @@ function dsm_run_lab_code_cell(string $code, array $graderConfig = []): array
     ];
     $pythonArgs = match ($runnerProfile) {
         'pandas' => [$pythonBin, $runner],
-        'matplotlib', 'seaborn' => [$pythonBin, '-I', $runner],
+        'matplotlib', 'seaborn', 'sklearn' => [$pythonBin, '-I', $runner],
         default => [$pythonBin, '-I', '-S', $runner],
     };
     $process = proc_open($pythonArgs, $descriptorSpec, $pipes, sys_get_temp_dir());

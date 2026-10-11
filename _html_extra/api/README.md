@@ -34,8 +34,9 @@ Each lab or homework definition in `lib/quiz-app.php` picks a runner profile wit
 
 - `plain_python` (default): a small set of builtins (including `abs`) and string/list methods; no imports.
 - `pandas`: adds `numpy` and `pandas` imports and the `range`, `zip`, `enumerate`, `abs`, `dict`, and `tuple` builtins.
+- `sklearn`: `numpy`, `pandas`, and scikit-learn. Students can write `from sklearn.linear_model import LinearRegression`; allowed modules are `sklearn.linear_model`, `sklearn.model_selection`, `sklearn.metrics`, `sklearn.neighbors`, `sklearn.preprocessing`, and `sklearn.cluster` (also `from sklearn import metrics`). `sklearn.datasets`, `fetch_*`, and file access are blocked, as in the plot profiles.
 
-In every profile, the submitted cell runs in one namespace, so functions defined in the cell can read the cell's top-level variables, as in a notebook.
+In every profile, the submitted cell runs in one namespace, so functions defined in the cell can read the cell's top-level variables, as in a notebook. The runner also prints one numpy array before running the cell, because numpy sets up array printing lazily and that setup needs imports that student code cannot make.
 - `matplotlib`: adds `numpy`, `pandas`, and `matplotlib.pyplot` imports, list comprehensions, and `range`, `zip`, `enumerate`, `abs`, `dict`, `tuple`. File and system access (`read_*`, most `to_*`, `np.load`, `imread`, `fig.canvas`, and similar) is blocked by attribute name. Plots render with the `Agg` backend; `plt.show()` and `plt.close()` do nothing, and `savefig` records its arguments instead of writing a file.
 - `seaborn`: the `matplotlib` profile plus `import seaborn as sns`. Dataset loaders (`load_dataset`, `get_dataset_names`, `get_data_home`) are blocked because they read files or the network; questions supply inline DataFrames.
 
@@ -93,7 +94,7 @@ Production DSM uses a dedicated grader virtual environment:
 cd /var/www/dsm_private
 python3 -m venv grader-venv
 ./grader-venv/bin/python -m pip install --upgrade pip
-./grader-venv/bin/python -m pip install numpy pandas matplotlib seaborn
+./grader-venv/bin/python -m pip install numpy pandas matplotlib seaborn scikit-learn
 chmod -R g+rX /var/www/dsm_private/grader-venv
 ```
 

@@ -14,8 +14,8 @@ Chapter 13 extends regression to multiple predictors and introduces machine-lear
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 13 server-graded lab (`ch13-lab`) with five coding questions on multiple-regression prediction, coefficient effects, train/test counts, model comparison, and feature scaling.
-- `assignments/homework.ipynb` - Chapter 13 server-graded homework (`ch13-homework`) with five scenario-based true/false questions and five coding questions on multi-predictor predictions, coefficient comparison, validation scores, feature counts, and test error.
+- `assignments/lab.ipynb` - Chapter 13 server-graded lab (`ch13-lab`) with five scikit-learn tasks (`sklearn` runner profile): fit a LinearRegression and read its intercept and coefficients, the effect of one more room holding other features fixed, the most correlated predictor pair (multicollinearity), test RMSE of a simple vs. multiple model after train_test_split, and test-set R-squared with r2_score.
+- `assignments/homework.ipynb` - Chapter 13 server-graded homework (`ch13-homework`) with five scenario-based true/false checks (reading a coefficient, correlated predictors, training error, more predictors and overfitting, R-squared) and five coding questions: pricing listings with a fitted model, test residuals and RMSE, nearest-neighbor regression, checking two predictors for multicollinearity, and choosing a model by test RMSE.
 
 ## Figures And Media
 
