@@ -21,9 +21,9 @@ Students should be able to:
 2. `1501-clustering-concepts.ipynb` - Clustering Concepts
    - Unsupervised learning, management use cases, similarity, feature choice, scale, common clustering methods, and practical interpretation cautions.
 3. `1502-k-means-workflow.ipynb` - K-Means Workflow
-   - K-means algorithm, synthetic data, visualization, fitting clusters, centers, labels, and comparison to known generated labels.
+   - K-means algorithm, synthetic data with known labels, visualization, fitting clusters with `n_init` and `random_state`, centers, labels, and comparison to known generated labels.
 4. `1503-interpreting-clusters.ipynb` - Interpreting Clusters
-   - Choosing `k`, elbow and silhouette checks, cluster summaries, domain interpretation, practical tips, and the arbitrariness of cluster labels.
+   - Customer segmentation example (synthetic `customer_segments.csv`): raw vs. scaled features, choosing `k` with elbow and silhouette checks, cluster profiles in original units, segment names and possible actions, practical tips, and the arbitrariness of cluster labels.
 5. `assignments/index.ipynb` - Assignments
    - Preview
    - Lab

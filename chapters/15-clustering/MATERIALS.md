@@ -8,8 +8,8 @@ Chapter 15 introduces clustering as an unsupervised machine-learning technique, 
 
 - `1500-clustering.ipynb` - Landing: Chapter orientation, video, learning goals, flow, glossary, and slides.
 - `1501-clustering-concepts.ipynb` - Clustering Concepts: Unsupervised learning, management use cases, similarity, feature choice, scale, common clustering methods, and practical interpretation cautions.
-- `1502-k-means-workflow.ipynb` - K-Means Workflow: K-means algorithm, synthetic data, visualization, fitting clusters, centers, labels, and comparison to known generated labels.
-- `1503-interpreting-clusters.ipynb` - Interpreting Clusters: Choosing `k`, elbow and silhouette checks, cluster summaries, domain interpretation, practical tips, and the arbitrariness of cluster labels.
+- `1502-k-means-workflow.ipynb` - K-Means Workflow: K-means algorithm, synthetic `make_blobs` data with known labels, visualization, fitting clusters (`n_init`, `random_state`), centers, labels, and comparison to known generated labels.
+- `1503-interpreting-clusters.ipynb` - Interpreting Clusters: customer segmentation example, raw vs. scaled features, choosing `k` with elbow and silhouette checks, cluster profiles in original units, segment names and actions, practical tips, and the arbitrariness of cluster labels.
 
 ## Student Assignments
 
@@ -24,7 +24,8 @@ Chapter 15 introduces clustering as an unsupervised machine-learning technique, 
 
 ## Supporting Code And Data
 
-- Generated synthetic data from `sklearn.datasets.make_blobs`.
+- `1502`: generated synthetic data from `sklearn.datasets.make_blobs` (`random_state=101`).
+- `1503`: `data/customer_segments.csv`, a synthetic data set of 240 online-store customers (`customer_id`, `annual_spend` in dollars, `orders_per_year`) generated for this book with `numpy.random.default_rng(15)` from four customer types: occasional (90; spend ~$400, ~3 orders), frequent small-basket (60; ~$900, ~24), big-ticket (50; ~$2,200, ~5), and loyal high-value (40; ~$2,600, ~28). Disclosed as synthetic in the notebook.
 - K-means examples use `sklearn.cluster.KMeans`; cluster evaluation uses `sklearn.metrics.silhouette_score`.
 
 ## Slide Deck
