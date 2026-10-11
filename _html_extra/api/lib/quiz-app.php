@@ -943,16 +943,20 @@ False-alarm rate: 0.05',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch10-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => 'Treatment mean: 114.0
-Control mean: 100.0',
-                'q2' => 'Lift: 14.0',
-                'q3' => 'Version A rate: 0.1
-Version B rate: 0.14',
-                'q4' => 'Extreme differences: 2',
-                'q5' => 'Conditions met: 2
-Ready for causal claim: True
-Small sample: True',
+                'q1' => 'Mean A: 41.67
+Mean B: 48.17
+Observed difference: 6.5',
+                'q2' => 'Rate A: 0.2
+Rate B: 0.3
+Difference: 0.1',
+                'q3' => 'Shuffled difference: -3.17',
+                'q4' => 'P-value: 0.0
+Decision: reject the null',
+                'q5' => 'Coupon email: evidence of a causal effect
+Loyalty members: association only
+New layout: no evidence of a difference',
             ],
         ],
         'ch11-lab' => [
@@ -1336,19 +1340,29 @@ Observed is above it: True',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch10-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
+                'q1' => false,
                 'q2' => true,
                 'q3' => true,
-                'q4' => false,
+                'q4' => true,
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Difference: 12.0',
-                'q7' => 'Lift percent: 20.0',
-                'q8' => 'Treatment labels: 3',
-                'q9' => 'Tail rate: 0.25',
-                'q10' => 'RCT ready: True',
+                'q6' => 'New: 30.67
+Returning: 33.17
+Distance: 2.5',
+                'q7' => 'Annual: 0.1
+Monthly: 0.25
+Difference: 0.15',
+                'q8' => 'P-value: 0.16
+Decision: do not reject the null',
+                'q9' => 'Rate A: 0.08
+Rate B: 0.1
+Relative lift: 25.0',
+                'q10' => 'Treatment relief: 0.4
+Control relief: 0.1
+Difference: 0.3',
             ],
         ],
         'ch11-homework' => [

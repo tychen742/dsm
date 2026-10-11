@@ -44,8 +44,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with two-group means, observed lift, conversion rates, permutation extremes, and causal-evidence checks.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile): group means and the observed difference with groupby, conversion rates, the difference under one given shuffle of the labels, a one-sided permutation-test p-value and decision from given simulated differences, and classifying studies as causal evidence, association only, or no evidence.
+- Homework: five scenario-based true/false checks (opt-in comparisons, what shuffling simulates, one-sided statistics, randomized trials, small randomized studies) and five pandas coding questions: basket size by segment, churn by plan, a two-sided permutation p-value and decision, relative lift, and a randomized controlled trial.
 
 ## Maintenance Notes
 

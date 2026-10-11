@@ -15,8 +15,8 @@ Chapter 10 extends inference to comparisons between two groups, including A/B te
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 10 server-graded lab (`ch10-lab`) with five coding questions on two-group means, observed lift, conversion rates, permutation extremes, and causal-evidence checks.
-- `assignments/homework.ipynb` - Chapter 10 server-graded homework (`ch10-homework`) with five scenario-based true/false questions and five coding questions on group differences, lift, labels, tail rates, and randomized-trial checks.
+- `assignments/lab.ipynb` - Chapter 10 server-graded lab (`ch10-lab`) with five pandas tasks: group means and the observed difference with groupby, conversion rates, the difference under one given shuffle of the labels, a one-sided permutation-test p-value and decision from given simulated differences, and classifying studies as causal evidence, association only, or no evidence.
+- `assignments/homework.ipynb` - Chapter 10 server-graded homework (`ch10-homework`) with five scenario-based true/false checks (opt-in comparisons, what shuffling simulates, one-sided statistics, randomized trials, small randomized studies) and five pandas coding questions: basket size by segment, churn by plan, a two-sided permutation p-value and decision, relative lift, and a randomized controlled trial.
 
 ## Figures And Media
 
