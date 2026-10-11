@@ -19,7 +19,7 @@ Students should be able to:
 1. `0800-probability-statistics.ipynb` - Landing
    - Chapter orientation, video, learning goals, flow, glossary, and slides.
 2. `0801-probability-models.ipynb` - Probability Models
-   - Population versus sample, variables versus observations, and probability language for data-generating processes.
+   - Probability models (outcomes, sample space, events, complements, expected value) with a shipping-delay example and simulation; population versus sample, variables versus observations, and distributions.
 3. `0802-descriptive-distributions.ipynb` - Descriptive Distributions
    - Descriptive statistics, mean versus median, one-variable visualization, distribution families, and the law of large numbers.
 4. `0803-sampling-variability.ipynb` - Sampling Variability

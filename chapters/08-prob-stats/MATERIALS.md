@@ -7,7 +7,7 @@ Chapter 08 introduces probability, descriptive statistics, distributions, and sa
 ## Active Source Notebooks
 
 - `0800-probability-statistics.ipynb` - Landing: Chapter orientation, video, learning goals, flow, glossary, and slides.
-- `0801-probability-models.ipynb` - Probability Models: Population versus sample, variables versus observations, and probability language for data-generating processes.
+- `0801-probability-models.ipynb` - Probability Models: Probability models (outcomes, sample space, events, complements, expected value) with a shipping-delay example and simulation; population versus sample, variables versus observations, and distributions.
 - `0802-descriptive-distributions.ipynb` - Descriptive Distributions: Descriptive statistics, mean versus median, one-variable visualization, distribution families, and the law of large numbers.
 - `0803-sampling-variability.ipynb` - Sampling Variability: Sample proportions, sampling distributions, standard error, and the effect of sample size.
 
