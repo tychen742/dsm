@@ -964,14 +964,17 @@ New layout: no evidence of a difference',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch11-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => '75th percentile: 88',
-                'q2' => 'Estimate: 52.0',
-                'q3' => 'Bootstrap median: 42',
-                'q4' => 'Interval width: 8',
-                'q5' => 'Metric: average order value
-Lower: 42
-Upper: 58',
+                'q1' => '75th percentile: 6
+90th percentile: 8',
+                'q2' => 'Sample median: 71.0
+Resample median: 84.5',
+                'q3' => '95% CI: 63.0 to 84.5',
+                'q4' => '95% width: 21.5
+80% width: 13.0',
+                'q5' => '95% CI: 0.52 to 0.625
+Whole interval above 0.5: True',
             ],
         ],
         'ch12-lab' => [
@@ -1370,19 +1373,26 @@ Difference: 0.3',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch11-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
-                'q2' => true,
+                'q1' => false,
+                'q2' => false,
                 'q3' => true,
-                'q4' => false,
+                'q4' => true,
                 'q5' => false,
             ],
             'code_outputs' => [
-                'q6' => 'Median: 72',
-                'q7' => 'Bootstrap mean: 20.0',
-                'q8' => 'Interval midpoint: 50.0',
-                'q9' => '25th percentile: 12',
-                'q10' => 'Estimate range: 44 to 56',
+                'q6' => '25th percentile: 45
+Median: 49
+75th percentile: 52',
+                'q7' => 'Resample mean: 50.67
+Distinct values: 9 of 15',
+                'q8' => '95% CI: 45.67 to 52.6',
+                'q9' => 'Width A: 0.18
+Width B: 0.09
+Ratio: 2.0',
+                'q10' => '95% CI: 0.033 to 0.083
+Claim inside interval: True',
             ],
         ],
         'ch12-homework' => [

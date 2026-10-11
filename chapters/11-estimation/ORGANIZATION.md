@@ -44,8 +44,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with percentiles, sample estimates, bootstrap medians, interval width, and interval statements.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile): delivery percentiles with method='nearest', a sample median and one given bootstrap resample, a 95% bootstrap confidence interval from given bootstrap medians, 95% vs. 80% interval widths, and a bootstrap interval for a proportion used to judge a majority claim.
+- Homework: five scenario-based true/false checks (resampling with replacement, intervals for a mean vs. individual values, the meaning of 95% confidence, lower confidence levels, the bootstrap and extremes) and five pandas coding questions: quartiles, one bootstrap resample, a 95% interval for a mean, sample size and interval width, and checking a supplier's claim against an interval.
 
 ## Maintenance Notes
 

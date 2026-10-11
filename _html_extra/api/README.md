@@ -34,6 +34,8 @@ Each lab or homework definition in `lib/quiz-app.php` picks a runner profile wit
 
 - `plain_python` (default): a small set of builtins (including `abs`) and string/list methods; no imports.
 - `pandas`: adds `numpy` and `pandas` imports and the `range`, `zip`, `enumerate`, `abs`, `dict`, and `tuple` builtins.
+
+In every profile, the submitted cell runs in one namespace, so functions defined in the cell can read the cell's top-level variables, as in a notebook.
 - `matplotlib`: adds `numpy`, `pandas`, and `matplotlib.pyplot` imports, list comprehensions, and `range`, `zip`, `enumerate`, `abs`, `dict`, `tuple`. File and system access (`read_*`, most `to_*`, `np.load`, `imread`, `fig.canvas`, and similar) is blocked by attribute name. Plots render with the `Agg` backend; `plt.show()` and `plt.close()` do nothing, and `savefig` records its arguments instead of writing a file.
 - `seaborn`: the `matplotlib` profile plus `import seaborn as sns`. Dataset loaders (`load_dataset`, `get_dataset_names`, `get_data_home`) are blocked because they read files or the network; questions supply inline DataFrames.
 

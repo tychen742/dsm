@@ -562,8 +562,10 @@ def run_code(code, profile="plain_python", python_paths=None):
         modules = {"pandas": pd, "numpy": np}
         for alias, module_name in pandas_aliases.items():
             safe_globals[alias] = modules[module_name]
+    # One namespace for globals and locals, so functions defined in the cell can
+    # see the cell's top-level variables (as in a notebook).
     with contextlib.redirect_stdout(stdout):
-        exec(compiled, safe_globals, {})
+        exec(compiled, safe_globals, safe_globals)
     return stdout.getvalue()
 
 
