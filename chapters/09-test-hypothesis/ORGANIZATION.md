@@ -44,8 +44,8 @@ Students should be able to:
 
 - Preview: introduce the chapter vocabulary and core terms before class.
 - Section notebooks: each active content section includes at least one paired `thebe-interactive` exercise and adjacent `hide-input` solution cell.
-- Lab: server-graded applied practice with observed differences, distribution distance, simulated extremes, p-values, and decision rules.
-- Homework: server-graded reinforcement with five scenario-based true/false concept checks and five coding questions covering the chapter's main technical practice.
+- Lab: server-graded pandas tasks (`pandas` runner profile) using given simulation results: an absolute-distance test statistic, total variation distance, a p-value from simulated statistics, the conventional significance labels, and the false-alarm (Type I error) rate of A/A tests.
+- Homework: five scenario-based true/false checks (stating the null, reading a p-value, choosing a statistic, not rejecting is not proof, many tests and false alarms) and five pandas coding questions: a defect-rate statistic, a channel-mix TVD, a p-value from simulations, decisions at two cutoffs, and the 95th-percentile cutoff for a statistic.
 
 ## Maintenance Notes
 

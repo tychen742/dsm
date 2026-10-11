@@ -924,12 +924,18 @@ SE with n=400: 0.02',
             'assignment_slug' => 'lab',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch09-lab',
+            'runner_profile' => 'pandas',
             'code_outputs' => [
-                'q1' => 'Observed difference: 8',
-                'q2' => 'Total distance: 0.04',
-                'q3' => 'Extreme simulations: 2',
-                'q4' => 'P-value: 0.4',
-                'q5' => 'Decision: strong evidence',
+                'q1' => 'Observed percent: 24.5
+Test statistic: 4.5',
+                'q2' => 'TVD: 0.1',
+                'q3' => 'At least as large: 4
+P-value: 0.2',
+                'q4' => 'Free shipping: highly significant
+Loyalty email: significant
+New layout: not significant',
+                'q5' => 'False alarms: 1
+False-alarm rate: 0.05',
             ],
         ],
         'ch10-lab' => [
@@ -1306,19 +1312,23 @@ SE with n=144: 1.0',
             'assignment_slug' => 'homework',
             'max_score' => 10,
             'canvas_assignment_column' => 'ch09-homework',
+            'runner_profile' => 'pandas',
             'true_false' => [
-                'q1' => true,
-                'q2' => true,
-                'q3' => false,
-                'q4' => true,
-                'q5' => false,
+                'q1' => false,
+                'q2' => false,
+                'q3' => true,
+                'q4' => false,
+                'q5' => true,
             ],
             'code_outputs' => [
-                'q6' => 'Test statistic: 6',
-                'q7' => 'Tail count: 3',
-                'q8' => 'Evidence: weak',
-                'q9' => 'Distance: 0.1',
-                'q10' => 'Reject null: True',
+                'q6' => 'Observed percent: 7.0
+Test statistic: 2.0',
+                'q7' => 'TVD: 0.08',
+                'q8' => 'P-value: 0.08',
+                'q9' => 'At 0.05: do not reject
+At 0.1: reject',
+                'q10' => '95th percentile: 0.068
+Observed is above it: True',
             ],
         ],
         'ch10-homework' => [

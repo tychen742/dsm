@@ -10,6 +10,7 @@ import tempfile
 
 ALLOWED_CALLS = {
     "print": print,
+    "abs": abs,
     "int": int,
     "round": round,
     "ord": ord,
@@ -553,6 +554,8 @@ def run_code(code, profile="plain_python", python_paths=None):
     stdout = io.StringIO()
     safe_globals = {"__builtins__": ALLOWED_CALLS}
     if profile == "pandas":
+        # Loops over DataFrame columns need zip/range/enumerate, as in the plot profiles.
+        safe_globals["__builtins__"] = {**ALLOWED_CALLS, **MATPLOTLIB_EXTRA_CALLS}
         import numpy as np
         import pandas as pd
 

@@ -15,8 +15,8 @@ Chapter 09 introduces hypothesis testing as a framework for assessing models and
 
 - `assignments/index.ipynb` - assignment landing page.
 - `assignments/preview.ipynb` - server-graded preview quiz covering glossary and core terms.
-- `assignments/lab.ipynb` - Chapter 09 server-graded lab (`ch09-lab`) with five coding questions on observed differences, distribution distance, simulated extremes, p-values, and decision rules.
-- `assignments/homework.ipynb` - Chapter 09 server-graded homework (`ch09-homework`) with five scenario-based true/false questions and five coding questions on test statistics, simulated tails, p-value labels, distribution distance, and null decisions.
+- `assignments/lab.ipynb` - Chapter 09 server-graded lab (`ch09-lab`) with five pandas coding questions on an absolute-distance test statistic, total variation distance, a p-value from given simulation results, conventional significance labels, and the Type I error rate of A/A tests.
+- `assignments/homework.ipynb` - Chapter 09 server-graded homework (`ch09-homework`) with five scenario-based true/false questions and five pandas coding questions on a defect-rate statistic, a channel-mix TVD, a p-value from simulations, decisions at two cutoffs, and the 95th-percentile cutoff for a statistic.
 
 ## Figures And Media
 
